@@ -1,0 +1,9 @@
+{% extends "optionnelles/base.html" %}
+
+{% block content %}
+{% if user %}
+    <p>{{ user.username }}</p>
+{% else %}
+    <p>No users are available.</p>
+{% endif %}
+{% endblock %}

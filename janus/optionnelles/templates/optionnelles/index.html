@@ -1,9 +1,26 @@
+{% extends "optionnelles/base.html" %}
+
+{% block content %}
 {% if user_list %}
-    <ul>
+    <ul class="mdl-list" style="width:300px;">
     {% for user in user_list %}
-        <li><a href="/options/{{ user.id }}/user/">{{ user.username }}</a></li>
+        <li class="mdl-list__item">
+            
+            <span class="mdl-list__item-primary-content">
+            <i class="material-icons  mdl-list__item-avatar">person</i>
+            <!--<a href="/options/{{ user.id }}/user/"> </a>-->
+            {{ user.username }}
+            </span>
+            
+            <span class="mdl-list__item-secondary-action">
+                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-{{user.id}}">
+                      <input type="checkbox" id="list-switch-{{user.id}}" class="mdl-switch__input" checked />
+                    </label>
+            </span>
+        </li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{% endblock %}
