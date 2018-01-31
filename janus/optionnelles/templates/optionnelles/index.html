@@ -20,6 +20,28 @@
         </li>
     {% endfor %}
     </ul>
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">Nom d'utilisateur</th>
+                <th>Date</th>
+                <th>Administrateur</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for user in user_list %}
+                <tr>
+                        <td class="mdl-data-table__cell--non-numeric">{{ user.username }}</td>
+                        <td>{{ user.date_joined }}</td>
+                        {% if user.is_staff == 1 %}
+                        <td>Oui</td>
+                        {% else %}
+                        <td>Non</td>
+                        {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
