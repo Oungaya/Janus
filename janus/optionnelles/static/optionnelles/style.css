@@ -195,3 +195,23 @@ html, body {
         -ms-flex-align: center;
             align-items: center;
   }
+
+  #logo-accueil-janus{
+    font-family: 'Cinzel Decorative', cursive;
+    text-align: center;
+    padding-top:50px;
+    font-size: 80px;
+    height: 100px;
+
+  }
+
+  #logo-accueil-janus span{
+    padding: 10px;
+    background: #26a69a;
+    background: -moz-linear-gradient(left, #26a69a 0%, #2989d8 50%, #63f2c0 100%);
+    background: -webkit-linear-gradient(left, #26a69a 0%,#2989d8 50%,#63f2c0 100%);
+    background: linear-gradient(to right, #26a69a 0%,#2989d8 50%,#63f2c0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+  }
