@@ -1,0 +1,9 @@
+{% if user_list %}
+    <ul>
+    {% for user in user_list %}
+        <li><a href="/options/{{ user.id }}/user/">{{ user.username }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
