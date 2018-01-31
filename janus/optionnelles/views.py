@@ -12,6 +12,10 @@ def index(request):
     return render(request, 'optionnelles/index.html', context)
 
 def user_detail(request, user_id):
-    return HttpResponse("You're looking at question %s." % user_id)
+    user = User.objects.get(pk=user_id)
+    context = {
+        'user': user,
+    }
+    return render(request, 'optionnelles/user.html', context)
 
 # Create your views here.
