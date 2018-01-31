@@ -18,4 +18,13 @@ def user_detail(request, user_id):
     }
     return render(request, 'optionnelles/user.html', context)
 
+def user_connection(request):
+    return render(request, 'optionnelles/login.html')
+
+def user_inscription(request):
+    return render(request, 'optionnelles/inscription.html')
+
+def user_motDePasseOublie(request):
+    return render(request, 'optionnelles/motDePasseOublie.html')
+
 # Create your views here.

@@ -1,0 +1,19 @@
+{% extends "optionnelles/base_unknow.html" %}
+
+{% block content %}
+<div class="mdl-tabs__tab-bar">
+        <a href="/options/login" class="mdl-tabs__tab">Connexion</a>
+        <a href="/options/inscription" class="mdl-tabs__tab">Inscription</a>
+        <a href="/options/oubli-mdp" class="mdl-tabs__tab is-active">Mot de passe oublié</a>
+    </div>
+
+<div class="mdl-tabs__panel" id="connexion-panel">
+    
+</div>
+<div class="mdl-tabs__panel" id="inscription-panel">
+
+</div>
+<div class="mdl-tabs__panel is-active" id="motDePasseOublie-panel">
+    Mot de passe oublié..
+</div>
+{% endblock %}
