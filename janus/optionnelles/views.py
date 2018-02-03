@@ -9,6 +9,7 @@ from django.views.generic.base import View
 from django.template.context_processors import csrf
 from .forms import ConnexionForm, InscriptionForm
 from django.contrib.auth.decorators import login_required
+from django import forms
 
 @login_required
 def index(request):
