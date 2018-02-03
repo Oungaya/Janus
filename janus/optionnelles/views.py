@@ -10,12 +10,14 @@ from django.template.context_processors import csrf
 from .forms import ConnexionForm, InscriptionForm, MpoublieForm, ReinitialisationForm
 from django.contrib.auth.decorators import login_required
 from django import forms
+from .optionnellesHelpers import getGroupTemplate
 
 @login_required
 def index(request):
     user_list = User.objects.all()
     context = {
         'user_list': user_list,
+        'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/index.html', context)
 
