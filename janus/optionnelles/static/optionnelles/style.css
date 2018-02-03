@@ -202,7 +202,7 @@ _:-ms-input-placeholder, :root .demo-graph {
   padding-top:50px;
   font-size: 80px;
   height: 100px;
-
+  margin-bottom: -40px;
 }
 
 #logo-accueil-janus span{
@@ -283,6 +283,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 .connexion-card{
   margin-left: auto;
   margin-right: auto;
+  min-width: 400px;
 }
 
 .inscription-card{

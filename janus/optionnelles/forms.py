@@ -14,8 +14,8 @@ class InscriptionForm(forms.Form):
     parcours = forms.ModelChoiceField(queryset=queryParcours,widget=forms.Select(attrs={'class' : 'mdl-textfield__input'}))
     password = forms.CharField(max_length=100,widget=forms.PasswordInput(attrs={'class' : 'mdl-textfield__input'}))
     confirmPassword = forms.CharField(max_length=100,widget=forms.PasswordInput(attrs={'class' : 'mdl-textfield__input'}))
-    email = forms.CharField(max_length=100,widget=forms.EmailInput(attrs={'class' : 'mdl-textfield__input'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class' : 'mdl-textfield__input'}))
     telephone = forms.IntegerField(max_value=99999999999,widget=forms.NumberInput(attrs={'class' : 'mdl-textfield__input'}))
 
 class MpoublieForm(forms.Form):
-    email = forms.CharField(max_length=100,widget=forms.EmailInput(attrs={'class' : 'mdl-textfield__input'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class' : 'mdl-textfield__input'}))
