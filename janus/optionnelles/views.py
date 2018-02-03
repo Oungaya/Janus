@@ -22,6 +22,15 @@ def index(request):
     return render(request, 'optionnelles/index.html', context)
 
 @login_required
+def admin_ValidationInscription(request):
+    user_list = User.objects.all()
+    context = {
+        'user_list': user_list,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/validation_inscription_admin.html', context)
+
+@login_required
 def user_detail(request, user_id):
     user = User.objects.get(pk=user_id)
     context = {
