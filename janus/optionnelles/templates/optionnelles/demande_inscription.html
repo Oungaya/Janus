@@ -1,0 +1,31 @@
+{% extends "optionnelles/base_unknow.html" %}
+
+{% block content %}
+<div class="mdl-tabs__tab-bar">
+        <a href="/options/login" class="mdl-tabs__tab">Connexion</a>
+        <a href="/options/inscription" class="mdl-tabs__tab is-active">Inscription</a>
+        <a href="/options/oubli-mdp" class="mdl-tabs__tab">Mot de passe oublié</a>
+    </div>
+<div class="mdl-tabs__panel" id="connexion-panel">
+    
+</div>
+<div class="mdl-tabs__panel is-active" id="inscription-panel">
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--10-col-tablet mdl-cell--12-col-phone">
+                <div class="inscription-card mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                                <h2 class="mdl-card__title-text">Demande d'inscription</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            Une demande d'inscription a été envoyé à l'administrateur. Un email vous sera envoyé dès que votre inscription aura été validé. Merci de faire confiance à Janus, il saura vous guider dans vos choix mieux que quiconque. 
+                        </div>
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+            </div>
+        </div>
+        <div class="mdl-tabs__panel" id="motDePasseOublie-panel">
+            
+        </div>
+        {% endblock %}

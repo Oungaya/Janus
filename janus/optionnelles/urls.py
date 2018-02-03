@@ -9,5 +9,6 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('inscription/', views.user_inscription, name='user_inscription'),
     path('oubli-mdp/', views.user_motDePasseOublie, name='user_motDePasseOublie'),
-    path('demande_reinitialisation/', views.user_demandeReinitialisation, name='user_demandeReinitialisation')
+    path('demande_reinitialisation/', views.user_demandeReinitialisation, name='user_demandeReinitialisation'),
+    path('demande_inscription/', views.user_demandeInscription, name='user_demandeInscription')
 ]

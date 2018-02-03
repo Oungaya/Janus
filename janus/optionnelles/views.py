@@ -64,7 +64,7 @@ def user_inscription(request):
     if request.method == 'POST':
         form = InscriptionForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/options/')
+            return HttpResponseRedirect('/options/demande_inscription')
         else:
             raise forms.ValidationError(
                     "Votre compte n'a pas encore été activé ou a été désactivé "
@@ -88,5 +88,8 @@ def user_motDePasseOublie(request):
 
 def user_demandeReinitialisation(request):
     return render(request, 'optionnelles/validation_demande.html')
+
+def user_demandeInscription(request):
+    return render(request, 'optionnelles/demande_inscription.html')
 
 # Create your views here.
