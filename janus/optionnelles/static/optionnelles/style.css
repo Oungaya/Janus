@@ -216,6 +216,10 @@ _:-ms-input-placeholder, :root .demo-graph {
   -webkit-animation: hue 60s infinite linear;
 }
 
+.logo-base{
+  font-family: 'Cinzel Decorative', cursive;
+}
+
 #connexion-panel .mdl-cell{
   text-align: center;
 }
