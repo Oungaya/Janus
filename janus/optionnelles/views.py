@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
-from .forms import ConnexionForm, InscriptionForm, MpoublieForm
+from .forms import ConnexionForm, InscriptionForm, MpoublieForm, ReinitialisationForm
 from django.contrib.auth.decorators import login_required
 from django import forms
 
@@ -86,10 +86,25 @@ def user_motDePasseOublie(request):
         form = MpoublieForm()
     return render(request, 'optionnelles/motDePasseOublie.html', {'form': form})
 
+def user_formulaireReinitialisation(request):
+    if request.method == 'POST':
+        form = ReinitialisationForm(request.POST)
+        if form.is_valid(): #verifier que l'adresse mail est contenu dans la BDD
+            return HttpResponseRedirect('/options/validation_reinitialisation') #rediriger vers la page de validation
+        else:
+            raise forms.ValidationError(
+                    "Le mot de passe n'est pas identique"
+                    )
+    else:
+        form = ReinitialisationForm()
+    return render(request, 'optionnelles/formulaire_reinitialisation.html', {'form': form})
+
 def user_demandeReinitialisation(request):
     return render(request, 'optionnelles/validation_demande.html')
 
 def user_demandeInscription(request):
     return render(request, 'optionnelles/demande_inscription.html')
 
+def user_validationReinitialisation(request):
+    return render(request, 'optionnelles/validation_reinitialisation.html')
 # Create your views here.
