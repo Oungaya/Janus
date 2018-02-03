@@ -7,15 +7,27 @@
         <a href="/options/oubli-mdp" class="mdl-tabs__tab">Mot de passe oublié</a>
     </div>
 <div class="mdl-tabs__panel is-active" id="connexion-panel">
-    <body>
-        <h2>Connexion</h2>
-        <form method="post" action="{% url 'login' %}"> <!-- url 'attribut name du path dans urls.py' -->
-            {% csrf_token %}
-            <p>Nom d'utilisateur : <input type="text" name="username"></p>
-            <p>Mot de passe : <input type="password" name="password"></p>
-            <button type="submit">Login</button>
-        </form>
-    </body>
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--10-col-tablet mdl-cell--12-col-phone">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    
+                    <div id="div-login" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            {{ form.username }}
+                            <label class="mdl-textfield__label" for="{{ form.username.id_for_label }}">Login</label>
+                    </div>
+                    <div id="div-password" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                            {{ form.password }}
+                            <label class="mdl-textfield__label" for="{{ form.password.id_for_label }}">Mot de passe</label>
+                    </div>
+                    <div>
+                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Submit" />
+                    </div>
+                </form>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+        </div>
 </div>
 <div class="mdl-tabs__panel" id="inscription-panel">
 
@@ -23,4 +35,5 @@
 <div class="mdl-tabs__panel" id="motDePasseOublie-panel">
     
 </div>
+
 {% endblock %}

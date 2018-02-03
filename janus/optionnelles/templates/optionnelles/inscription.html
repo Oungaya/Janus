@@ -10,7 +10,72 @@
     
 </div>
 <div class="mdl-tabs__panel is-active" id="inscription-panel">
-    Inscription
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--10-col-tablet mdl-cell--12-col-phone">
+            <form action="" method="post">
+                {% csrf_token %}
+                
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        {{ form.username }}
+                        <label class="mdl-textfield__label" for="{{ form.username.id_for_label }}">Login</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                        {{ form.numero_etudiant }}
+                    <label class="mdl-textfield__label" for="{{ form.numero_etudiant.id_for_label }}">Numéro étudiant</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                        {{ form.nom }}
+                    <label class="mdl-textfield__label" for="{{ form.nom.id_for_label }}">Nom</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                        {{ form.prenom }}
+                    <label class="mdl-textfield__label" for="{{ form.prenom.id_for_label }}">Prenom</label>
+                </div>               
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                        {{ form.password }}
+                    <label class="mdl-textfield__label" for="{{ form.password.id_for_label }}">Mot de passe</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                        {{ form.confirmPassword }}
+                    <label class="mdl-textfield__label" for="{{ form.confirmPassword.id_for_label }}">Confirmation</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                        {{ form.email }}
+                    <label class="mdl-textfield__label" for="{{ form.email.id_for_label }}">Email</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                        {{ form.telephone }}
+                    <label class="mdl-textfield__label" for="{{ form.telephone.id_for_label }}">Téléphone</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="div-parcours" >
+                        {{ form.parcours }}
+                        <label class="mdl-textfield__label" for="{{ form.parcours.id_for_label }}">Parcours</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="div-parcours" >
+                        
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-ajac">
+                                <span class="mdl-switch__label">AJAC</span>
+                                <input type="checkbox" id="switch-ajac" class="mdl-switch__input">
+                                
+                        </label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-redoublant">
+                                <span class="mdl-switch__label">Redoublant</span>
+                                <input type="checkbox" id="switch-redoublant" class="mdl-switch__input">
+                                
+                        </label>
+                </div>
+                <div>
+                    <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Submit" />
+                </div>
+            </form>
+        </div>
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+    </div>
 </div>
 <div class="mdl-tabs__panel" id="motDePasseOublie-panel">
     
