@@ -218,6 +218,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 
 .logo-base{
   font-family: 'Cinzel Decorative', cursive;
+  font-size: 30px;
 }
 
 #connexion-panel .mdl-cell{
@@ -283,6 +284,7 @@ _:-ms-input-placeholder, :root .demo-graph {
   margin-left: auto;
   margin-right: auto;
   width: auto;
+  max-width: 700px;
 }
 
 .connexion-card .mdl-card__actions{
@@ -302,3 +304,4 @@ _:-ms-input-placeholder, :root .demo-graph {
   background: #26a69a;
   color: #fff;
 }
+
