@@ -74,6 +74,16 @@ def user_inscription(request):
     return render(request, 'optionnelles/inscription.html', {'form': form})
 
 def user_motDePasseOublie(request):
-    return render(request, 'optionnelles/motDePasseOublie.html')
+    if request.method == 'POST':
+        form = InscriptionForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/options/') #rediriger vers la page de validation
+        else:
+            raise forms.ValidationError(
+                    "L'adresse email n'est pas valide "
+                    )
+    else:
+        form = InscriptionForm()
+    return render(request, 'optionnelles/motDePasseOublie.html', {'form': form})
 
 # Create your views here.

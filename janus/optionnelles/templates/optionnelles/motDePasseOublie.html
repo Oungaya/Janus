@@ -14,6 +14,29 @@
 
 </div>
 <div class="mdl-tabs__panel is-active" id="motDePasseOublie-panel">
-    Mot de passe oublié..
+        <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+                <div class="mdl-cell mdl-cell--4-col mdl-cell--10-col-tablet mdl-cell--12-col-phone">
+                  <div class="mpoublie-card mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                                <h2 class="mdl-card__title-text">Renseignez votre adresse email</h2>
+                        </div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div id="div-login" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                {{ form.email }}
+                                <label class="mdl-textfield__label" for="{{ form.email.id_for_label }}">Adresse email</label>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            Une demande de réinitialisation de votre mot de passe vous sera envoyé par email. Suivez les instructions indiqué dans l'email pour le réinitialiser.
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                                <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Reinitialiser" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+        </div>    
 </div>
 {% endblock %}

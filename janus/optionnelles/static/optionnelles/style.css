@@ -229,6 +229,11 @@ _:-ms-input-placeholder, :root .demo-graph {
   text-align: center;
 }
 
+#motDePasseOublie-panel .mdl-cell{
+  text-align: center;
+}
+
+
 .panneau-principal{
   background: #26a69a;
   background: -moz-linear-gradient(left, #26a69a 0%, #2989d8 50%, #63f2c0 100%);
@@ -287,11 +292,22 @@ _:-ms-input-placeholder, :root .demo-graph {
   max-width: 700px;
 }
 
+.mpoublie-card{
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  min-width: 400px;
+}
+
 .connexion-card .mdl-card__actions{
   text-align: right;
 }
 
 .inscription-card .mdl-card__actions{
+  text-align: right;
+}
+
+.mpoublie-card .mdl-card__actions{
   text-align: right;
 }
 
@@ -305,3 +321,11 @@ _:-ms-input-placeholder, :root .demo-graph {
   color: #fff;
 }
 
+.mpoublie-card .mdl-card__title{
+  background: #26a69a;
+  color: #fff;
+}
+
+.mpoublie-card .mdl-card__supporting-text{
+  text-align: left;
+}
