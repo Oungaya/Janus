@@ -1,6 +1,20 @@
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
+  
 }
+
+body{
+  background: url('images/bureau.jpg') bottom / cover;
+}
+
+a{
+  text-decoration: none;
+}
+
+a:-webkit-any-link{
+  text-decoration: none;
+}
+
 .demo-avatar {
   width: 48px;
   height: 48px;
@@ -203,6 +217,7 @@ _:-ms-input-placeholder, :root .demo-graph {
   font-size: 80px;
   height: 100px;
   margin-bottom: -40px;
+  background: #fff;
 }
 
 #logo-accueil-janus span{
@@ -329,4 +344,8 @@ _:-ms-input-placeholder, :root .demo-graph {
 
 .mpoublie-card .mdl-card__supporting-text{
   text-align: left;
+}
+
+.mdl-tabs__tab-bar{
+border-bottom: none;
 }
