@@ -234,3 +234,42 @@ _:-ms-input-placeholder, :root .demo-graph {
   background: -webkit-linear-gradient(left, #26a69a 0%,#2989d8 50%,#63f2c0 100%);
   background: linear-gradient(to right, #26a69a 0%,#2989d8 50%,#63f2c0 100%);
 }
+
+.test-card-wide.mdl-card {
+  width: 512px;
+}
+.test-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('images/testcard.png') center / cover;
+}
+.test-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.card-test-list{
+  margin-left: 8px;
+}
+
+.card-test-list > .mdl-card__actions {
+  display: flex;
+  box-sizing:border-box;
+  align-items: center;
+  background: #26a69a;
+  background: -moz-linear-gradient(left, #26a69a 0%, #2989d8 50%, #63f2c0 100%);
+  background: -webkit-linear-gradient(left, #26a69a 0%,#2989d8 50%,#63f2c0 100%);
+  background: linear-gradient(to right, #26a69a 0%,#2989d8 50%,#63f2c0 100%);
+}
+
+.card-test-list > .mdl-card__actions > .material-icons {
+  padding-right: 10px;
+}
+.card-test-list > .mdl-card__title,
+.card-test-list > .mdl-card__actions,
+.card-test-list > .mdl-card__actions > .mdl-button {
+  color: #fff;
+}
+
+.mdl-card{
+  margin-bottom: 8px;
+}

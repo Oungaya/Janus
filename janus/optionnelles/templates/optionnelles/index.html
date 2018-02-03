@@ -1,7 +1,27 @@
 {% extends "optionnelles/base.html" %}
 
 {% block content %}
+<div class="test-card-wide mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Donner son avis</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          Idée : présenter les options à l'aide de carte et permettre aux étudiants de donner un avis sur le cours (favorable/non + commentaires)
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Voter
+          </a>
+        </div>
+        <div class="mdl-card__menu">
+          <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">share</i>
+          </button>
+        </div>
+      </div>
 {% if user_list %}
+<div class="card-test-list mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title mdl-card--expand">
     <ul class="mdl-list" style="width:300px;">
     {% for user in user_list %}
         <li class="mdl-list__item">
@@ -20,6 +40,15 @@
         </li>
     {% endfor %}
     </ul>
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Valider l'inscription
+            </a>
+            <div class="mdl-layout-spacer"></div>
+            <i class="material-icons">event</i>
+          </div>
+</div>
     <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
             <thead>
               <tr>
@@ -45,4 +74,5 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+
 {% endblock %}
