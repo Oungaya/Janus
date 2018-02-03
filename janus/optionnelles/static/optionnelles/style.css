@@ -273,3 +273,32 @@ _:-ms-input-placeholder, :root .demo-graph {
 .mdl-card{
   margin-bottom: 8px;
 }
+
+.connexion-card{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inscription-card{
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+}
+
+.connexion-card .mdl-card__actions{
+  text-align: right;
+}
+
+.inscription-card .mdl-card__actions{
+  text-align: right;
+}
+
+.connexion-card .mdl-card__title{
+  background: #26a69a;
+  color: #fff;
+}
+
+.inscription-card .mdl-card__title{
+  background: #26a69a;
+  color: #fff;
+}
