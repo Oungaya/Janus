@@ -87,7 +87,7 @@ class Professeur_par_UE(models.Model):
         return self.ue.nom + " " + self.professeur.nom + " " + self.professeur.prenom
 
 class AnneeCourante(models.Model):
-    models.ForeignKey(Promotion, on_delete=models.CASCADE)
+    models.ForeignKey(Parcours, on_delete=models.CASCADE)
     nom = models.CharField(max_length=200)
     dateDebutSemestre1 = models.DateTimeField('date début semestre 1')
     dateDebutSemestre2 = models.DateTimeField('date début semestre 2')
@@ -109,9 +109,12 @@ class Etudiant(models.Model):
     nom = models.CharField(max_length=200)
     prenom = models.CharField(max_length=200)
     numero_etudiant = models.CharField(max_length=20)
-    models.ForeignKey(Parcours, on_delete=models.CASCADE)
+    ajac = models.BooleanField(default="false")
+    redoublant = models.BooleanField(default="false")
+    #models.ForeignKey(Parcours, on_delete=models.CASCADE)
     utilisateur = models.OneToOneField(User, on_delete=models.CASCADE)
     ues = models.ManyToManyField("UE", through="Etudiant_par_UE")
+    parcours = models.ManyToManyField(Parcours)
 
     def __str__(self):
         return self.prenom + " " + self.nom
