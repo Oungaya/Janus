@@ -11,6 +11,7 @@ from .forms import ConnexionForm, InscriptionForm, MpoublieForm, Reinitialisatio
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .optionnellesHelpers import getGroupTemplate
+from django.contrib.auth.models import Group
 
 @login_required
 def index(request):
@@ -75,6 +76,18 @@ def user_inscription(request):
     if request.method == 'POST':
         form = InscriptionForm(request.POST)
         if form.is_valid():
+            data = form.cleaned_data
+            djangoUser = User.objects.create_user(username=data['username'], email=data['email'],password=data['password'])
+            my_group = Group.objects.get(name='Etudiant') 
+            my_group.user_set.add(djangoUser)
+            djangoUser.first_name = username=data['prenom']
+            djangoUser.last_name = username=data['nom']
+            djangoUser.is_active = "False"
+            djangoUser.save()
+            etudiantUser = Etudiant(numero_etudiant=data['numero_etudiant'],ajac=data['ajac'],redoublant=data['redoublant'])
+            etudiantUser.utilisateur = djangoUser
+            etudiantUser.save()
+
             return HttpResponseRedirect('/options/demande_inscription')
         else:
             raise forms.ValidationError(

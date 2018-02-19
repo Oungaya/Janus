@@ -54,7 +54,7 @@ class UE(models.Model):
 class UE_par_Pole(models.Model):
     pole = models.ForeignKey(Pole, on_delete=models.CASCADE)
     ue = models.ForeignKey(UE, on_delete=models.CASCADE)
-    option = models.BooleanField(default="false")
+    option = models.BooleanField(default="False")
 
     def __str__(self):
         return self.ue.nom + " " + self.pole.nom
@@ -106,18 +106,17 @@ class AnneeCourante(models.Model):
 
 
 class Etudiant(models.Model):
-    nom = models.CharField(max_length=200)
-    prenom = models.CharField(max_length=200)
     numero_etudiant = models.CharField(max_length=20)
-    ajac = models.BooleanField(default="false")
-    redoublant = models.BooleanField(default="false")
+    ajac = models.BooleanField(default="False")
+    redoublant = models.BooleanField(default="False")
     #models.ForeignKey(Parcours, on_delete=models.CASCADE)
     utilisateur = models.OneToOneField(User, on_delete=models.CASCADE)
     ues = models.ManyToManyField("UE", through="Etudiant_par_UE")
     parcours = models.ManyToManyField(Parcours)
+    #telephone = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.prenom + " " + self.nom
+        return self.utilisateur.first_name + " " + self.utilisateur.last_name
 
 class Etudiant_par_UE(models.Model):
     etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE)
@@ -131,7 +130,7 @@ class Absence(models.Model):
     models.ForeignKey(UE, on_delete=models.CASCADE)
     models.ForeignKey(Etudiant, on_delete=models.CASCADE)
     date_heure = models.DateTimeField('date et heure')
-    justifiee = models.BooleanField(default="false")
+    justifiee = models.BooleanField(default="False")
 
     def __str__(self):
         return self.prenom + " " + self.nom
