@@ -113,7 +113,7 @@ class Etudiant(models.Model):
     utilisateur = models.OneToOneField(User, on_delete=models.CASCADE)
     ues = models.ManyToManyField("UE", through="Etudiant_par_UE")
     parcours = models.ManyToManyField(Parcours)
-    #telephone = models.CharField(max_length=20)
+    telephone = models.CharField(max_length=20)
 
     def __str__(self):
         return self.utilisateur.first_name + " " + self.utilisateur.last_name

@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from .models import Etudiant
+from .models import Etudiant, Parcours
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -84,8 +84,10 @@ def user_inscription(request):
             djangoUser.last_name = username=data['nom']
             djangoUser.is_active = "False"
             djangoUser.save()
-            etudiantUser = Etudiant(numero_etudiant=data['numero_etudiant'],ajac=data['ajac'],redoublant=data['redoublant'])
+            etudiantUser = Etudiant(numero_etudiant=data['numero_etudiant'],ajac=data['ajac'],redoublant=data['redoublant'],telephone=data['telephone'])
             etudiantUser.utilisateur = djangoUser
+            etudiantUser.save()
+            etudiantUser.parcours.add(data['parcours'])
             etudiantUser.save()
 
             return HttpResponseRedirect('/options/demande_inscription')
