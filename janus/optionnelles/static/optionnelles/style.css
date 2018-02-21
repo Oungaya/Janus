@@ -364,3 +364,7 @@ border-bottom: none;
   right:30px;
   background: #fff;
 }
+
+.inscription-professeur-card form{
+  text-align: center !important;
+}

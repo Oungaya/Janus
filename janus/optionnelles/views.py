@@ -50,7 +50,7 @@ def admin_InscriptionProfesseur(request):
         'user_list': user_list,
         'template_group': getGroupTemplate(request.user)
     }
-    print(context)
+
     if request.method == 'POST':
         form = InscriptionProfesseurForm(request.POST)
         if form.is_valid():
@@ -68,12 +68,12 @@ def admin_InscriptionProfesseur(request):
             messages.success(request, 'Le professeur a été ajouté')
             return HttpResponseRedirect('/options/')
         else:
-            raise forms.ValidationError(
-                    "Votre compte n'a pas encore été activé ou a été désactivé "
-                    )
+            form.add_error(None,
+                    "Les identifiants de connexion sont incorrectes "
+                )
     else:
         form = InscriptionProfesseurForm()
-    print(context)
+
     return render(request, 'optionnelles/inscription_professeur_admin.html', {'form': form,'user_list': user_list,'template_group': getGroupTemplate(request.user)})
 
 @login_required
