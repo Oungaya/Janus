@@ -54,13 +54,15 @@ def user_connection(request):
                     login(request, user)
                     return HttpResponseRedirect('/options/')
                 else:
-                    raise forms.ValidationError(
+                    form.add_error(None,
                     "Votre compte n'a pas encore été activé ou a été désactivé "
                     )
+                    return render(request, 'optionnelles/login.html', {'form': form})
             else:
-                raise forms.ValidationError(
+                form.add_error(None,
                     "Les identifiants de connexion sont incorrectes "
                 )
+                return render(request, 'optionnelles/login.html', {'form': form})
                 #form = ConnexionForm(request.POST)
                 #return render(request, 'optionnelles/login.html', {'form': form})
     else:
@@ -92,8 +94,8 @@ def user_inscription(request):
 
             return HttpResponseRedirect('/options/demande_inscription')
         else:
-            raise forms.ValidationError(
-                    "Votre compte n'a pas encore été activé ou a été désactivé "
+            form.add_error(None,
+                    "L'inscription a échoué"
                     )
     else:
         form = InscriptionForm()

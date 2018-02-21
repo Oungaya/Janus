@@ -76,6 +76,13 @@
                         <div class="mdl-card__actions mdl-card--border">
                             <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="S'inscrire" />
                         </div>
+                        {% if form.non_field_errors %}
+                        <ul class='form-errors'>
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
                     </form>
                 </div>
         </div>
