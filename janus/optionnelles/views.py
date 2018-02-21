@@ -24,9 +24,9 @@ def index(request):
 
 @login_required
 def admin_ValidationInscription(request):
-    user_list = User.objects.all()
+    liste_etudiant = Etudiant.objects.filter(utilisateur__is_active=False)
     context = {
-        'user_list': user_list,
+        'liste_etudiant': liste_etudiant,
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/validation_inscription_admin.html', context)
