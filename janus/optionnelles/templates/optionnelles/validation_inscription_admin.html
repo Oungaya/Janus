@@ -13,31 +13,32 @@
         </div>  
         
 </div>
-{% if user_list %}
-
-    {% for user in user_list %}
-    <div class="card-inscription-list mdl-card mdl-shadow--2dp">
-            <div class="mdl-card__title mdl-card--expand">
-            <ul class="mdl-list" >
-        <li class="mdl-list__item">
-            
-            <span class="mdl-list__item-primary-content">
-            <i class="material-icons  mdl-list__item-avatar">person</i>
-            <!--<a href="/options/{{ user.id }}/user/"> </a>-->
-            {{ user.username }}
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-{{user.id}}">
-                      <input type="checkbox" id="list-switch-{{user.id}}" class="mdl-switch__input" checked />
-                    </label>
-            </span>
-        </li>
-    </ul>
-</div>
-</div>
-    {% endfor %}
+{% if liste_etudiant %}
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Identifiant</th>
+                    <th>Prenom</th>
+                    <th>Nom</th>
+                    <th>Parcours</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in liste_etudiant %}
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric"> {{ e.numero_etudiant }} </td>
+                        <td> {{ e.prenom }} </td>
+                        <td> {{ e.nom }} </td>
+                        <td> 
+                            {% for p in e.parcours.all %}
+                            {{ p.nom }} 
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     
-
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
