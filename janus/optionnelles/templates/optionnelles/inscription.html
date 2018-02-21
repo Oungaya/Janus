@@ -92,4 +92,30 @@
 <div class="mdl-tabs__panel" id="motDePasseOublie-panel">
     
 </div>
+{% if form.non_field_errors %}
+<div id="toast" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text">
+            {% for error in form.non_field_errors %}
+            {{ error }}
+            {% endfor %}
+    </div>
+    <button class="mdl-snackbar__action" type="button"></button>
+  </div>
+  {% endif %}
+{% endblock %}
+
+{% block script %}
+{% if form.non_field_errors %}
+    <script>
+    var msg = $(".mdl-snackbar__text").html();
+                        
+    document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var snackbarContainer = document.querySelector('#toast');
+                var data = {message: msg};
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            }, 0);
+        });
+    </script>
+{% endif %}
 {% endblock %}

@@ -50,6 +50,7 @@ def admin_InscriptionProfesseur(request):
         'user_list': user_list,
         'template_group': getGroupTemplate(request.user)
     }
+    print(context)
     if request.method == 'POST':
         form = InscriptionProfesseurForm(request.POST)
         if form.is_valid():
@@ -72,7 +73,8 @@ def admin_InscriptionProfesseur(request):
                     )
     else:
         form = InscriptionProfesseurForm()
-    return render(request, 'optionnelles/inscription_professeur_admin.html', {'form': form}, context)
+    print(context)
+    return render(request, 'optionnelles/inscription_professeur_admin.html', {'form': form,'user_list': user_list,'template_group': getGroupTemplate(request.user)})
 
 @login_required
 def user_detail(request, user_id):
