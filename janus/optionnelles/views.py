@@ -1,17 +1,28 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from .models import Etudiant
+from .models import Etudiant, Professeur
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
-from .forms import ConnexionForm, InscriptionForm, MpoublieForm, ReinitialisationForm
+from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
+from django.contrib import messages
+import random, string
+
+def generer_mdp():
+    length = 8
+    mdp = []
+    mdp.append(random.choice(string.ascii_lowercase))
+    mdp.append(random.choice(string.ascii_uppercase))
+    mdp.append(str(random.randint(0,9)))
+    random.shuffle(mdp)
+    return ''.join(mdp)
 
 @login_required
 def index(request):
@@ -30,6 +41,38 @@ def admin_ValidationInscription(request):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/validation_inscription_admin.html', context)
+
+@login_required
+def admin_InscriptionProfesseur(request):
+    user_list = User.objects.all()
+    professeur_list = Professeur.objects.all()
+    context = {
+        'user_list': user_list,
+        'template_group': getGroupTemplate(request.user)
+    }
+    if request.method == 'POST':
+        form = InscriptionProfesseurForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            djangoUser = User.objects.create_user(username=data['prenom'][0].lower()+data['nom'].lower(), email=data['email'], password=generer_mdp())
+            my_group = Group.objects.get(name='Professeur') 
+            my_group.user_set.add(djangoUser)
+            djangoUser.first_name = username=data['prenom']
+            djangoUser.last_name = username=data['nom']
+            djangoUser.is_active = "True"
+            djangoUser.save()
+            professeurUser = Professeur(nombre_heures=data['nombre_heures'])
+            professeurUser.utilisateur = djangoUser
+            professeurUser.save()
+            messages.success(request, 'Le professeur a été ajouté')
+            return HttpResponseRedirect('/options/')
+        else:
+            raise forms.ValidationError(
+                    "Votre compte n'a pas encore été activé ou a été désactivé "
+                    )
+    else:
+        form = InscriptionProfesseurForm()
+    return render(request, 'optionnelles/inscription_professeur_admin.html', {'form': form}, context)
 
 @login_required
 def user_detail(request, user_id):

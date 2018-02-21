@@ -1,6 +1,15 @@
 
 {% extends template_group %}
 
+<!-- AFFICHAGE DES MESSAGES DE RETOUR -->
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 {% block content %}
 <div class="test-card-wide mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title">
@@ -20,6 +29,7 @@
           </button>
         </div>
       </div>
+
 {% if user_list %}
 <div class="card-test-list mdl-card mdl-shadow--2dp">
     <div class="mdl-card__title mdl-card--expand">

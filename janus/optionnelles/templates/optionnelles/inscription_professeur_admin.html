@@ -1,0 +1,41 @@
+{% extends template_group %}
+
+{% block content %}
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+    <div class="mdl-cell mdl-cell--8-col mdl-cell--10-col-tablet mdl-cell--12-col-phone">
+            <div class="inscription-card mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title">
+                            <h2 class="mdl-card__title-text">Renseignez les informations du professeur</h2>
+                    </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                            {{ form.nom }}
+                        <label class="mdl-textfield__label" for="{{ form.nom.id_for_label }}">Nom</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                            {{ form.prenom }}
+                        <label class="mdl-textfield__label" for="{{ form.prenom.id_for_label }}">Prenom</label>
+                    </div>    
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                            {{ form.email }}
+                    <label class="mdl-textfield__label" for="{{ form.email.id_for_label }}">Email</label>
+                    </div>          
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                            {{ form.nombre_heures }}
+                        <label class="mdl-textfield__label" for="{{ form.nombre_heures.id_for_label }}">Nombre d'heures d'enseignement</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="div-statut" >
+                            {{ form.statut }}
+                        <label class="mdl-textfield__label" for="{{ form.statut.id_for_label }}">Statut</label>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Enregistrer" />
+                    </div>
+                </form>
+            </div>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+</div>
+{% endblock %}

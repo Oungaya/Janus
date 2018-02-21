@@ -14,4 +14,5 @@ urlpatterns = [
     path('validation_reinitialisation/', views.user_validationReinitialisation, name='user_validationReinitialisation'),
     path('formulaire_reinitialisation/', views.user_formulaireReinitialisation, name='user_formulaireReinitialisation'),
     path('validation_inscription/', views.admin_ValidationInscription, name='admin_ValidationInscription'),
+    path('inscription_professeur/', views.admin_InscriptionProfesseur, name='admin_InscriptionProfesseur'),
 ]
