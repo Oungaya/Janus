@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur
+from .models import Etudiant, Professeur, Parcours
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -35,9 +35,9 @@ def index(request):
 
 @login_required
 def admin_ValidationInscription(request):
-    user_list = User.objects.all()
+    liste_etudiant = Etudiant.objects.filter(utilisateur__is_active=False)
     context = {
-        'user_list': user_list,
+        'liste_etudiant': liste_etudiant,
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/validation_inscription_admin.html', context)
@@ -97,13 +97,15 @@ def user_connection(request):
                     login(request, user)
                     return HttpResponseRedirect('/options/')
                 else:
-                    raise forms.ValidationError(
+                    form.add_error(None,
                     "Votre compte n'a pas encore été activé ou a été désactivé "
                     )
+                    return render(request, 'optionnelles/login.html', {'form': form})
             else:
-                raise forms.ValidationError(
+                form.add_error(None,
                     "Les identifiants de connexion sont incorrectes "
                 )
+                return render(request, 'optionnelles/login.html', {'form': form})
                 #form = ConnexionForm(request.POST)
                 #return render(request, 'optionnelles/login.html', {'form': form})
     else:
@@ -127,14 +129,16 @@ def user_inscription(request):
             djangoUser.last_name = username=data['nom']
             djangoUser.is_active = "False"
             djangoUser.save()
-            etudiantUser = Etudiant(numero_etudiant=data['numero_etudiant'],ajac=data['ajac'],redoublant=data['redoublant'])
+            etudiantUser = Etudiant(numero_etudiant=data['numero_etudiant'],ajac=data['ajac'],redoublant=data['redoublant'],telephone=data['telephone'])
             etudiantUser.utilisateur = djangoUser
+            etudiantUser.save()
+            etudiantUser.parcours.add(data['parcours'])
             etudiantUser.save()
 
             return HttpResponseRedirect('/options/demande_inscription')
         else:
-            raise forms.ValidationError(
-                    "Votre compte n'a pas encore été activé ou a été désactivé "
+            form.add_error(None,
+                    "L'inscription a échoué"
                     )
     else:
         form = InscriptionForm()
