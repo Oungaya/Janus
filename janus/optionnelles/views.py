@@ -63,6 +63,41 @@ def admin_ValidationInscriptionDetails(request, num_etu):
     return render(request, 'optionnelles/validation_inscription_admin_detail.html', context)
 
 @login_required
+def admin_ValidationInscriptionEnd(request, num_etu):
+    etu = Etudiant.objects.get(numero_etudiant = num_etu)
+    if request.method == 'POST':
+        form = ValidationUserByAdminForm(request.POST)
+        if request.POST.get("accept"):
+            if form.is_valid():
+                data = form.cleaned_data
+                if etu.numero_etudiant != data['numero_etudiant']:
+                    etu.numero_etudiant = data['numero_etudiant']
+                if etu.ajac != data['ajac']:
+                    etu.ajac = data['ajac']
+                if etu.redoublant != data['redoublant']:
+                    etu.redoublant = data['redoublant']
+                if etu.parcours != data['parcours']:
+                    etu.parcours.set(data['parcours'])
+                        
+                if etu.telephone != data['telephone']:
+                    etu.telephone = data['telephone']
+                etu.save()
+
+                etu.utilisateur.first_name = data['prenom']
+                etu.utilisateur.last_name = data['nom']
+                etu.utilisateur.email = data['email']
+                etu.utilisateur.is_active = True
+                etu.utilisateur.save()
+
+                messages.success(request, 'Utilisateur validé')
+                return HttpResponseRedirect('/options/validation_inscription/')
+            else:
+                return HttpResponseRedirect('/options/validation_inscription/') 
+        else:
+            return HttpResponseRedirect('/options/validation_inscription/') 
+    
+
+@login_required
 def admin_InscriptionProfesseur(request):
     user_list = User.objects.all()
     professeur_list = Professeur.objects.all()
