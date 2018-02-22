@@ -94,6 +94,7 @@ def admin_ValidationInscriptionEnd(request, num_etu):
             else:
                 return HttpResponseRedirect('/options/validation_inscription/') 
         else:
+            Etudiant.objects.get(numero_etudiant = num_etu).delete()
             return HttpResponseRedirect('/options/validation_inscription/') 
     
 
