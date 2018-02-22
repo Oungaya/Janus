@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
-from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm
+from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .optionnellesHelpers import getGroupTemplate
@@ -41,6 +41,26 @@ def admin_ValidationInscription(request):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/validation_inscription_admin.html', context)
+
+@login_required
+def admin_ValidationInscriptionDetails(request, num_etu):
+    etu = Etudiant.objects.get(numero_etudiant = num_etu)
+    form = ValidationUserByAdminForm(initial={
+        'nom': etu.utilisateur.last_name,
+        'prenom': etu.utilisateur.first_name,
+        'numero_etudiant': etu.numero_etudiant,
+        'telephone': etu.telephone,
+        'parcours': etu.parcours.all(),
+        'ajac': etu.ajac,
+        'redoublant': etu.redoublant,
+        'email': etu.utilisateur.email
+        })
+    context = {
+        'etudiant': etu,
+        'template_group': getGroupTemplate(request.user),
+        'form' : form
+    }
+    return render(request, 'optionnelles/validation_inscription_admin_detail.html', context)
 
 @login_required
 def admin_InscriptionProfesseur(request):

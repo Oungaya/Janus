@@ -14,30 +14,32 @@
         
 </div>
 {% if liste_etudiant %}
-        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-            <thead>
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Nom</th>
+                <th>Prenom</th>
+                <th>Identifiant</th>
+                <th>Parcours</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in liste_etudiant %}
                 <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Identifiant</th>
-                    <th>Prenom</th>
-                    <th>Nom</th>
-                    <th>Parcours</th>
+                    <td class="mdl-data-table__cell--non-numeric">
+                        {{ e.utilisateur.last_name }}
+                    </td>
+                    <td> {{ e.utilisateur.first_name }} </td>
+                    <td><a href="/options/validation_inscription/{{ e.numero_etudiant }}/user/"> {{ e.numero_etudiant }} </a></td>
+                    <td> 
+                        {% for p in e.parcours.all %}
+                        {{ p.nom }} 
+                        {% endfor %}
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for e in liste_etudiant %}
-                    <tr>
-                        <td class="mdl-data-table__cell--non-numeric"> {{ e.numero_etudiant }} </td>
-                        <td> {{ e.prenom }} </td>
-                        <td> {{ e.nom }} </td>
-                        <td> 
-                            {% for p in e.parcours.all %}
-                            {{ p.nom }} 
-                            {% endfor %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            {% endfor %}
+        </tbody>
+    </table>
     
 {% else %}
     <p>No polls are available.</p>
