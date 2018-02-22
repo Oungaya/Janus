@@ -69,12 +69,12 @@ class Professeur(models.Model):
     nom = models.CharField(max_length=200)
     prenom = models.CharField(max_length=200)
     nombre_heures = models.IntegerField(default=0)
-    models.ForeignKey(Statut, on_delete=models.CASCADE)
+    statut = models.ForeignKey(Statut, on_delete=models.CASCADE)
     utilisateur = models.OneToOneField(User, on_delete=models.CASCADE)
     ues = models.ManyToManyField("UE", through="Professeur_par_UE")
 
     def __str__(self):
-        return self.prenom + " " + self.nom
+        return self.utilisateur.first_name + " " + self.utilisateur.last_name
 
 class Professeur_par_UE(models.Model):
     professeur = models.ForeignKey(Professeur, on_delete=models.CASCADE)

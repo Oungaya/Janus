@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours
+from .models import Etudiant, Professeur, Parcours, Statut
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -65,11 +65,14 @@ def admin_InscriptionProfesseur(request):
             professeurUser = Professeur(nombre_heures=data['nombre_heures'])
             professeurUser.utilisateur = djangoUser
             professeurUser.save()
+            professeurUser.statut.add(data['statut'])
+            professeurUser.save()
+
             messages.success(request, 'Le professeur a été ajouté')
             return HttpResponseRedirect('/options/')
         else:
             form.add_error(None,
-                    "Les identifiants de connexion sont incorrectes "
+                "Les identifiants de connexion sont incorrectes "
                 )
     else:
         form = InscriptionProfesseurForm()
