@@ -2,7 +2,8 @@
 {% extends template_group %}
 
 {% block content %}
-<div class="mdl-shadow--2dp micro-card-menu ">
+<!-- 
+    <div class="mdl-shadow--2dp micro-card-menu ">
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet">
                     <i class="material-icons">view_comfy</i>
@@ -10,9 +11,9 @@
             <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet">
                     <i class="material-icons">format_align_justify</i>
             </div>
-        </div>  
-        
-</div>
+        </div>         
+    </div>
+-->
 {% if etudiant %}
     <div class="mdl-tabs__panel is-active">
         <div class="mdl-grid">
@@ -74,10 +75,10 @@
             </div>
             <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
         </div>
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
     </div>
-    <div class="mdl-tabs__panel" id="motDePasseOublie-panel">
 {% else %}
-    <p>No polls are available.</p>
+    <p>Vous n'avez aucun étudiant en attente de validation.</p>
 {% endif %}
 
 {% endblock %}
