@@ -15,4 +15,5 @@ urlpatterns = [
     path('formulaire_reinitialisation/', views.user_formulaireReinitialisation, name='user_formulaireReinitialisation'),
     path('validation_inscription/', views.admin_ValidationInscription, name='admin_ValidationInscription'),
     path('inscription_professeur/', views.admin_InscriptionProfesseur, name='admin_InscriptionProfesseur'),
+    path('validation_inscription/<int:num_etu>/user/', views.admin_ValidationInscriptionDetails, name='admin_ValidationInscriptionDetails')
 ]
