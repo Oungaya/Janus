@@ -50,7 +50,7 @@ def admin_ValidationInscriptionDetails(request, num_etu):
         'prenom': etu.utilisateur.first_name,
         'numero_etudiant': etu.numero_etudiant,
         'telephone': etu.telephone,
-        'parcours': etu.parcours.all(),
+        'parcours': etu.parcours.first(),
         'ajac': etu.ajac,
         'redoublant': etu.redoublant,
         'email': etu.utilisateur.email
@@ -77,7 +77,8 @@ def admin_ValidationInscriptionEnd(request, num_etu):
                 if etu.redoublant != data['redoublant']:
                     etu.redoublant = data['redoublant']
                 if etu.parcours != data['parcours']:
-                    etu.parcours.set(data['parcours'])
+                    etu.parcours.through.objects.all().delete()
+                    etu.parcours.add(data['parcours'])
                         
                 if etu.telephone != data['telephone']:
                     etu.telephone = data['telephone']
@@ -118,10 +119,9 @@ def admin_InscriptionProfesseur(request):
             djangoUser.last_name = username=data['nom']
             djangoUser.is_active = "True"
             djangoUser.save()
-            professeurUser = Professeur(nombre_heures=data['nombre_heures'])
+            professeurUser = Professeur(nombre_heures=data['nombre_heures'], statut=data['statut'])
             professeurUser.utilisateur = djangoUser
-            professeurUser.save()
-            professeurUser.statut.add(data['statut'])
+            #professeurUser.statut.add(data['statut'])
             professeurUser.save()
 
             messages.success(request, 'Le professeur a été ajouté')

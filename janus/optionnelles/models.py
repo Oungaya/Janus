@@ -12,7 +12,7 @@ class Promotion(models.Model):
 
 class Parcours(models.Model):
     nom = models.CharField(max_length=200)
-    models.ForeignKey(Promotion, on_delete=models.CASCADE)
+    promotion = models.ForeignKey(Promotion, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nom
@@ -26,8 +26,8 @@ class TypePole(models.Model):
 
 class Pole(models.Model):
     nom = models.CharField(max_length=200)
-    models.ForeignKey(Parcours, on_delete=models.CASCADE)
-    models.ForeignKey(TypePole, on_delete=models.CASCADE)
+    parcours = models.ForeignKey(Parcours, on_delete=models.CASCADE)
+    typePole = models.ForeignKey(TypePole, on_delete=models.CASCADE)
     nombre_options = models.IntegerField(default=0)
 
     def __str__(self):
@@ -45,7 +45,7 @@ class UE(models.Model):
     code_apoge = models.CharField(max_length=200)
     nombre_groupe = models.IntegerField(default=0)
     nombre_heures = models.IntegerField(default=0)
-    models.ForeignKey(Semestre, on_delete=models.CASCADE)
+    semestre = models.ForeignKey(Semestre, on_delete=models.CASCADE)
     poles = models.ManyToManyField("Pole", through="UE_par_Pole")
 
     def __str__(self):
@@ -67,7 +67,7 @@ class Statut(models.Model):
 
 class Professeur(models.Model):
     nombre_heures = models.IntegerField(default=0)
-    models.ForeignKey(Statut, on_delete=models.CASCADE)
+    statut = models.ForeignKey(Statut, on_delete=models.CASCADE)
     utilisateur = models.OneToOneField(User, on_delete=models.CASCADE)
     ues = models.ManyToManyField("UE", through="Professeur_par_UE")
 
@@ -85,7 +85,7 @@ class Professeur_par_UE(models.Model):
         return self.ue.nom + " " + self.professeur.nom + " " + self.professeur.prenom
 
 class AnneeCourante(models.Model):
-    models.ForeignKey(Parcours, on_delete=models.CASCADE)
+    parcours = models.ForeignKey(Parcours, on_delete=models.CASCADE)
     nom = models.CharField(max_length=200)
     dateDebutSemestre1 = models.DateTimeField('date début semestre 1')
     dateDebutSemestre2 = models.DateTimeField('date début semestre 2')
@@ -125,8 +125,8 @@ class Etudiant_par_UE(models.Model):
         return self.ue.nom + " " + self.etudiant.nom + " " + self.etudiant.prenom
 
 class Absence(models.Model):
-    models.ForeignKey(UE, on_delete=models.CASCADE)
-    models.ForeignKey(Etudiant, on_delete=models.CASCADE)
+    ue = models.ForeignKey(UE, on_delete=models.CASCADE)
+    etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE)
     date_heure = models.DateTimeField('date et heure')
     justifiee = models.BooleanField(default="False")
 
