@@ -1,13 +1,13 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours
+from .models import Etudiant, Professeur, Parcours, Statut
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
-from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm
+from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .optionnellesHelpers import getGroupTemplate
@@ -43,6 +43,63 @@ def admin_ValidationInscription(request):
     return render(request, 'optionnelles/validation_inscription_admin.html', context)
 
 @login_required
+def admin_ValidationInscriptionDetails(request, num_etu):
+    etu = Etudiant.objects.get(numero_etudiant = num_etu)
+    form = ValidationUserByAdminForm(initial={
+        'nom': etu.utilisateur.last_name,
+        'prenom': etu.utilisateur.first_name,
+        'numero_etudiant': etu.numero_etudiant,
+        'telephone': etu.telephone,
+        'parcours': etu.parcours.first(),
+        'ajac': etu.ajac,
+        'redoublant': etu.redoublant,
+        'email': etu.utilisateur.email
+        })
+    context = {
+        'etudiant': etu,
+        'template_group': getGroupTemplate(request.user),
+        'form' : form
+    }
+    return render(request, 'optionnelles/validation_inscription_admin_detail.html', context)
+
+@login_required
+def admin_ValidationInscriptionEnd(request, num_etu):
+    etu = Etudiant.objects.get(numero_etudiant = num_etu)
+    if request.method == 'POST':
+        form = ValidationUserByAdminForm(request.POST)
+        if request.POST.get("accept"):
+            if form.is_valid():
+                data = form.cleaned_data
+                if etu.numero_etudiant != data['numero_etudiant']:
+                    etu.numero_etudiant = data['numero_etudiant']
+                if etu.ajac != data['ajac']:
+                    etu.ajac = data['ajac']
+                if etu.redoublant != data['redoublant']:
+                    etu.redoublant = data['redoublant']
+                if etu.parcours != data['parcours']:
+                    etu.parcours.through.objects.all().delete()
+                    etu.parcours.add(data['parcours'])
+                        
+                if etu.telephone != data['telephone']:
+                    etu.telephone = data['telephone']
+                etu.save()
+
+                etu.utilisateur.first_name = data['prenom']
+                etu.utilisateur.last_name = data['nom']
+                etu.utilisateur.email = data['email']
+                etu.utilisateur.is_active = True
+                etu.utilisateur.save()
+
+                messages.success(request, 'Utilisateur validé')
+                return HttpResponseRedirect('/options/validation_inscription/')
+            else:
+                return HttpResponseRedirect('/options/validation_inscription/') 
+        else:
+            Etudiant.objects.get(numero_etudiant = num_etu).delete()
+            return HttpResponseRedirect('/options/validation_inscription/') 
+    
+
+@login_required
 def admin_InscriptionProfesseur(request):
     user_list = User.objects.all()
     professeur_list = Professeur.objects.all()
@@ -62,14 +119,16 @@ def admin_InscriptionProfesseur(request):
             djangoUser.last_name = username=data['nom']
             djangoUser.is_active = "True"
             djangoUser.save()
-            professeurUser = Professeur(nombre_heures=data['nombre_heures'])
+            professeurUser = Professeur(nombre_heures=data['nombre_heures'], statut=data['statut'])
             professeurUser.utilisateur = djangoUser
+            #professeurUser.statut.add(data['statut'])
             professeurUser.save()
+
             messages.success(request, 'Le professeur a été ajouté')
             return HttpResponseRedirect('/options/')
         else:
             form.add_error(None,
-                    "Les identifiants de connexion sont incorrectes "
+                "Les identifiants de connexion sont incorrectes "
                 )
     else:
         form = InscriptionProfesseurForm()
