@@ -119,7 +119,7 @@ def admin_InscriptionProfesseur(request):
             djangoUser.last_name = username=data['nom']
             djangoUser.is_active = "True"
             djangoUser.save()
-            professeurUser = Professeur(nombre_heures=data['nombre_heures'], statut=data['statut'])
+            professeurUser = Professeur( statut=data['statut'])
             professeurUser.utilisateur = djangoUser
             #professeurUser.statut.add(data['statut'])
             professeurUser.save()

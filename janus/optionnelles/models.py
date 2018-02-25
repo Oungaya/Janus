@@ -61,12 +61,12 @@ class UE_par_Pole(models.Model):
 
 class Statut(models.Model):
     nom = models.CharField(max_length=200)
+    nombre_heures = models.IntegerField(default=0)
 
     def __str__(self):
         return self.nom
 
 class Professeur(models.Model):
-    nombre_heures = models.IntegerField(default=0)
     statut = models.ForeignKey(Statut, on_delete=models.CASCADE)
     utilisateur = models.OneToOneField(User, on_delete=models.CASCADE)
     ues = models.ManyToManyField("UE", through="Professeur_par_UE")
