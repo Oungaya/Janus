@@ -104,13 +104,13 @@ def main():
     INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Etude de cas thématique\', \'PRO_03\', \'0\', \'0\', \'30\', \'3\');\
     INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Projet professionnel\', \'PRO_04\', \'0\', \'0\', \'0\', \'3\');\
     INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Outils pour la Business intelligence\', \'ISI_18\', \'0\', \'8\', \'22\', \'2\');\
-    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Outils pour les systèmes décisionnels en entreprise\', \'INFOR_16\', \'0\', \'8\', \'22\', \'1\');\
-    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Aide à la décision avancée\', \'INFOR_17\', \'0\', \'8\', \'22\', \'2\');\
-    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Architecture des SI 2\', \'INFOR_18\', \'0\', \'0\', \'30\', \'1\');\
-    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Modélis. des pb en management et mkg\', \'INFOR_27\', \'0\', \'8\', \'22\', \'1\');\
-    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Recherche heuristique\', \'INFOR_29\', \'0\', \'8\', \'22\', \'2\');\
-    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'IA\', \'INFOR_23\', \'0\', \'8\', \'22\', \'1\');\
-    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Web x.0\', \'INFOR_32\', \'0\', \'8\', \'22\', \'1\');\
+    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Outils pour les systèmes décisionnels en entreprise\', \'INFO_16\', \'0\', \'8\', \'22\', \'1\');\
+    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Aide à la décision avancée\', \'INFO_17\', \'0\', \'8\', \'22\', \'2\');\
+    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Architecture des SI 2\', \'INFO_18\', \'0\', \'0\', \'30\', \'1\');\
+    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Modélis. des pb en management et mkg\', \'INFO_27\', \'0\', \'8\', \'22\', \'1\');\
+    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Recherche heuristique\', \'INFO_29\', \'0\', \'8\', \'22\', \'2\');\
+    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'IA\', \'INFO_23\', \'0\', \'8\', \'22\', \'1\');\
+    INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Web x.0\', \'INFO_32\', \'0\', \'8\', \'22\', \'1\');\
     INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Data Science\', \'TRANS_09\', \'0\', \'8\', \'22\', \'2\');\
     INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Big data\', \'INFO_20\', \'0\', \'8\', \'22\', \'1\');\
     INSERT INTO optionnelles_ue(nom, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Internet Of Things (IOT)\', \'INFO_26\', \'0\', \'0\', \'30\', \'2\');\
