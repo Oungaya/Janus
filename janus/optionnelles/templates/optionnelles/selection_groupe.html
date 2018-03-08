@@ -1,5 +1,5 @@
 {% extends template_group %}
-
+{% load options_extras %}
 {% block content %}
 
     <div class="mdl-cell mdl-cell--3-col card-chip-etudiant">
@@ -7,12 +7,14 @@
             {% if user_list %}
             <ul class="liste_etudiant droppable">
                 {% for e in user_list %}
-                <li class="draggable">
-                <span class="mdl-chip mdl-chip--contact  ">
-                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">{{ e.utilisateur.first_name|slice:"1" }}{{ e.utilisateur.last_name|slice:"1" }}</span>
-                    <span class="mdl-chip__text">{{ e.utilisateur.first_name }} {{ e.utilisateur.last_name }} </span>
-                </span>
-            </li>
+                {% if e|get_UE:ue.id|has_no_group:0 %}
+                                <li class="draggable">
+                                    <span class="mdl-chip mdl-chip--contact"  data-id-etudiant="{{e.id}}" data-groupe="0" data-id-ue="{{ue.id}}">
+                                        <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">{{ e.utilisateur.first_name|slice:"1" }}{{ e.utilisateur.last_name|slice:"1" }}</span>
+                                        <span class="mdl-chip__text">{{ e.utilisateur.first_name }} {{ e.utilisateur.last_name }} </span>
+                                    </span>
+                                </li>
+                   {% endif %}
                 {% endfor %}
             </ul>
             {% else %}
@@ -21,36 +23,65 @@
 
     </div>
     <div class="mdl-cell mdl-cell--9-col card-chip-etudiant">
+            {% if col != 0  %}
             <div class="mdl-grid">
-        {% for i in range %}
-        <div class="mdl-cell mdl-cell--{{col}}-col card-chip-etudiant">
-            <h5>Groupe {{i|add:1}}</h5>
-            <ul class="liste_groupe droppable">
-
-            </ul>
-        </div>
-        {% endfor %}
-    </div>
+                {% for i in range %}
+                <div class="mdl-cell mdl-cell--{{col}}-col card-chip-etudiant" data-id-groupe="{{i|add:1}}" >
+                    <h5>Groupe {{i|add:1}}</h5>
+                    <ul class="liste_groupe droppable">
+                            {% for e in user_list %}
+                            {% if e|get_UE:ue.id|has_group:i %}
+                                            <li class="draggable">
+                                                <span class="mdl-chip mdl-chip--contact"  data-id-etudiant="{{e.id}}" data-groupe="0" data-id-ue="{{ue.id}}">
+                                                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">{{ e.utilisateur.first_name|slice:"1" }}{{ e.utilisateur.last_name|slice:"1" }}</span>
+                                                    <span class="mdl-chip__text">{{ e.utilisateur.first_name }} {{ e.utilisateur.last_name }} </span>
+                                                </span>
+                                            </li>
+                               {% endif %}
+                            {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+    {% else %}
+        <h5>Cette UE ne contient pas de groupes.</h5>
+    {% endif %}
     </div>
 
   {% endblock %}
 
   {% block script %}
   <script>
+      var id_etudiant;
+      var id_ue;
+      var id_new_groupe;
         $( function() {
           $( ".droppable").sortable({
             connectWith: ".droppable",
             revert: true
           });
           $( ".draggable" ).draggable({
-            connectToSortable: ".droppable"
+            connectToSortable: ".droppable",
+            start: function() {
+                id_etudiant = $(this).find(".mdl-chip--contact").attr("data-id-etudiant");
+                id_ue = $(this).find(".mdl-chip--contact").attr("data-id-ue");
+            },
+            drag: function() {
+            },
+            stop: function() {   
+        }
           });
           //$( "ul, li" ).disableSelection();
 
           $( ".droppable" ).droppable({
       accept: ".draggable",
       drop: function( event, ui ) {
-        //fonction JSON
+       
+        id_new_groupe = $(this).parents(".card-chip-etudiant").attr("data-id-groupe");
+        
+        //ici, nous récupèrons les trois variables et nous les envoyons en fonction AJAX pour mettre a jour la base 
+        
+
       }
     });
         } );

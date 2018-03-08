@@ -44,9 +44,12 @@ def admin_choixUeGroupe(request):
 
 @login_required
 def admin_selectionGroupe(request, id_ue):
-    user_list = Etudiant.objects.filter(utilisateur__is_active=True)
     ue = UE.objects.get(pk=id_ue)
-    col = int(12/ue.nombre_groupes)
+    user_list = Etudiant.objects.filter(utilisateur__is_active=True, ues__id=id_ue)
+    if ue.nombre_groupes != 0:
+        col = int(12/ue.nombre_groupes)
+    else:
+        col = 0
     context = {
         'user_list': user_list,
         'ue': ue,
