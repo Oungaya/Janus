@@ -368,3 +368,8 @@ border-bottom: none;
 .inscription-professeur-card form{
   text-align: center !important;
 }
+
+.card-chip-etudiant{
+  padding:15px;
+  background: white;
+}

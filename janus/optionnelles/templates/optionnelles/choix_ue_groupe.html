@@ -1,0 +1,45 @@
+{% extends template_group %}
+
+{% block content %}
+<div class="mdl-shadow--2dp micro-card-menu ">
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet">
+                    <i class="material-icons">view_comfy</i>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet">
+                    <i class="material-icons">format_align_justify</i>
+            </div>
+        </div>  
+        
+</div>
+{% if liste_ue %}
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Nom</th>
+                <th>Nombres de groupe</th>
+                <th>Pôles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in liste_ue %}
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">
+                        <a href="/options/selection_groupe/{{ e.id }}/"> {{ e.nom }} </a>
+                    </td>
+                    <td> {{ e.nombre_groupes }} </td>
+                    <td> 
+                        {% for p in e.poles.all %}
+                        {{ p.nom }} 
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours, Statut
+from .models import Etudiant, Professeur, Parcours, Statut, UE
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -32,6 +32,24 @@ def index(request):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/index.html', context)
+
+@login_required
+def admin_choixUeGroupe(request):
+    liste_ue = UE.objects.all()
+    context = {
+        'liste_ue': liste_ue,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/choix_ue_groupe.html', context)
+
+@login_required
+def admin_selectionGroupe(request, id_ue):
+    user_list = Etudiant.objects.filter(utilisateur__is_active=True)
+    context = {
+        'user_list': user_list,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/selection_groupe.html', context)
 
 @login_required
 def admin_ValidationInscription(request):

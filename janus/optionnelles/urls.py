@@ -19,6 +19,8 @@ urlpatterns = [
     path('inscription_professeur/', views.admin_InscriptionProfesseur, name='admin_InscriptionProfesseur'),
     path('validation_inscription/<num_etu>/user/', views.admin_ValidationInscriptionDetails, name='admin_ValidationInscriptionDetails'),
     path('validation_inscription/<num_etu>/end/', views.admin_ValidationInscriptionEnd, name='admin_ValidationInscriptionEnd'),
+    path('selection_groupe/<int:id_ue>/', views.admin_selectionGroupe, name='admin_selectionGroupe'),
+    path('choix_ue_groupe/', views.admin_choixUeGroupe, name='admin_choixUeGroupe'),
     #gestion du mot de passe oublié
     url(r'^password_reset/$', auth_views.password_reset,{'email_template_name':'optionnelles/registration/password_reset_email.html',
                                                     'template_name':'optionnelles/registration/password_reset_form.html',

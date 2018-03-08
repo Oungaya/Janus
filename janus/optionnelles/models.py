@@ -50,7 +50,7 @@ class UE(models.Model):
     poles = models.ManyToManyField("Pole", through="UE_par_Pole")
 
     def __str__(self):
-        return self.prenom + " " + self.nom
+        return self.nom
 
 class UE_par_Pole(models.Model):
     pole = models.ForeignKey(Pole, on_delete=models.CASCADE)
@@ -123,7 +123,7 @@ class Etudiant_par_UE(models.Model):
     groupe = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.ue.nom + " " + self.etudiant.nom + " " + self.etudiant.prenom
+        return self.ue.nom + " " + self.etudiant.utilisateur.first_name + " " + self.etudiant.utilisateur.last_name
 
 class Absence(models.Model):
     ue = models.ForeignKey(UE, on_delete=models.CASCADE)

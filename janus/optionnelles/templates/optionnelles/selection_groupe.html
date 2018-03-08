@@ -1,0 +1,41 @@
+{% extends template_group %}
+
+{% block content %}
+
+    <div class="mdl-cell mdl-cell--3-col card-chip-etudiant">
+        <h5>Liste des étudiants :</h5>
+            {% if user_list %}
+                {% for e in user_list %}
+                <span class="mdl-chip mdl-chip--contact ondragstart='drag(event)' draggable='true' ">
+                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">{{ e.utilisateur.first_name|slice:"1" }}{{ e.utilisateur.last_name|slice:"1" }}</span>
+                    <span class="mdl-chip__text">{{ e.utilisateur.first_name }} {{ e.utilisateur.last_name }} </span>
+                </span>
+                {% endfor %}
+            {% else %}
+                <p>Pas d'étudiants disponible</p>
+            {% endif %}
+
+    </div>
+    <div class="mdl-cell mdl-cell--9-col card-chip-etudiant"></div>
+
+  {% endblock %}
+
+  {% block script %}
+
+  <script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+    
+    function drag(ev) {
+        ev.dataTransfer.setData("Text", ev.target.id);
+    }
+    
+    function drop(ev) {
+        var data = ev.dataTransfer.getData("Text");
+        ev.target.appendChild(document.getElementById(data));
+        ev.preventDefault();
+    }
+    </script>
+
+  {% endblock %}
