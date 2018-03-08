@@ -19,7 +19,8 @@ def main():
     INSERT INTO optionnelles_semestre(nom, diminutif) VALUES (\'Semestre 1\', \'S1\');\
     INSERT INTO optionnelles_semestre(nom, diminutif) VALUES (\'Semestre 2\', \'S2\');\
     INSERT INTO optionnelles_semestre(nom, diminutif) VALUES (\'Annuel\', \'AN\');\
-    INSERT INTO optionnelles_parcours(nom, promotion_id) VALUES (\'M1 MIAGE\', \'1\');\
+    INSERT INTO optionnelles_parcours(nom, promotion_id) VALUES (\'M1 MIAGE Stage\', \'1\');\
+    INSERT INTO optionnelles_parcours(nom, promotion_id) VALUES (\'M1 MIAGE Alternance\', \'1\');\
     INSERT INTO optionnelles_parcours(nom, promotion_id) VALUES (\'M2 OSIE\', \'2\');\
     INSERT INTO optionnelles_parcours(nom, promotion_id) VALUES (\'M2 SID\', \'2\');\
     INSERT INTO optionnelles_parcours(nom, promotion_id) VALUES (\'M2 SIO\', \'2\');\

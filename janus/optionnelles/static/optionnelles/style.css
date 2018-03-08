@@ -384,4 +384,25 @@ border-bottom: none;
   background-color: white;
   border: 1px solid #ccc;
   padding:5px;
+  border-radius:3px;
+}
+
+.card-ue{
+  background-color: #26a69a;
+  padding:10px;
+  color:white;
+}
+
+.control-hide-nom{
+  display: none;
+}
+.control-hide-groupe{
+  display: none;
+}
+.control-hide-pole{
+  display: none;
+}
+
+.js-sorter-desc{
+  cursor: pointer;
 }

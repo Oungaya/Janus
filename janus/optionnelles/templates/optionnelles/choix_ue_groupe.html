@@ -13,13 +13,45 @@
         
 </div>
 {% if liste_ue %}
-    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <table class="js-dynamitable mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="table_ue">
         <thead>
             <tr>
-                <th class="mdl-data-table__cell--non-numeric">Nom</th>
-                <th>Nombres de groupe</th>
-                <th>Pôles</th>
+                <th class="mdl-data-table__cell--non-numeric">
+                    <i class="js-sorter-desc material-icons">sort</i>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="form-control mdl-textfield__input control-show-nom" type="text" id="nom">
+                        <label class="mdl-textfield__label" for="nom">Nom</label>
+                      </div>
+                </th>
+                <th>
+                    <i class="js-sorter-desc material-icons">sort</i>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class=" form-control mdl-textfield__input control-show-groupe" type="text" id="groupe">
+                            <label class="mdl-textfield__label" for="groupe">Nombres de groupe</label>
+                    </div>
+                </th>
+                <th>
+                    <i class="js-sorter-desc material-icons">sort</i>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class=" form-control mdl-textfield__input control-show-pole" type="text" id="pole">
+                            <label class="mdl-textfield__label" for="pole">Pôles</label>
+                    </div>
+                </th>
+
             </tr>
+            <tr>
+                    <th>
+                            <input class="js-filter  form-control control-hide-nom" type="text" value="">
+                    </th>
+                    <th>
+                            <input class="js-filter  form-control control-hide-groupe" type="text" value="">
+                    </th>
+                    <th>
+                            <input class="js-filter  form-control control-hide-pole" type="text" value="">
+                    </th>
+                    
+                </tr>
+
         </thead>
         <tbody>
             {% for e in liste_ue %}
@@ -42,4 +74,25 @@
     <p>No polls are available.</p>
 {% endif %}
 
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        $(function(){
+
+            $(".control-show-nom").on('change keyup paste', function () {
+                $(".control-hide-nom").val($(".control-show-nom").val());
+                $(".control-hide-nom").change();
+            });
+            $(".control-show-groupe").on('change keyup paste', function () {
+                $(".control-hide-groupe").val($(".control-show-groupe").val());
+                $(".control-hide-groupe").change();
+            });
+            $(".control-show-pole").on('change keyup paste', function () {
+                $(".control-hide-pole").val($(".control-show-pole").val());
+                $(".control-hide-pole").change();
+            });
+        });
+    </script>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends template_group %}
 {% load options_extras %}
 {% block content %}
-
+    <div class='mdl-cell mdl-cell--12-col card-ue'><h5>{{ue.nom}}</h5></div>
     <div class="mdl-cell mdl-cell--3-col card-chip-etudiant">
         <h5>Liste des étudiants</h5>
             {% if user_list %}
