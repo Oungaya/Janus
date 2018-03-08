@@ -3,39 +3,56 @@
 {% block content %}
 
     <div class="mdl-cell mdl-cell--3-col card-chip-etudiant">
-        <h5>Liste des étudiants :</h5>
+        <h5>Liste des étudiants</h5>
             {% if user_list %}
+            <ul class="liste_etudiant droppable">
                 {% for e in user_list %}
-                <span class="mdl-chip mdl-chip--contact ondragstart='drag(event)' draggable='true' ">
+                <li class="draggable">
+                <span class="mdl-chip mdl-chip--contact  ">
                     <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">{{ e.utilisateur.first_name|slice:"1" }}{{ e.utilisateur.last_name|slice:"1" }}</span>
                     <span class="mdl-chip__text">{{ e.utilisateur.first_name }} {{ e.utilisateur.last_name }} </span>
                 </span>
+            </li>
                 {% endfor %}
+            </ul>
             {% else %}
                 <p>Pas d'étudiants disponible</p>
             {% endif %}
 
     </div>
-    <div class="mdl-cell mdl-cell--9-col card-chip-etudiant"></div>
+    <div class="mdl-cell mdl-cell--9-col card-chip-etudiant">
+            <div class="mdl-grid">
+        {% for i in range %}
+        <div class="mdl-cell mdl-cell--{{col}}-col card-chip-etudiant">
+            <h5>Groupe {{i|add:1}}</h5>
+            <ul class="liste_groupe droppable">
+
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
 
   {% endblock %}
 
   {% block script %}
-
   <script>
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
-    
-    function drag(ev) {
-        ev.dataTransfer.setData("Text", ev.target.id);
-    }
-    
-    function drop(ev) {
-        var data = ev.dataTransfer.getData("Text");
-        ev.target.appendChild(document.getElementById(data));
-        ev.preventDefault();
-    }
-    </script>
+        $( function() {
+          $( ".droppable").sortable({
+            connectWith: ".droppable",
+            revert: true
+          });
+          $( ".draggable" ).draggable({
+            connectToSortable: ".droppable"
+          });
+          //$( "ul, li" ).disableSelection();
 
+          $( ".droppable" ).droppable({
+      accept: ".draggable",
+      drop: function( event, ui ) {
+        //fonction JSON
+      }
+    });
+        } );
+   </script>
   {% endblock %}

@@ -45,8 +45,13 @@ def admin_choixUeGroupe(request):
 @login_required
 def admin_selectionGroupe(request, id_ue):
     user_list = Etudiant.objects.filter(utilisateur__is_active=True)
+    ue = UE.objects.get(pk=id_ue)
+    col = int(12/ue.nombre_groupes)
     context = {
         'user_list': user_list,
+        'ue': ue,
+        'range': range(ue.nombre_groupes),
+        'col': col,
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/selection_groupe.html', context)
