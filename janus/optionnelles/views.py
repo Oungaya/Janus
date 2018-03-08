@@ -1,6 +1,6 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours, Statut, UE
+from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -58,6 +58,24 @@ def admin_selectionGroupe(request, id_ue):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/selection_groupe.html', context)
+
+def change_groupe(request):
+    etudiant_id = request.GET.get('etudiant', None)
+    ue_id = request.GET.get('ue', None)
+    groupe = request.GET.get('groupe', None)
+
+    #set les groupes aux etudiants 
+    e = Etudiant.objects.get(pk=etudiant_id)
+    ue = UE.objects.get(pk=ue_id)
+
+    EtudiantParUE = Etudiant_par_UE.objects.get(etudiant__id=e.id,ue__id=ue.id)
+    EtudiantParUE.groupe = groupe
+    EtudiantParUE.save()
+
+    data = {
+        'is_taken': 1
+    }
+    return JsonResponse(data)
 
 @login_required
 def admin_ValidationInscription(request):

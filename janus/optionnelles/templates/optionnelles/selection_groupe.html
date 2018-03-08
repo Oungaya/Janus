@@ -80,10 +80,28 @@
         id_new_groupe = $(this).parents(".card-chip-etudiant").attr("data-id-groupe");
         
         //ici, nous récupèrons les trois variables et nous les envoyons en fonction AJAX pour mettre a jour la base 
-        
+        $.ajax({
+            url: '/options/ajax/change_groupe/',
+            data: {
+            'ue': id_ue,
+            'groupe': id_new_groupe,
+            'etudiant': id_etudiant
+            },
+            dataType: 'json',
+            success: function (data) {
+                
+            },
+            error: function(jqXHR, exception){
+                
+            }
+        });
 
       }
     });
-        } );
+
+       
+    } );
+
+        
    </script>
   {% endblock %}

@@ -30,7 +30,7 @@
                     <td> {{ e.nombre_groupes }} </td>
                     <td> 
                         {% for p in e.poles.all %}
-                        {{ p.nom }} 
+                        {{ p.parcours.nom }} / {{ p.nom }} 
                         {% endfor %}
                     </td>
                 </tr>
