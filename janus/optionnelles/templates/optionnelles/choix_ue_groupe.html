@@ -12,7 +12,9 @@
         </div>  
         
 </div>
+<div class="mdl-cell mdl-cell--12-col">
 {% if liste_ue %}
+
     <table class="js-dynamitable mdl-data-table mdl-js-data-table mdl-shadow--2dp" id="table_ue">
         <thead>
             <tr>
@@ -39,7 +41,7 @@
                 </th>
 
             </tr>
-            <tr>
+            <tr class="hide-control">
                     <th>
                             <input class="js-filter  form-control control-hide-nom" type="text" value="">
                     </th>
@@ -71,9 +73,12 @@
     </table>
     
 {% else %}
-    <p>No polls are available.</p>
+<div class="mdl-cell mdl-cell--12-col card-ue">
+        <h5>Aucune UE n'est disponible.</h5>
+</div>
+    
 {% endif %}
-
+</div>
 {% endblock %}
 
 

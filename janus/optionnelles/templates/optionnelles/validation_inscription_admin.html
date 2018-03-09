@@ -13,15 +13,54 @@
         </div>  
         
 </div>
+<div class="mdl-cell mdl-cell--12-col">
 {% if liste_etudiant %}
-    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-        <thead>
+    <table class="js-dynamitable mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
             <tr>
-                <th class="mdl-data-table__cell--non-numeric">Nom</th>
-                <th>Prenom</th>
-                <th>Identifiant</th>
-                <th>Parcours</th>
-            </tr>
+                    <th class="mdl-data-table__cell--non-numeric">
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="form-control mdl-textfield__input control-show-nom" type="text" id="nom">
+                            <label class="mdl-textfield__label" for="nom">Nom</label>
+                          </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-prenom" type="text" id="prenom">
+                                <label class="mdl-textfield__label" for="prenom">Prénom</label>
+                        </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-num" type="text" id="num">
+                                <label class="mdl-textfield__label" for="num">Numéro étudiant</label>
+                        </div>
+                    </th>
+                    <th>
+                            <i class="js-sorter-desc material-icons">sort</i>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class=" form-control mdl-textfield__input control-show-parcours" type="text" id="parcours">
+                                    <label class="mdl-textfield__label" for="parcours">Parcours</label>
+                            </div>
+                        </th>
+                </tr>
+                <tr class="hide-control">
+                        <th>
+                                <input class="js-filter  form-control hide-control control-hide-nom" type="text" value="">
+                        </th>
+                        <th>
+                                <input class="js-filter  form-control hide-control control-hide-prenom" type="text" value="">
+                        </th>
+                        <th>
+                                <input class="js-filter  form-control hide-control control-hide-num" type="text" value="">
+                        </th>
+                        <th>
+                                <input class="js-filter  form-control hide-control control-hide-parcours" type="text" value="">
+                        </th>
+                    </tr>
         </thead>
         <tbody>
             {% for e in liste_etudiant %}
@@ -42,7 +81,33 @@
     </table>
     
 {% else %}
-    <p>No polls are available.</p>
+    <div class="mdl-cell mdl-cell--12-col  card-ue">
+        <h5>Aucun étudiant n'est en phase de validation</h5>
+    </div>>
 {% endif %}
+</div>
+{% endblock %}
 
+{% block script %}
+    <script>
+        $(function(){
+
+            $(".control-show-nom").on('change keyup paste', function () {
+                $(".control-hide-nom").val($(".control-show-nom").val());
+                $(".control-hide-nom").change();
+            });
+            $(".control-show-prenom").on('change keyup paste', function () {
+                $(".control-hide-prenom").val($(".control-show-prenom").val());
+                $(".control-hide-prenom").change();
+            });
+            $(".control-show-num").on('change keyup paste', function () {
+                $(".control-hide-num").val($(".control-show-num").val());
+                $(".control-hide-num").change();
+            });
+            $(".control-show-parcours").on('change keyup paste', function () {
+                $(".control-hide-parcours").val($(".control-show-parcours").val());
+                $(".control-hide-parcours").change();
+            });
+        });
+    </script>
 {% endblock %}

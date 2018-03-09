@@ -21,6 +21,7 @@ urlpatterns = [
     path('validation_inscription/<num_etu>/end/', views.admin_ValidationInscriptionEnd, name='admin_ValidationInscriptionEnd'),
     path('selection_groupe/<int:id_ue>/', views.admin_selectionGroupe, name='admin_selectionGroupe'),
     url(r'^ajax/change_groupe/$', views.change_groupe, name='change_groupe'),
+    url(r'^ajax/notification_inscription/$', views.notification_inscription, name='notification_inscription'),
     path('choix_ue_groupe/', views.admin_choixUeGroupe, name='admin_choixUeGroupe'),
     #gestion du mot de passe oublié
     url(r'^password_reset/$', auth_views.password_reset,{'email_template_name':'optionnelles/registration/password_reset_email.html',

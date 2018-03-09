@@ -363,6 +363,7 @@ border-bottom: none;
   bottom: 30px;
   right:30px;
   background: #fff;
+  display: none;
 }
 
 .inscription-professeur-card form{
@@ -405,4 +406,20 @@ border-bottom: none;
 
 .js-sorter-desc{
   cursor: pointer;
+}
+.js-sorter-desc:hover{
+  color:#26a69a;
+}
+.hide-control{
+  display: none !important;
+}
+.js-dynamitable{
+  width:100%;
+}
+.js-dynamitable tr td{
+  text-align: left;
+}
+
+.js-dynamitable .mdl-textfield{
+  width:auto;
 }

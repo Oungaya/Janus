@@ -77,6 +77,15 @@ def change_groupe(request):
     }
     return JsonResponse(data)
 
+def notification_inscription(request):
+
+    nombre_inscription = Etudiant.objects.filter(utilisateur__is_active=False).count()
+
+    data = {
+        'nombre_notification': nombre_inscription
+    }
+    return JsonResponse(data)
+
 @login_required
 def admin_ValidationInscription(request):
     liste_etudiant = Etudiant.objects.filter(utilisateur__is_active=False)
