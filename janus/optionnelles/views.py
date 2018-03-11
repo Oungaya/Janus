@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
-from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm
+from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm, InscriptionAdminForm
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .optionnellesHelpers import getGroupTemplate
@@ -190,12 +190,44 @@ def admin_InscriptionProfesseur(request):
             return HttpResponseRedirect('/options/liste_professeur')
         else:
             form.add_error(None,
-                "Les identifiants de connexion sont incorrectes "
+                "L'inscription a échoué"
                 )
     else:
         form = InscriptionProfesseurForm()
 
     return render(request, 'optionnelles/inscription_professeur_admin.html', {'form': form,'user_list': user_list,'template_group': getGroupTemplate(request.user)})
+
+@login_required
+def admin_InscriptionAdmin(request):
+    liste_admin = User.objects.filter(is_staff=True)    
+    context = {
+        'liste_admin': liste_admin,
+        'template_group': getGroupTemplate(request.user)
+    }
+
+    if request.method == 'POST':
+        form = InscriptionAdminForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            djangoUser = User.objects.create_user(username=data['prenom'][0].lower()+data['nom'].lower(), email=data['email'], password=generer_mdp())
+            my_group = Group.objects.get(name='Professeur') 
+            if data['isProf'] == True:
+                my_group.user_set.add(djangoUser)
+            djangoUser.first_name = username=data['prenom']
+            djangoUser.last_name = username=data['nom']
+            djangoUser.is_staff = "True"
+            djangoUser.save()
+
+            messages.success(request, 'L\'administrateur a été ajouté')
+            return HttpResponseRedirect('/options/liste_admin')
+        else:
+            form.add_error(None,
+                "L'inscription a échoué"
+                )
+    else:
+        form = InscriptionProfesseurForm()
+
+    return render(request, 'optionnelles/inscription_admin.html', {'form': form,'liste_admin': liste_admin,'template_group': getGroupTemplate(request.user)})
 
 @login_required
 def admin_ListeProfesseur(request):
@@ -205,6 +237,15 @@ def admin_ListeProfesseur(request):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/professeur_liste_admin.html', context)
+
+@login_required
+def admin_ListeAdmin(request):
+    liste_admin = User.objects.filter(is_staff=True)
+    context = {
+        'liste_admin': liste_admin,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/liste_admin.html', context)
 
 @login_required
 def admin_ProfesseurDetails(request, id_prof):
