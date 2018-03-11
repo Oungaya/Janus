@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
-from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm, InscriptionAdminForm
+from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm, InscriptionAdminForm, ModificationAdminForm
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .optionnellesHelpers import getGroupTemplate
@@ -210,9 +210,9 @@ def admin_InscriptionAdmin(request):
         if form.is_valid():
             data = form.cleaned_data
             djangoUser = User.objects.create_user(username=data['prenom'][0].lower()+data['nom'].lower(), email=data['email'], password=generer_mdp())
-            my_group = Group.objects.get(name='Professeur') 
-            if data['isProf'] == True:
-                my_group.user_set.add(djangoUser)
+            #my_group = Group.objects.get(name='Professeur') 
+            #if data['isProf'] == "True":
+            #    my_group.user_set.add(djangoUser)
             djangoUser.first_name = username=data['prenom']
             djangoUser.last_name = username=data['nom']
             djangoUser.is_staff = "True"
@@ -246,6 +246,49 @@ def admin_ListeAdmin(request):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/liste_admin.html', context)
+
+@login_required
+def admin_AdminDetails(request, id_admin):
+    admin = User.objects.filter(is_staff=True).get(pk=id_admin)
+    form = ModificationAdminForm(initial={
+        'nom': admin.last_name,
+        'prenom': admin.first_name,
+        'username': admin.username,
+        #'groupe': admin.groupe.first(),
+        'email': admin.email
+        })
+    context = {
+        'administrateur': admin,
+        'template_group': getGroupTemplate(request.user),
+        'form' : form
+    }
+    return render(request, 'optionnelles/admin_details.html', context)
+
+@login_required
+def admin_AdminEnd(request, id_admin):
+    admin = User.objects.filter(is_staff=True).get(pk=id_admin)
+    if request.method == 'POST':
+        form = ModificationAdminForm(request.POST)
+        if request.POST.get("modif"):
+            if form.is_valid():
+                data = form.cleaned_data
+                #if admin.groupe != data['groupe']:
+                #    admin.groupe.through.objects.all().delete()
+                #    admin.groupe.add(data['groupe'])
+                #admin.save()
+
+                admin.email = data['email']
+                admin.username = data['username']
+                admin.first_name = data['prenom']                                        
+                admin.last_name = data['nom']
+                admin.save()
+
+                messages.success(request, 'Admin modifié')
+                return HttpResponseRedirect('/options/liste_admin/')
+            else:
+                form.add_error(None,"La modification a échoué")
+        else:
+            return HttpResponseRedirect('/options/liste_admin/')
 
 @login_required
 def admin_ProfesseurDetails(request, id_prof):
