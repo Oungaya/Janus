@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
-from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm
+from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .optionnellesHelpers import getGroupTemplate
@@ -187,6 +187,59 @@ def admin_InscriptionProfesseur(request):
         form = InscriptionProfesseurForm()
 
     return render(request, 'optionnelles/inscription_professeur_admin.html', {'form': form,'user_list': user_list,'template_group': getGroupTemplate(request.user)})
+
+@login_required
+def admin_ListeProfesseur(request):
+    liste_professeur = Professeur.objects.all
+    context = {
+        'liste_professeur': liste_professeur,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/professeur_liste_admin.html', context)
+
+@login_required
+def admin_ProfesseurDetails(request, id_prof):
+    prof = Professeur.objects.get(pk=id_prof)
+    form = ModificationProfByAdminForm(initial={
+        'nom': prof.utilisateur.last_name,
+        'prenom': prof.utilisateur.first_name,
+        'username': prof.utilisateur.username,
+        'statut': prof.statut,
+        'email': prof.utilisateur.email
+        })
+    context = {
+        'professeur': prof,
+        'template_group': getGroupTemplate(request.user),
+        'form' : form
+    }
+    return render(request, 'optionnelles/professeur_admin_details.html', context)
+
+@login_required
+def admin_ProfesseurEnd(request, id_prof):
+    prof = Professeur.objects.get(pk=id_prof)
+    if request.method == 'POST':
+        form = ModificationProfByAdminForm(request.POST)
+        if request.POST.get("modif"):
+            if form.is_valid():
+                data = form.cleaned_data
+                if prof.statut != data['statut']:
+                    prof.statut = data['statut']
+                prof.save()
+
+                prof.utilisateur.email = data['email']
+                prof.utilisateur.username = data['username']
+                prof.utilisateur.first_name = data['prenom']                                        
+                prof.utilisateur.last_name = data['nom']
+                prof.utilisateur.save()
+
+                messages.success(request, 'Professeur modifié')
+                return HttpResponseRedirect('/options/liste_professeur/')
+            else:
+                form.add_error(None,"La modification a échoué")
+        else:
+            return HttpResponseRedirect('/options/liste_professeur/')
+        
+
 
 @login_required
 def user_detail(request, user_id):
