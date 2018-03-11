@@ -1,5 +1,6 @@
 from django import template
 from ..models import Etudiant, Etudiant_par_UE
+from django.contrib.auth.models import Group
 
 register = template.Library()
 
@@ -17,3 +18,8 @@ def has_group(UE, args):
 def has_group(UE, args):
     num_groupe = int(args) + 1
     return UE.filter(groupe=num_groupe).exists()
+
+@register.filter(name='is_group') 
+def is_group(user, group_name):
+    group =  Group.objects.get(name=group_name) 
+    return group in user.groups.all() 

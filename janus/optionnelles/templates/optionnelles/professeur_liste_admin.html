@@ -1,0 +1,133 @@
+
+{% extends template_group %}
+
+{% block content %}
+<div class="mdl-cell mdl-cell--12-col">
+    <a href="/options/inscription_professeur/"> 
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored add-button">
+                <i class="material-icons">add</i>
+        </button>
+    </a>
+{% if liste_professeur %}
+    <table class="js-dynamitable mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+            <tr>
+                    <th class="mdl-data-table__cell--non-numeric">
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="form-control mdl-textfield__input control-show-nom" type="text" id="nom">
+                            <label class="mdl-textfield__label" for="nom">Nom</label>
+                          </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-prenom" type="text" id="prenom">
+                                <label class="mdl-textfield__label" for="prenom">Prénom</label>
+                        </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-email" type="text" id="email">
+                                <label class="mdl-textfield__label" for="email">Email</label>
+                        </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-username" type="text" id="username">
+                                <label class="mdl-textfield__label" for="username">Nom d'utilisateur</label>
+                        </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-statut" type="text" id="statut">
+                                <label class="mdl-textfield__label" for="statut">Statut</label>
+                        </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-nb_heures" type="text" id="nb_heures">
+                                <label class="mdl-textfield__label" for="nb_heures">Nombre d'heures</label>
+                        </div>
+                    </th>
+                </tr>
+                <tr class="hide-control">
+                        <th>
+                                <input class="js-filter  form-control hide-control control-hide-nom" type="text" value="">
+                        </th>
+                        <th>
+                                <input class="js-filter  form-control hide-control control-hide-prenom" type="text" value="">
+                        </th>
+                        <th>
+                                <input class="js-filter  form-control hide-control control-hide-email" type="text" value="">
+                        </th>
+                        <th>
+                            <input class="js-filter  form-control hide-control control-hide-username" type="text" value="">
+                        </th>
+                        <th>
+                            <input class="js-filter  form-control hide-control control-hide-statut" type="text" value="">
+                        </th>
+                        <th>
+                            <input class="js-filter  form-control hide-control control-hide-nb_heures" type="text" value="">
+                        </th>
+                    </tr>
+        </thead>
+        <tbody>
+            {% for p in liste_professeur %}
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">
+                        {{ p.utilisateur.last_name }}
+                    </td>
+                    <td> {{ p.utilisateur.first_name }} </td>
+                    <td> {{ p.utilisateur.email }}</td>
+                    <td><a href="/options/modification_professeur/{{ p.id }}/user/">  {{ p.utilisateur.username }} </a></td>
+                    <td> {{ p.statut }}</td>
+                    <td> {{ p.statut.nombre_heures }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+{% else %}
+    <div class="mdl-cell mdl-cell--12-col  card-ue">
+        <h5>Aucun professeur n'est renseigné dans l'application</h5>
+    </div>>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function(){
+
+            $(".control-show-nom").on('change keyup paste', function () {
+                $(".control-hide-nom").val($(".control-show-nom").val());
+                $(".control-hide-nom").change();
+            });
+            $(".control-show-prenom").on('change keyup paste', function () {
+                $(".control-hide-prenom").val($(".control-show-prenom").val());
+                $(".control-hide-prenom").change();
+            });
+            $(".control-show-email").on('change keyup paste', function () {
+                $(".control-hide-email").val($(".control-show-email").val());
+                $(".control-hide-email").change();
+            });
+            $(".control-show-username").on('change keyup paste', function () {
+                $(".control-hide-username").val($(".control-show-username").val());
+                $(".control-hide-username").change();
+            });
+            $(".control-show-statut").on('change keyup paste', function () {
+                $(".control-hide-statut").val($(".control-show-statut").val());
+                $(".control-hide-statut").change();
+            });
+            $(".control-show-nb_heures").on('change keyup paste', function () {
+                $(".control-hide-nb_heures").val($(".control-show-nb_heures").val());
+                $(".control-hide-nb_heures").change();
+            });
+        });
+    </script>
+{% endblock %}

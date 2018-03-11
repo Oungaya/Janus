@@ -1,0 +1,56 @@
+
+{% extends template_group %}
+
+{% block content %}
+{% if administrateur %}
+    <div class="mdl-tabs__panel is-active">
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+            <div class="mdl-cell mdl-cell--8-col mdl-cell--10-col-tablet mdl-cell--12-col-phone">
+                    <div class="inscription-card mdl-card mdl-shadow--2dp inscription-professeur-card">
+                            <div class="mdl-card__title">
+                                    <h2 class="mdl-card__title-text">Informations sur l'admin' :</h2>
+                            </div>
+                        <form action="/options/modification_admin/{{ administrateur.id }}/end/" method="post">
+                            {% csrf_token %}
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                                    {{ form.nom }}
+                                <label class="mdl-textfield__label" for="{{ form.nom.id_for_label }}">Nom</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                                    {{ form.prenom }}
+                                <label class="mdl-textfield__label" for="{{ form.prenom.id_for_label }}">Prenom</label>
+                            </div> 
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                                    {{ form.username }}
+                                <label class="mdl-textfield__label" for="{{ form.username.id_for_label }}">Nom d'utilisateur</label>
+                            </div>                
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                                    {{ form.email }}
+                                <label class="mdl-textfield__label" for="{{ form.email.id_for_label }}">Email</label>
+                            </div>
+                            <!--
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="div-groupe" >
+                                    {{ form.groupe }}
+                                    <label class="mdl-textfield__label" for="{{ form.statut.id_for_label }}">Groupe</label>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="div-groupe" >
+                                    
+                            </div>
+                        -->
+                            <div class="mdl-card__actions mdl-card--border">
+                                <input type="submit" name="refus" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--colored" value="Retour" />
+                                <input type="submit" name="modif" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--colored" value="Modifier" />
+                            </div>
+                        </form>
+                    </div>
+            </div>
+            <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+    </div>
+{% else %}
+    <p>Mes couilles.</p>
+{% endif %}
+
+{% endblock %}

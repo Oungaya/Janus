@@ -1,0 +1,72 @@
+
+
+{% extends template_group %}
+
+
+{% block content %}
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+    <div class="mdl-cell mdl-cell--8-col mdl-cell--10-col-tablet mdl-cell--12-col-phone">
+            <div class="inscription-card  mdl-card mdl-shadow--2dp inscription-professeur-card">
+                    <div class="mdl-card__title">
+                            <h2 class="mdl-card__title-text">Renseignez les informations de l'administrateur</h2>
+                    </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                            {{ form.nom }}
+                        <label class="mdl-textfield__label" for="{{ form.nom.id_for_label }}">Nom</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                            {{ form.prenom }}
+                        <label class="mdl-textfield__label" for="{{ form.prenom.id_for_label }}">Prenom</label>
+                    </div>    
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+                            {{ form.email }}
+                    <label class="mdl-textfield__label" for="{{ form.email.id_for_label }}">Email</label>
+                    </div>          
+                    <!--
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="id_isProf">
+                                    <span class="mdl-switch__label">Professeur</span>
+                                    <input type="checkbox" id="switch-isProf" class="mdl-switch__input">
+                                   {{ form.isProf }}
+                            </label>
+                    </div>
+                    -->
+                    <div class="mdl-card__actions mdl-card--border">
+                        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Enregistrer" />
+                    </div>
+                </form>
+            </div>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+</div>
+{% if form.non_field_errors %}
+<div id="toast" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text">
+            {% for error in form.non_field_errors %}
+            {{ error }}
+            {% endfor %}
+    </div>
+    <button class="mdl-snackbar__action" type="button"></button>
+</div>
+  {% endif %}
+{% endblock %}
+
+{% block script %}
+{% if form.non_field_errors %}
+    <script>
+    var msg = $(".mdl-snackbar__text").html();
+                        
+    document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var snackbarContainer = document.querySelector('#toast');
+                var data = {message: msg};
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            }, 0);
+        });
+    </script>
+{% endif %}
+{% endblock %}
