@@ -187,7 +187,7 @@ def admin_InscriptionProfesseur(request):
             professeurUser.save()
 
             messages.success(request, 'Le professeur a été ajouté')
-            return HttpResponseRedirect('/options/')
+            return HttpResponseRedirect('/options/liste_professeur')
         else:
             form.add_error(None,
                 "Les identifiants de connexion sont incorrectes "
