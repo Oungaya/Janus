@@ -13,6 +13,7 @@ from django import forms
 from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
+from django.core.mail import send_mail
 import random, string
 
 def generer_mdp():
@@ -156,9 +157,10 @@ def admin_ValidationInscriptionEnd(request, num_etu):
                 return HttpResponseRedirect('/options/validation_inscription/')
             else:
                 return HttpResponseRedirect('/options/validation_inscription/') 
-        else:
-            Etudiant.objects.get(numero_etudiant = num_etu).delete()
-            return HttpResponseRedirect('/options/validation_inscription/') 
+        #fmy - on ne fais rien en cas de refus (remarques client WP3)
+        #else:
+            #Etudiant.objects.get(numero_etudiant = num_etu).delete()
+        return HttpResponseRedirect('/options/validation_inscription/') 
     
 
 @login_required
@@ -174,7 +176,8 @@ def admin_InscriptionProfesseur(request):
         form = InscriptionProfesseurForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            djangoUser = User.objects.create_user(username=data['prenom'][0].lower()+data['nom'].lower(), email=data['email'], password=generer_mdp())
+            password = generer_mdp()
+            djangoUser = User.objects.create_user(username=data['prenom'][0].lower()+data['nom'].lower(), email=data['email'], password=password)
             my_group = Group.objects.get(name='Professeur') 
             my_group.user_set.add(djangoUser)
             djangoUser.first_name = username=data['prenom']
@@ -185,7 +188,15 @@ def admin_InscriptionProfesseur(request):
             professeurUser.utilisateur = djangoUser
             #professeurUser.statut.add(data['statut'])
             professeurUser.save()
-
+            if data['notifierParMail'] :
+                send_mail(
+                    'Inscription plateforme de gestion des feuilles d\'émargement - Janus',
+                    'Bonjour,\n Vous avez été inscrit sur Janus, pour accéder à votre compte veuillez utiliser les '\
+                    'identifiants suivant : \n\t nom d\'utilisateur : ' + djangoUser.username + ' \n\t mot de pase : ' + password
+                    + ' \n\n Cordialement,\n\n l\'équipe Janus.',
+                    'from@example.com',
+                    [djangoUser.email],
+                    fail_silently=False)
             messages.success(request, 'Le professeur a été ajouté')
             return HttpResponseRedirect('/options/')
         else:

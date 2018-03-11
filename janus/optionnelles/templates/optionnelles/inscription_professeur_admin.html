@@ -36,6 +36,12 @@
                             {{ form.statut }}
                         <label class="mdl-textfield__label" for="{{ form.statut.id_for_label }}">Statut</label>
                     </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="id_notifierParMail">
+                                <span class="mdl-switch__label">Notifier par e-mail</span>
+                                    {{ form.notifierParMail }}
+                        </label>
+                    </div>
                     <div class="mdl-card__actions mdl-card--border">
                         <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Enregistrer" />
                     </div>
