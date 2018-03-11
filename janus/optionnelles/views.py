@@ -96,6 +96,15 @@ def admin_ValidationInscription(request):
     return render(request, 'optionnelles/validation_inscription_admin.html', context)
 
 @login_required
+def admin_listeProfesseurs(request):
+    liste_professeur = Professeur.objects.filter(utilisateur__is_active=True)
+    context = {
+        'liste_professeur': liste_professeur,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/admin_liste_professeur.html', context)
+
+@login_required
 def admin_ValidationInscriptionDetails(request, num_etu):
     etu = Etudiant.objects.get(numero_etudiant = num_etu)
     form = ValidationUserByAdminForm(initial={

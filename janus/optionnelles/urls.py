@@ -16,6 +16,7 @@ urlpatterns = [
     path('validation_reinitialisation/', views.user_validationReinitialisation, name='user_validationReinitialisation'),
     path('formulaire_reinitialisation/', views.user_formulaireReinitialisation, name='user_formulaireReinitialisation'),
     path('validation_inscription/', views.admin_ValidationInscription, name='admin_ValidationInscription'),
+    path('liste_professeur/', views.admin_listeProfesseurs, name='admin_liste_professeur'),
     path('inscription_professeur/', views.admin_InscriptionProfesseur, name='admin_InscriptionProfesseur'),
     path('validation_inscription/<num_etu>/user/', views.admin_ValidationInscriptionDetails, name='admin_ValidationInscriptionDetails'),
     path('validation_inscription/<num_etu>/end/', views.admin_ValidationInscriptionEnd, name='admin_ValidationInscriptionEnd'),
