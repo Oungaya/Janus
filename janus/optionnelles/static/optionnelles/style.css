@@ -417,9 +417,15 @@ border-bottom: none;
   width:100%;
 }
 .js-dynamitable tr td{
-  text-align: left;
+  text-align: center;
 }
 
 .js-dynamitable .mdl-textfield{
   width:auto;
+}
+
+.add-button{
+  position: fixed !important;
+  bottom:30px;
+  right: 30px;
 }
