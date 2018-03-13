@@ -10,3 +10,30 @@
 <a class="mdl-navigation__link" href=""><i class="material-icons" role="presentation">import_contacts</i>Mes cours</a>
 <a class="mdl-navigation__link" href=""><i class="material-icons" role="presentation">list</i>Emargement</a>
 {% endblock %}
+
+
+{% block scriptTemplate %}
+
+<script>
+    $(function(){
+        $.ajax({
+            url: '/options/ajax/notification_inscription/',
+            dataType: 'json',
+            success: function (data) {
+                var notifications = data.nombre_notification;
+                $("#link-inscription span").attr("data-badge",notifications);
+                if(notifications != 0){                    
+                    $("#link-inscription span").addClass("mdl-badge");
+                }
+                
+                
+            },
+            error: function(jqXHR, exception){
+                
+            }
+        });
+    });
+    
+</script>
+
+{% endblock %}
