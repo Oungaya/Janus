@@ -400,7 +400,8 @@ def user_inscription(request):
             djangoUser.last_name = username=data['nom']
             djangoUser.is_active = "False"
             djangoUser.save()
-            etudiantUser = Etudiant(numero_etudiant=data['numero_etudiant'],ajac=data['ajac'],redoublant=data['redoublant'],telephone=data['telephone'])
+            # ajac enlevé MAJ du 13/03/2018
+            etudiantUser = Etudiant(numero_etudiant=data['numero_etudiant'],redoublant=data['redoublant'],telephone=data['telephone'])
             etudiantUser.utilisateur = djangoUser
             etudiantUser.save()
             etudiantUser.parcours.add(data['parcours'])

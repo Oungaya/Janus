@@ -42,6 +42,7 @@ class Semestre(models.Model):
 
 class UE(models.Model):
     nom = models.CharField(max_length=200)
+    num_UE = models.CharField(max_length=200)
     code_apoge = models.CharField(max_length=200)
     nombre_groupes = models.IntegerField(default=0)
     nombre_heures_TD = models.IntegerField(default=0)

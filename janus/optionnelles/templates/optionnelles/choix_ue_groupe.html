@@ -25,6 +25,13 @@
                         <label class="mdl-textfield__label" for="nom">Nom</label>
                       </div>
                 </th>
+                <th class="mdl-data-table__cell--non-numeric">
+                    <i class="js-sorter-desc material-icons">sort</i>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="form-control mdl-textfield__input control-show-numUE" type="text" id="numUE">
+                        <label class="mdl-textfield__label" for="numUE">Numéro UE</label>
+                      </div>
+                </th>
                 <th>
                     <i class="js-sorter-desc material-icons">sort</i>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -46,6 +53,9 @@
                             <input class="js-filter  form-control control-hide-nom" type="text" value="">
                     </th>
                     <th>
+                            <input class="js-filter  form-control control-hide-numUE" type="text" value="">
+                    </th>
+                    <th>
                             <input class="js-filter  form-control control-hide-groupe" type="text" value="">
                     </th>
                     <th>
@@ -61,6 +71,7 @@
                     <td class="mdl-data-table__cell--non-numeric">
                         <a href="/options/selection_groupe/{{ e.id }}/"> {{ e.nom }} </a>
                     </td>
+                    <td> {{ e.num_UE }} </td>
                     <td> {{ e.nombre_groupes }} </td>
                     <td> 
                         {% for p in e.poles.all %}
@@ -89,6 +100,10 @@
             $(".control-show-nom").on('change keyup paste', function () {
                 $(".control-hide-nom").val($(".control-show-nom").val());
                 $(".control-hide-nom").change();
+            });
+            $(".control-show-numUE").on('change keyup paste', function () {
+                $(".control-hide-numUE").val($(".control-show-numUE").val());
+                $(".control-hide-numUE").change();
             });
             $(".control-show-groupe").on('change keyup paste', function () {
                 $(".control-hide-groupe").val($(".control-show-groupe").val());

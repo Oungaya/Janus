@@ -57,21 +57,11 @@
                                 <label class="mdl-textfield__label" for="{{ form.parcours.id_for_label }}">Parcours</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="div-parcours" >
-                                
-                        </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="id_ajac">
-                                        <span class="mdl-switch__label">AJAC</span>
-                                       <!-- <input type="checkbox" id="switch-ajac" class="mdl-switch__input">-->
-                                       {{ form.ajac }}
-                                </label>
-                        </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="id_redoublant">
-                                        <span class="mdl-switch__label">Redoublant</span>
-                                        <!--<input type="checkbox" id="switch-redoublant" class="mdl-switch__input">-->
-                                        {{ form.redoublant }}
-                                </label>
+                            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="id_redoublant">
+                                <span class="mdl-switch__label">Redoublant</span>
+                                <!--<input type="checkbox" id="switch-redoublant" class="mdl-switch__input">-->
+                                {{ form.redoublant }}
+                            </label>  
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
                             <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="S'inscrire" />
