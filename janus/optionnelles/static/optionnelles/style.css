@@ -429,3 +429,8 @@ border-bottom: none;
   bottom:30px;
   right: 30px;
 }
+
+#name-template{
+  color:#757575;
+  font-size: 18px;
+}
