@@ -107,7 +107,6 @@ def main():
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Outils pour la Business intelligence\', \'ISI_18\', \'0\', \'0\', \'8\', \'22\', \'2\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Outils pour les systèmes décisionnels en entreprise\', \'INFO_16\', \'0\', \'0\', \'8\', \'22\', \'1\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Aide à la décision avancée\', \'INFO_17\', \'0\', \'0\', \'8\', \'22\', \'2\');\
-    INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Architecture des SI 2\', \'INFO_18\', \'0\', \'0\', \'0\', \'30\', \'1\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Modélis. des pb en management et mkg\', \'INFO_27\', \'0\', \'0\', \'8\', \'22\', \'1\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Recherche heuristique\', \'INFO_29\', \'0\', \'0\', \'8\', \'22\', \'2\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'IA\', \'INFO_23\', \'0\', \'0\', \'8\', \'22\', \'1\');\
