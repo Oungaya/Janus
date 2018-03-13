@@ -3,6 +3,4 @@ janus/janus/__pycache__
 janus/optionnelles/migrations
 janus/optionnelles/__pycache__
 .DS_Store
-janus/optionnelles/templatetags/__pycache__/options_extras.cpython-36.pyc
-janus/optionnelles/templatetags/__pycache__/__init__.cpython-36.pyc
-janus/script_reset_db.py
+janus/script_reset_db.py
