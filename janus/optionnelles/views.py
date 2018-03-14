@@ -145,6 +145,7 @@ def admin_ValidationInscriptionEnd(request, num_etu):
                         
                 if etu.telephone != data['telephone']:
                     etu.telephone = data['telephone']
+            
                 etu.save()
 
                 etu.utilisateur.first_name = data['prenom']
@@ -405,6 +406,12 @@ def user_inscription(request):
             etudiantUser.utilisateur = djangoUser
             etudiantUser.save()
             etudiantUser.parcours.add(data['parcours'])
+            #Affectation des UEs à l'étudiant en fontion de son parcours
+            for k in etudiantUser.parcours.all():
+                for i in k.pole_set.all():
+                    for y in i.ue_set.all():
+                        ueEtudiant = Etudiant_par_UE(etudiant = etudiantUser, ue = y.ue, optionnelle = y.option)
+                        ueEtudiant.save()
             etudiantUser.save()
 
             return HttpResponseRedirect('/options/demande_inscription')

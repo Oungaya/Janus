@@ -121,6 +121,7 @@ class Etudiant(models.Model):
 class Etudiant_par_UE(models.Model):
     etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE)
     ue = models.ForeignKey(UE, on_delete=models.CASCADE)
+    optionnelle = models.BooleanField(default="False")
     groupe = models.IntegerField(default=0)
 
     def __str__(self):
