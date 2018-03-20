@@ -123,6 +123,7 @@ class Etudiant_par_UE(models.Model):
     ue = models.ForeignKey(UE, on_delete=models.CASCADE)
     optionnelle = models.BooleanField(default="False")
     groupe = models.IntegerField(default=0)
+    choisie = models.BooleanField(default="False")
 
     def __str__(self):
         return self.ue.nom + " " + self.etudiant.utilisateur.first_name + " " + self.etudiant.utilisateur.last_name
