@@ -38,26 +38,31 @@ def main():
     INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M1 MIAGE Domaine d''application\', \'3\', \'1\', \'4\');\
     INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M1 MIAGE Compétences Transverses\', \'5\', \'1\', \'5\');\
     INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M1 MIAGE Professionnalisation\', \'0\', \'1\', \'6\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Compétences en Ingénierie des SI\', \'3\', \'2\', \'1\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Compétences en Informatique\', \'2\', \'2\', \'2\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Compétences en Gestion\', \'0\', \'2\', \'3\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Compétences Transverses\', \'0\', \'2\', \'5\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Professionnalisation\', \'0\', \'2\', \'6\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Compétences en Ingénierie des SI\', \'0\', \'3\', \'1\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Compétences en Informatique\', \'2\', \'3\', \'2\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Compétences en Gestion\', \'0\', \'3\', \'3\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Compétences Transverses\', \'0\', \'3\', \'5\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Professionnalisation\', \'0\', \'3\', \'6\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Compétences en Ingénierie des SI\', \'2\', \'4\', \'1\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Compétences en Informatique\', \'3\', \'4\', \'2\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Compétences en Gestion\', \'0\', \'4\', \'3\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Compétences Transverses\', \'0\', \'4\', \'5\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Professionnalisation\', \'0\', \'4\', \'6\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS Compétences en Ingénierie des SI\', \'0\', \'5\', \'1\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS Compétences en Informatique\', \'2\', \'5\', \'2\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS Compétences Transverses\', \'0\', \'5\', \'5\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS eSanté\', \'0\', \'5\', \'7\');\
-    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS Professionnalisation\', \'0\', \'5\', \'6\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M1 MIAGE Compétences en Ingénierie des SI\', \'3\', \'2\', \'1\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M1 MIAGE Compétences en Informatique\', \'6\', \'2\', \'2\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M1 MIAGE Domaine d''application\', \'3\', \'2\', \'4\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M1 MIAGE Compétences Transverses\', \'5\', \'2\', \'5\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M1 MIAGE Professionnalisation\', \'0\', \'2\', \'6\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Compétences en Ingénierie des SI\', \'3\', \'3\', \'1\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Compétences en Informatique\', \'2\', \'3\', \'2\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Compétences en Gestion\', \'0\', \'3\', \'3\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Compétences Transverses\', \'0\', \'3\', \'5\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 OSIE Professionnalisation\', \'0\', \'3\', \'6\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Compétences en Ingénierie des SI\', \'0\', \'4\', \'1\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Compétences en Informatique\', \'2\', \'4\', \'2\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Compétences en Gestion\', \'0\', \'4\', \'3\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Compétences Transverses\', \'0\', \'4\', \'5\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SID Professionnalisation\', \'0\', \'4\', \'6\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Compétences en Ingénierie des SI\', \'2\', \'5\', \'1\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Compétences en Informatique\', \'3\', \'5\', \'2\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Compétences en Gestion\', \'0\', \'5\', \'3\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Compétences Transverses\', \'0\', \'5\', \'5\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIO Professionnalisation\', \'0\', \'5\', \'6\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS Compétences en Ingénierie des SI\', \'0\', \'6\', \'1\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS Compétences en Informatique\', \'2\', \'6\', \'2\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS Compétences Transverses\', \'0\', \'6\', \'5\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS eSanté\', \'0\', \'6\', \'7\');\
+    INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 SIS Professionnalisation\', \'0\', \'6\', \'6\');\
     INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 INE Compétence en Ingénierie des SI\', \'0\', \'7\', \'1\');\
     INSERT INTO optionnelles_pole(nom, nombre_options, parcours_id, typePole_id) VALUES (\'M2 INE Professionnalisation\', \'27\', \'7\', \'6\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Conduite de projet\', \'ISI_02\', \'0\', \'0\', \'8\', \'40\', \'3\');\
