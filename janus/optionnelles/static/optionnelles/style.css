@@ -434,3 +434,14 @@ border-bottom: none;
   color:#757575;
   font-size: 18px;
 }
+
+.card-ue-order{
+  background-color: #26a69a;
+  padding:10px;
+  color:white;
+
+}
+
+.li-ue-order{
+  padding:10px;
+}

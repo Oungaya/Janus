@@ -1,0 +1,30 @@
+{% extends template_group %}
+
+{% block content %}
+<div class='mdl-cell mdl-cell--12-col card-ue'><h5>Choix des options</h5></div>
+<div class="mdl-cell mdl-cell--12-col card-chip-etudiant">
+    {% if liste_ues %} 
+    <h5>Vos options :</h5>
+    <p>Sélectionner vos options par ordre de préférence. Vous pouvez modifier à tous moment vos choix jusqu'à la date --DATE--. Vos options seront ensuite réparties de manière équitable à l'aide d'un algorithme.</p>
+    <ol id="choix-option">
+        {% for e in liste_ues %}
+            <li class="li-ue-order"><div class="card-ue" data-ordre=""><span class="ordre"></span>{{ e.nom }}</div></li>
+        {% endfor %}
+    </ol>
+    
+    {% else %}
+        <div class="mdl-cell mdl-cell--12-col card-ue-order">
+            <h5>Aucune UE n'est disponible.</h5>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $( function() {
+        $( "#choix-option" ).sortable();
+        $( "#choix-option" ).disableSelection();
+        } );
+    </script>
+{% endblock %}

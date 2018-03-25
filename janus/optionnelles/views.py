@@ -136,6 +136,15 @@ def admin_listeProfesseurs(request):
     return render(request, 'optionnelles/admin_liste_professeur.html', context)
 
 @login_required
+def etudiant_choixOptions(request):
+    liste_ues = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(etudiant_par_ue__optionnelle=True)
+    context = {
+        'liste_ues': liste_ues,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/etudiant_choix_options.html', context)
+
+@login_required
 def admin_ValidationInscriptionDetails(request, num_etu):
     etu = Etudiant.objects.get(numero_etudiant = num_etu)
     form = ValidationUserByAdminForm(initial={
