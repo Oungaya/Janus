@@ -29,9 +29,10 @@ def generer_mdp():
 def exportCSV(request, id_ue, id_groupe):
     # Create the HttpResponse object with the appropriate CSV header.
     ue = UE.objects.get(pk=id_ue)
+    
     #if id_groupe == 0:
     
-    liste_etudiant = Etudiant.objects.all()
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id)
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="emargement.csv"'
@@ -62,10 +63,22 @@ def admin_choixUeGroupe(request):
     return render(request, 'optionnelles/choix_ue_groupe.html', context)
 
 @login_required
+def emargement(request, id_ue):
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue__id=id_ue)
+
+    context = {
+        'liste_etudiant': liste_etudiant,
+        'ue': id_ue,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/emargement.html', context)
+
+@login_required
 def liste_emargement(request):
     auth = request.user.is_staff
     liste_ue = UE.objects.all()
-    
+
+
     context = {
         'liste_ue': liste_ue,
         'template_group': getGroupTemplate(request.user)
