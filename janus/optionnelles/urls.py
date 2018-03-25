@@ -31,6 +31,8 @@ urlpatterns = [
     url(r'^ajax/change_groupe/$', views.change_groupe, name='change_groupe'),
     url(r'^ajax/notification_inscription/$', views.notification_inscription, name='notification_inscription'),
     path('choix_ue_groupe/', views.admin_choixUeGroupe, name='admin_choixUeGroupe'),
+    path('liste_emargement/', views.liste_emargement, name='liste_emargement'),
+    path('export_csv/<int:id_ue>/<int:id_groupe>', views.exportCSV, name='export_csv'),
     #gestion du mot de passe oublié
     url(r'^password_reset/$', auth_views.password_reset,{'email_template_name':'optionnelles/registration/password_reset_email.html',
                                                     'template_name':'optionnelles/registration/password_reset_form.html',

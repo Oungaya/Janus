@@ -14,7 +14,7 @@ from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
-import random, string
+import random, string, csv
 
 def generer_mdp():
     length = 8
@@ -24,6 +24,24 @@ def generer_mdp():
     mdp.append(str(random.randint(0,9)))
     random.shuffle(mdp)
     return ''.join(mdp)
+
+@login_required
+def exportCSV(request, id_ue, id_groupe):
+    # Create the HttpResponse object with the appropriate CSV header.
+    ue = UE.objects.get(pk=id_ue)
+    #if id_groupe == 0:
+    
+    liste_etudiant = Etudiant.objects.all()
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="emargement.csv"'
+
+    writer = csv.writer(response,delimiter=";")
+
+    for e in liste_etudiant:
+        writer.writerow([e.utilisateur.last_name + ";" + e.utilisateur.first_name])
+        
+    return response
 
 @login_required
 def index(request):
@@ -42,6 +60,18 @@ def admin_choixUeGroupe(request):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/choix_ue_groupe.html', context)
+
+@login_required
+def liste_emargement(request):
+    auth = request.user.is_staff
+    liste_ue = UE.objects.all()
+    
+    context = {
+        'liste_ue': liste_ue,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/emargement_liste_ue.html', context)
+
 
 @login_required
 def admin_selectionGroupe(request, id_ue):

@@ -69,9 +69,8 @@
             {% for e in liste_ue %}
             
                 <tr>
-                        
                     <td class="mdl-data-table__cell--non-numeric">
-                            <a href="/options/selection_groupe/{{ e.id }}/">  {{ e.nom }} </a>
+                            <a href="/options/emargement/{{ e.id }}/">  {{ e.nom }} </a>
                     </td>
                     <td> {{ e.num_UE }} </td>
                     <td> {{ e.nombre_groupes }} </td>
@@ -80,7 +79,6 @@
                         {{ p.parcours.nom.strip }} / {{ p.nom.strip }} <br/>
                         {% endfor %}
                     </td>
-                
                 </tr>
             
             {% endfor %}
