@@ -29,6 +29,7 @@ urlpatterns = [
     path('modification_admin/<int:id_admin>/end/', views.admin_AdminEnd, name='admin_AdminEnd'),
     path('selection_groupe/<int:id_ue>/', views.admin_selectionGroupe, name='admin_selectionGroupe'),
     url(r'^ajax/change_groupe/$', views.change_groupe, name='change_groupe'),
+    url(r'^ajax/choix_options/$', views.valider_choix_options, name='valider_choix_options'),
     url(r'^ajax/notification_inscription/$', views.notification_inscription, name='notification_inscription'),
     path('choix_ue_groupe/', views.admin_choixUeGroupe, name='admin_choixUeGroupe'),
     path('liste_emargement/', views.liste_emargement, name='liste_emargement'),

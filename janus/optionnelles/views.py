@@ -14,7 +14,7 @@ from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
-import random, string, csv
+import random, string, csv, json
 
 def generer_mdp():
     length = 8
@@ -117,6 +117,32 @@ def notification_inscription(request):
     }
     return JsonResponse(data)
 
+def valider_choix_options(request):
+    etudiant = Etudiant.objects.get(utilisateur=request.user.id)
+    liste_choix = json.loads(request.GET.get('dict'))
+    flag = True
+
+    for ue in liste_choix:
+        if Etudiant_par_UE.objects.filter(etudiant__id=etudiant.id, ue__id=ue['ue']).exists():
+            print(ue['ue']) 
+        else:
+            flag = False
+
+    if flag == True:
+        for ue in liste_choix:
+            EtudiantParUE = Etudiant_par_UE.objects.get(etudiant__id=etudiant.id,ue__id=ue['ue'])
+            EtudiantParUE.order = ue['ordre']
+            EtudiantParUE.save()
+        data = {
+            'error': 0
+        }
+    else:
+        data = {
+            'error': 1
+        }
+    return JsonResponse(data)
+
+
 @login_required
 def admin_ValidationInscription(request):
     liste_etudiant = Etudiant.objects.filter(utilisateur__is_active=False)
@@ -137,7 +163,7 @@ def admin_listeProfesseurs(request):
 
 @login_required
 def etudiant_choixOptions(request):
-    liste_ues = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(etudiant_par_ue__optionnelle=True)
+    liste_ues = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(etudiant_par_ue__optionnelle=True).order_by('etudiant_par_ue__order')
     context = {
         'liste_ues': liste_ues,
         'template_group': getGroupTemplate(request.user)
