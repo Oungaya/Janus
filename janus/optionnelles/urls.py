@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^ajax/notification_inscription/$', views.notification_inscription, name='notification_inscription'),
     path('choix_ue_groupe/', views.admin_choixUeGroupe, name='admin_choixUeGroupe'),
     path('liste_emargement/', views.liste_emargement, name='liste_emargement'),
+    path('emargement/<int:id_ue>/', views.emargement, name='emargement'),
     path('choix_options/', views.etudiant_choixOptions, name='choix_options'),
     path('export_csv/<int:id_ue>/<int:id_groupe>', views.exportCSV, name='export_csv'),
     #gestion du mot de passe oublié
