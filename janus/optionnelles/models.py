@@ -32,7 +32,13 @@ class Semestre(models.Model):
     def __str__(self):
         return self.nom
 
+<<<<<<< HEAD
 class Pole(models.Model):
+=======
+#Créer lien Pole Semestre pour intégrer Nombre d'options 
+
+class Semestre(models.Model):
+>>>>>>> 360759225032507bbe4514e17f40487eede34b2d
     nom = models.CharField(max_length=200)
     parcours = models.ForeignKey(Parcours, on_delete=models.CASCADE)
     typePole = models.ForeignKey(TypePole, on_delete=models.CASCADE)
