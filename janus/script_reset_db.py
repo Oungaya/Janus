@@ -255,6 +255,26 @@ def main():
     INSERT INTO optionnelles_ue_par_pole VALUES (125, 1, 27, 43);\
     INSERT INTO optionnelles_ue_par_pole VALUES (126, 1, 27, 54);\
     INSERT INTO optionnelles_ue_par_pole VALUES (127, 1, 27, 44);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 1, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 2, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (4, 2, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 3, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 4, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 4, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 6, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 7, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (4, 7, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 8, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 9, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 9, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 11, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 12, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 17, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 21, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 22, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 27, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (14, 32, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (13, 32, 2);\
     "', shell=True)
     subprocess.call('python3 manage.py createsuperuser', shell=True)
 
