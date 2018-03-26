@@ -36,6 +36,7 @@ urlpatterns = [
     path('emargement/<int:id_ue>/', views.emargement, name='emargement'),
     path('choix_options/', views.etudiant_choixOptions, name='choix_options'),
     path('export_csv/<int:id_ue>/<int:id_groupe>', views.exportCSV, name='export_csv'),
+    path('export_pdf/<int:id_ue>/<int:id_groupe>', views.exportPDF, name='export_pdf'),
     #gestion du mot de passe oublié
     url(r'^password_reset/$', auth_views.password_reset,{'email_template_name':'optionnelles/registration/password_reset_email.html',
                                                     'template_name':'optionnelles/registration/password_reset_form.html',

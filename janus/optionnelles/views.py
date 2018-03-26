@@ -15,7 +15,11 @@ from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
+from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.platypus.tables import Table
 import random, string, csv, json, codecs
+
 
 def generer_mdp():
     length = 8
@@ -56,6 +60,34 @@ def exportCSV(request, id_ue, id_groupe):
     for e in liste_etudiant:
         writer.writerow([e.utilisateur.last_name + ";" + e.utilisateur.first_name])
         
+    return response
+
+@login_required
+def exportPDF(request, id_ue, id_groupe):
+
+    ue = UE.objects.get(pk=id_ue)
+    
+    #if id_groupe == 0:
+    
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="'+ ue.nom +' export.pdf"'
+    """
+    p = canvas.Canvas(response)
+    p.drawString(100, 100, "Hello world.")
+    p.showPage()
+    p.save()
+    """
+    elements = []
+    cm = 2.54
+    doc = SimpleDocTemplate(response, rightMargin=0, leftMargin=6.5 * cm, topMargin=0.3 * cm, bottomMargin=0)
+
+    data=[liste_etudiant]
+    table = Table(data, colWidths=270, rowHeights=79)
+    elements.append(table)
+    doc.build(elements) 
+
     return response
 
 @login_required
@@ -232,7 +264,7 @@ def admin_ValidationInscriptionEnd(request, num_etu):
                 if etu.redoublant != data['redoublant']:
                     etu.redoublant = data['redoublant']
                 if etu.parcours != data['parcours']:
-                    etu.parcours.through.objects.all().delete()
+                    etu.parcours.clear()
                     etu.parcours.add(data['parcours'])
                         
                 if etu.telephone != data['telephone']:
