@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
+from django.template import loader, Context
 from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm, InscriptionAdminForm, ModificationAdminForm
 from django.contrib.auth.decorators import login_required
 from django import forms
@@ -14,7 +15,7 @@ from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
-import random, string, csv, json
+import random, string, csv, json, codecs
 
 def generer_mdp():
     length = 8
@@ -36,8 +37,21 @@ def exportCSV(request, id_ue, id_groupe):
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="emargement.csv"'
+    """
+    csv_data = (
+        ("First row", "Foo", "Bar", "Baz"),
+        ("Second row", "A", "B", "C", "Testing", "Here's a quote"),
+    )
 
-    writer = csv.writer(response,delimiter=";")
+    t = loader.get_template('export/emargement_export.txt')
+
+    response.write(t.render({
+        'data': csv_data,
+    }))
+"""
+    csv.register_dialect('unixpwd', delimiter=';', quoting=csv.QUOTE_NONE)
+    response.write(codecs.BOM_UTF8)
+    writer = csv.writer(response)
 
     for e in liste_etudiant:
         writer.writerow([e.utilisateur.last_name + ";" + e.utilisateur.first_name])
