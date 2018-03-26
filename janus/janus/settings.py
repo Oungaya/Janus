@@ -29,7 +29,6 @@ ALLOWED_HOSTS = ['janusoptionnelles.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
-    'optionnelles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +38,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'optionnelles',
+
 ]
 
 EMAIL_HOST = 'smtp.sendgrid.net'
