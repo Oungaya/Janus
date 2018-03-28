@@ -1,1 +1,1 @@
-web: gunicorn janus/janus.wsgi
+web: gunicorn janus.wsgi:application
