@@ -167,6 +167,14 @@ def change_groupe(request):
     }
     return JsonResponse(data)
 
+def valide_ue(request):
+    ue_id = request.GET.get('ue', None)
+    ue = UE.objects.get(pk=ue_id)
+    data = {
+        'is_valid': 1
+    }
+    return JsonResponse(data)
+
 def notification_inscription(request):
 
     nombre_inscription = Etudiant.objects.filter(utilisateur__is_active=False).count()

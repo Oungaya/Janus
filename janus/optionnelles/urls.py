@@ -23,6 +23,7 @@ urlpatterns = [
     path('modification_professeur/<int:id_prof>/end/', views.admin_ProfesseurEnd, name='admin_ProfesseurEnd'),
     path('validation_inscription/<num_etu>/user/', views.admin_ValidationInscriptionDetails, name='admin_ValidationInscriptionDetails'),
     path('validation_inscription/<num_etu>/end/', views.admin_ValidationInscriptionEnd, name='admin_ValidationInscriptionEnd'),
+    url(r'^ajax/valide_ue/$', views.valide_ue, name='valide_ue'),
     path('inscription_admin/', views.admin_InscriptionAdmin, name='admin_InscriptionAdmin'),
     path('liste_admin/', views.admin_ListeAdmin, name='admin_ListeAdmin'),
     path('modification_admin/<int:id_admin>/user/', views.admin_AdminDetails, name='admin_AdminDetails'),

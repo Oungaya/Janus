@@ -17,8 +17,7 @@
 {% if etudiant %}
     <div class="mdl-tabs__panel is-active">
         <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
-            <div class="mdl-cell mdl-cell--8-col mdl-cell--10-col-tablet mdl-cell--12-col-phone">
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--10-col-tablet mdl-cell--12-col-phone">
                     <div class="inscription-card mdl-card mdl-shadow--2dp inscription-professeur-card">
                             <div class="mdl-card__title">
                                     <h2 class="mdl-card__title-text">Informations sur l'étudiant :</h2>
@@ -73,12 +72,62 @@
                         </form>
                     </div>
             </div>
-            <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
+            <div class="mdl-cell mdl-cell--6-col">
+                <table class="js-dynamitable mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                    <thead>
+                        <tr>
+                            <th class="mdl-data-table__cell--non-numeric">
+                                    <i class="js-sorter-desc material-icons">sort</i>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <input class="form-control mdl-textfield__input control-show-nom_ue" type="text" id="nom_ue">
+                                        <label class="mdl-textfield__label" for="nom_ue">Unité d'Enseignement</label>
+                                    </div>
+                            </th>
+                            <th>
+                                <label class="mdl-textfield__label">Validée ?</label>
+                            </th>
+                        </tr>
+
+                        <tr class="hide-control">
+                            <th>
+                                    <input class="js-filter  form-control control-hide-nom_ue" type="text" value="">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ue in etudiant.ues.all %}
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    {{ ue.nom }}
+                                </td>
+                                <td>
+                                    <span class="mdl-list__item-secondary-action">
+                                            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" data-id-ue="{{ue.id}}" for="list-switch-{{ue.id}}">
+                                                <input type="checkbox" id="list-switch-{{ue.id}}" class="mdl-switch__input" checked />
+                                            </label>
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+                
         </div>
-        <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
     </div>
 {% else %}
     <p>Vous n'avez aucun étudiant en attente de validation.</p>
 {% endif %}
 
+{% endblock %}
+
+{% block script %}
+<script>
+    $(function(){
+        $(".control-show-nom_ue").on('change keyup paste', function () {
+            $(".control-hide-nom_ue").val($(".control-show-nom_ue").val());
+            $(".control-hide-nom_ue").change();
+        });
+    });
+</script>
 {% endblock %}
