@@ -169,7 +169,12 @@ def change_groupe(request):
 
 def valide_ue(request):
     ue_id = request.GET.get('ue', None)
+    etudiant = request.GET.get('etudiant', None)
     ue = UE.objects.get(pk=ue_id)
+
+    print(ue.nom)
+    
+
     data = {
         'is_valid': 1
     }

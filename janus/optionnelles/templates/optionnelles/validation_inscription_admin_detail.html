@@ -102,8 +102,8 @@
                                 </td>
                                 <td>
                                     <span class="mdl-list__item-secondary-action">
-                                            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" data-id-ue="{{ue.id}}" for="list-switch-{{ue.id}}">
-                                                <input type="checkbox" id="list-switch-{{ue.id}}" class="mdl-switch__input" checked />
+                                            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" data-id-ue="{{ue.id}}" data-id-etudiant="{{etudiant.id}}" for="list-switch-{{ue.id}}">
+                                                <input type="checkbox" id="list-switch-{{ue.id}}" class="mdl-switch__input validation-ue-input" checked />
                                             </label>
                                     </span>
                                 </td>
@@ -127,6 +127,26 @@
         $(".control-show-nom_ue").on('change keyup paste', function () {
             $(".control-hide-nom_ue").val($(".control-show-nom_ue").val());
             $(".control-hide-nom_ue").change();
+        });
+
+        $(".validation-ue-input").change(function(){
+            id_etudiant = $(this).parents('label').attr("data-id-etudiant");
+            id_ue = $(this).parents('label').attr("data-id-ue");
+
+            $.ajax({
+                url: '/options/ajax/valide_ue/',
+                data: {
+                'ue': id_ue,  
+                'etudiant': id_etudiant
+                },
+                dataType: 'json',
+                success: function (data) {
+                    
+                },
+                error: function(jqXHR, exception){
+                    
+                }
+            });
         });
     });
 </script>
