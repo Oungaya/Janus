@@ -1,6 +1,6 @@
 
 {% extends template_group %}
-
+{% load options_extras %}
 {% block content %}
 <!-- 
     <div class="mdl-shadow--2dp micro-card-menu ">
@@ -103,7 +103,11 @@
                                 <td>
                                     <span class="mdl-list__item-secondary-action">
                                             <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" data-id-ue="{{ue.id}}" data-id-etudiant="{{etudiant.id}}" for="list-switch-{{ue.id}}">
+                                                {% if etudiant|get_UE_valid:ue.id %}
                                                 <input type="checkbox" id="list-switch-{{ue.id}}" class="mdl-switch__input validation-ue-input" checked />
+                                                {% else %}
+                                                <input type="checkbox" id="list-switch-{{ue.id}}" class="mdl-switch__input validation-ue-input" />
+                                                {% endif %}
                                             </label>
                                     </span>
                                 </td>

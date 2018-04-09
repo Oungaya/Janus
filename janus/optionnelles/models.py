@@ -134,7 +134,7 @@ class Etudiant_par_UE(models.Model):
     groupe = models.IntegerField(default=0)
     order = models.IntegerField(default=0)
     choisie = models.BooleanField(default="False")
-    valide = models.BooleanField(default="False")
+    valide = models.BooleanField(default="True")
 
     def __str__(self):
         return self.ue.nom + " " + self.etudiant.utilisateur.first_name + " " + self.etudiant.utilisateur.last_name
