@@ -86,7 +86,7 @@ def main():
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Gestion de production\', \'GEO_02\', \'GEO_02\', \'0\', \'8\', \'22\', \'2\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Marketing orienté Web\', \'GEO_06\', \'GEO_06\', \'2\', \'8\', \'22\', \'2\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Droit de la santé et bioéthique 1\', \'SANTE_02\', \'SANTE_02\', \'0\', \'0\', \'30\', \'2\');\
-    INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Anglais\', \'TRANS_01\', \'TRANS_01\', \'0\', \'8\', \'22\', \'1\');\
+    INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Anglais M1\', \'TRANS_01\', \'TRANS_01\', \'0\', \'8\', \'22\', \'1\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Découverte de la recherche\', \'TRANS_03\', \'TRANS_03\', \'0\', \'8\', \'22\', \'1\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Instrumentation biomédicale 1\', \'SANTE_03\', \'SANTE_03\', \'0\', \'0\', \'30\', \'2\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Communication\', \'TRANS_02\', \'TRANS_02\', \'0\', \'8\', \'22\', \'1\');\
@@ -107,7 +107,7 @@ def main():
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Web Design\', \'INFO_31\', \'INFO_31\', \'0\', \'8\', \'22\', \'1\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Stratégie d entreprise\', \'GEO_08\', \'GEO_08\', \'0\', \'8\', \'22\', \'2\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Théories des organisations\', \'GEO_09\', \'GEO_09\', \'0\', \'8\', \'22\', \'1\');\
-    INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Anglais\', \'TRANS_08\', \'TRANS_08\', \'0\', \'0\', \'30\', \'2\');\
+    INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Anglais M2\', \'TRANS_08\', \'TRANS_08\', \'0\', \'0\', \'30\', \'2\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Environnement socio-économique\', \'TRANS_10\', \'TRANS_10\', \'0\', \'0\', \'30\', \'2\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Etude de cas thématique\', \'PRO_03\', \'PRO_03\', \'0\', \'0\', \'30\', \'3\');\
     INSERT INTO optionnelles_ue(nom, num_UE, code_apoge, nombre_groupes, nombre_heures_CM, nombre_heures_TD, semestre_id) VALUES (\'Projet professionnel\', \'PRO_04\', \'PRO_04\', \'0\', \'0\', \'0\', \'3\');\
@@ -191,70 +191,69 @@ def main():
     INSERT INTO optionnelles_ue_par_pole VALUES (61, 0, 14, 44);\
     INSERT INTO optionnelles_ue_par_pole VALUES (62, 0, 15, 45);\
     INSERT INTO optionnelles_ue_par_pole VALUES (63, 0, 15, 46);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (64, 0, 16, 32);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (65, 0, 16, 33);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (66, 1, 16, 36);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (67, 1, 16, 37);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (64, 0, 16, 33);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (65, 0, 16, 47);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (66, 0, 17, 48);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (67, 0, 17, 49);\
     INSERT INTO optionnelles_ue_par_pole VALUES (68, 0, 17, 38);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (69, 0, 17, 55);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (70, 0, 17, 52);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (71, 0, 17, 56);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (72, 1, 17, 39);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (73, 1, 17, 40);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (74, 1, 17, 53);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (75, 0, 18, 41);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (76, 0, 19, 43);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (77, 0, 19, 54);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (78, 0, 19, 44);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (79, 0, 20, 45);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (80, 0, 20, 46);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (81, 0, 21, 33);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (82, 0, 21, 35);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (83, 0, 22, 57);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (84, 0, 22, 52);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (85, 0, 22, 58);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (86, 0, 22, 56);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (87, 1, 22, 59);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (88, 1, 22, 60);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (89, 0, 23, 54);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (90, 0, 23, 44);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (91, 0, 23, 43);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (92, 0, 24, 61);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (93, 0, 24, 62);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (94, 0, 24, 63);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (95, 0, 25, 45);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (96, 0, 25, 46);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (97, 0, 26, 33);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (98, 0, 26, 41);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (99, 0, 27, 64);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (100, 0, 27, 46);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (101, 1, 27, 42);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (102, 1, 27, 48);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (103, 1, 27, 49);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (104, 1, 27, 38);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (105, 1, 27, 39);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (106, 1, 27, 55);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (107, 1, 27, 57);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (108, 1, 27, 59);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (109, 1, 27, 52);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (110, 1, 27, 58);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (111, 1, 27, 56);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (112, 1, 27, 50);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (113, 1, 27, 60);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (114, 1, 27, 51);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (115, 1, 27, 40);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (116, 1, 27, 53);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (117, 1, 27, 31);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (118, 1, 27, 32);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (119, 1, 27, 35);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (120, 1, 27, 36);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (121, 1, 27, 47);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (122, 1, 27, 61);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (123, 1, 27, 62);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (124, 1, 27, 63);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (125, 1, 27, 43);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (126, 1, 27, 54);\
-    INSERT INTO optionnelles_ue_par_pole VALUES (127, 1, 27, 44);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (69, 0, 17, 50);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (70, 0, 17, 51);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (71, 1, 17, 52);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (72, 1, 17, 53);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (73, 0, 18, 41);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (74, 0, 18, 42);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (75, 0, 19, 43);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (76, 0, 19, 54);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (77, 0, 19, 44);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (78, 0, 20, 45);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (79, 0, 20, 46);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (80, 0, 21, 33);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (81, 0, 21, 35);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (82, 0, 22, 57);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (83, 0, 22, 52);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (84, 0, 22, 58);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (85, 0, 22, 56);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (86, 1, 22, 59);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (87, 1, 22, 60);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (88, 0, 23, 54);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (89, 0, 23, 44);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (90, 0, 23, 43);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (91, 0, 24, 61);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (92, 0, 24, 62);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (93, 0, 24, 63);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (94, 0, 25, 45);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (95, 0, 25, 46);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (96, 0, 26, 33);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (97, 0, 26, 41);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (98, 0, 27, 64);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (99, 0, 27, 46);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (100, 1, 27, 42);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (101, 1, 27, 48);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (102, 1, 27, 49);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (103, 1, 27, 38);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (104, 1, 27, 39);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (105, 1, 27, 55);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (106, 1, 27, 57);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (107, 1, 27, 59);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (108, 1, 27, 52);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (109, 1, 27, 58);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (110, 1, 27, 56);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (111, 1, 27, 50);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (112, 1, 27, 60);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (113, 1, 27, 51);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (114, 1, 27, 40);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (115, 1, 27, 53);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (116, 1, 27, 31);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (117, 1, 27, 32);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (118, 1, 27, 35);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (119, 1, 27, 36);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (120, 1, 27, 47);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (121, 1, 27, 61);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (122, 1, 27, 62);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (123, 1, 27, 63);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (124, 1, 27, 43);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (125, 1, 27, 54);\
+    INSERT INTO optionnelles_ue_par_pole VALUES (126, 1, 27, 44);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 1, 2);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 2, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (4, 2, 2);\
