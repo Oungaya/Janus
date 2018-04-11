@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    #'optionnelles'
+    'janus.optionnelles'
 ]
 
 EMAIL_HOST = 'smtp.sendgrid.net'
