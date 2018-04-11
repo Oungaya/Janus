@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'janus.urls'
+ROOT_URLCONF = 'janus.janus.urls'
 
 TEMPLATES = [
     {
