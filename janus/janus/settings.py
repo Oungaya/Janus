@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'janus.optionnelles'
+    'optionnelles'
 ]
 
 EMAIL_HOST = 'smtp.sendgrid.net'
@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'janus.janus.urls'
+ROOT_URLCONF = 'janus.urls'
 
 TEMPLATES = [
     {
