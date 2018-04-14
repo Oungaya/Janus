@@ -1,6 +1,6 @@
-janus/janus/settings.py
-janus/janus/__pycache__
+janus/__pycache__
 janus/optionnelles/migrations
 janus/optionnelles/__pycache__
+optionnelles/templatetags/__pycache__
 .DS_Store
 janus/script_reset_db.py
