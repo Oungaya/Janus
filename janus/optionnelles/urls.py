@@ -23,6 +23,7 @@ urlpatterns = [
     path('modification_professeur/<int:id_prof>/end/', views.admin_ProfesseurEnd, name='admin_ProfesseurEnd'),
     path('validation_inscription/<num_etu>/user/', views.admin_ValidationInscriptionDetails, name='admin_ValidationInscriptionDetails'),
     path('validation_inscription/<num_etu>/end/', views.admin_ValidationInscriptionEnd, name='admin_ValidationInscriptionEnd'),
+    url(r'^ajax/valide_ue/$', views.valide_ue, name='valide_ue'),
     path('inscription_admin/', views.admin_InscriptionAdmin, name='admin_InscriptionAdmin'),
     path('liste_admin/', views.admin_ListeAdmin, name='admin_ListeAdmin'),
     path('modification_admin/<int:id_admin>/user/', views.admin_AdminDetails, name='admin_AdminDetails'),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('emargement/<int:id_ue>/', views.emargement, name='emargement'),
     path('choix_options/', views.etudiant_choixOptions, name='choix_options'),
     path('export_csv/<int:id_ue>/<int:id_groupe>', views.exportCSV, name='export_csv'),
+    path('export_pdf/<int:id_ue>/<int:id_groupe>', views.exportPDF, name='export_pdf'),
     #gestion du mot de passe oublié
     url(r'^password_reset/$', auth_views.password_reset,{'email_template_name':'optionnelles/registration/password_reset_email.html',
                                                     'template_name':'optionnelles/registration/password_reset_form.html',

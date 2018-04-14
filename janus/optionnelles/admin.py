@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from .models import Professeur,Statut,Semestre,TypePole,Promotion,AnneeCourante,Parcours,Etudiant,Pole,UE,Etudiant_par_UE
+from .models import Professeur,Statut,Semestre,TypePole,Promotion,AnneeCourante,Parcours,Etudiant,Pole,UE,Etudiant_par_UE,Pole_par_Semestre
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
@@ -12,7 +12,7 @@ admin.site.register(Promotion)
 admin.site.register(AnneeCourante)
 admin.site.register(Parcours)
 #admin.site.register(Etudiant)
-admin.site.register(Pole)
+#admin.site.register(Pole)
 admin.site.register(UE)
 
 class UEInline(admin.TabularInline):
@@ -22,7 +22,15 @@ class UEInline(admin.TabularInline):
 class EtudiantAdmin(admin.ModelAdmin):
     inlines = (UEInline,)
 
+class SemestreInline(admin.TabularInline):
+    model = Pole_par_Semestre
+    extra = 2 # how many rows to show
+
+class PoleAdmin(admin.ModelAdmin):
+    inlines = (SemestreInline,)
+
 admin.site.register(Etudiant, EtudiantAdmin)
+admin.site.register(Pole, PoleAdmin)
 
 """
 class ProfesseurInline(admin.StackedInline):

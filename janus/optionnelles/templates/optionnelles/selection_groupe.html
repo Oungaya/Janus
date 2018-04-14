@@ -10,8 +10,8 @@
                 {% if e|get_UE:ue.id|has_no_group:0 %}
                                 <li class="draggable">
                                     <span class="mdl-chip mdl-chip--contact"  data-id-etudiant="{{e.id}}" data-groupe="0" data-id-ue="{{ue.id}}">
-                                        <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">{{ e.utilisateur.first_name|slice:"1" }}{{ e.utilisateur.last_name|slice:"1" }}</span>
-                                        <span class="mdl-chip__text">{{ e.utilisateur.first_name }} {{ e.utilisateur.last_name }} </span>
+                                        <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">{{ e.utilisateur.last_name|slice:"1" }}{{ e.utilisateur.first_name|slice:"1" }}</span>
+                                        <span class="mdl-chip__text">{{ e.utilisateur.last_name }} {{ e.utilisateur.first_name }} </span>
                                     </span>
                                 </li>
                    {% endif %}

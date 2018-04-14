@@ -25,21 +25,29 @@ class TypePole(models.Model):
     def __str__(self):
         return self.nom
 
-class Pole(models.Model):
-    nom = models.CharField(max_length=200)
-    parcours = models.ForeignKey(Parcours, on_delete=models.CASCADE)
-    typePole = models.ForeignKey(TypePole, on_delete=models.CASCADE)
-    nombre_options = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.nom
-
 class Semestre(models.Model):
     nom = models.CharField(max_length=200)
     diminutif = models.CharField(max_length=10)
 
     def __str__(self):
         return self.nom
+
+class Pole(models.Model):
+    nom = models.CharField(max_length=200)
+    parcours = models.ForeignKey(Parcours, on_delete=models.CASCADE)
+    typePole = models.ForeignKey(TypePole, on_delete=models.CASCADE)
+    semestres = models.ManyToManyField("Semestre", through="Pole_par_Semestre")
+
+    def __str__(self):
+        return self.nom
+
+class Pole_par_Semestre(models.Model):
+    semestre = models.ForeignKey(Semestre, on_delete=models.CASCADE)
+    pole = models.ForeignKey(Pole, on_delete=models.CASCADE)
+    nombre_options = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.semestre.nom + " " + self.pole.nom
 
 class UE(models.Model):
     nom = models.CharField(max_length=200)
@@ -126,6 +134,7 @@ class Etudiant_par_UE(models.Model):
     groupe = models.IntegerField(default=0)
     order = models.IntegerField(default=0)
     choisie = models.BooleanField(default="False")
+    valide = models.BooleanField(default="True")
 
     def __str__(self):
         return self.ue.nom + " " + self.etudiant.utilisateur.first_name + " " + self.etudiant.utilisateur.last_name
