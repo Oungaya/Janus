@@ -17,8 +17,10 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate
-from reportlab.platypus.tables import Table
-import random, string, csv, json, codecs
+from reportlab.platypus.tables import Table, TableStyle
+import random, string, csv, json, codecs, io, tempfile
+from weasyprint import HTML
+from django.template.loader import render_to_string
 
 
 def generer_mdp():
@@ -41,18 +43,7 @@ def exportCSV(request, id_ue, id_groupe):
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="emargement.csv"'
-    """
-    csv_data = (
-        ("First row", "Foo", "Bar", "Baz"),
-        ("Second row", "A", "B", "C", "Testing", "Here's a quote"),
-    )
 
-    t = loader.get_template('export/emargement_export.txt')
-
-    response.write(t.render({
-        'data': csv_data,
-    }))
-"""
     csv.register_dialect('unixpwd', delimiter=';', quoting=csv.QUOTE_NONE)
     response.write(codecs.BOM_UTF8)
     writer = csv.writer(response)
@@ -64,29 +55,49 @@ def exportCSV(request, id_ue, id_groupe):
 
 @login_required
 def exportPDF(request, id_ue, id_groupe):
-
+    """
     ue = UE.objects.get(pk=id_ue)
     
     #if id_groupe == 0:
     
     liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id)
-
+    liste_etudiant_nom = Etudiant.objects.values_list('utilisateur__first_name',flat=True)
+    liste_etudiant_prenom = Etudiant.objects.values_list('utilisateur__last_name',flat=True)
+    print(liste_etudiant)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="'+ ue.nom +' export.pdf"'
-    """
-    p = canvas.Canvas(response)
-    p.drawString(100, 100, "Hello world.")
-    p.showPage()
-    p.save()
-    """
+
+    buff = io.StringIO()
     elements = []
     cm = 2.54
     doc = SimpleDocTemplate(response, rightMargin=0, leftMargin=6.5 * cm, topMargin=0.3 * cm, bottomMargin=0)
 
-    data=[liste_etudiant]
+    data=[liste_etudiant_nom,liste_etudiant_prenom]
+    print(liste_etudiant_nom)
+    print(liste_etudiant_prenom)
     table = Table(data, colWidths=270, rowHeights=79)
     elements.append(table)
     doc.build(elements) 
+    response.write(buff.getvalue())
+    buff.close()
+    """
+    ue = UE.objects.get(pk=id_ue)
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id)
+    
+    # Rendered
+    html_string = render_to_string('export/export_pdf.html', {'liste_etudiant': liste_etudiant})
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+
+    # Creating http response
+    response = HttpResponse(content_type='application/pdf;')
+    response['Content-Disposition'] = 'attachment; filename="'+ ue.nom +' export.pdf"'
+    response['Content-Transfer-Encoding'] = 'binary'
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+        output = open(output.name, 'rb')
+        response.write(output.read())
 
     return response
 

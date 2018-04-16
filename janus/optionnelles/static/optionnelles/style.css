@@ -455,3 +455,12 @@ border-bottom: none;
   color: #ffffff;
   padding: 13px 0 0 24px;
 }
+
+.filter-panel{
+  padding:10px;
+  background:white;
+}
+
+.btn-export{
+  margin-right: 15px;
+}
