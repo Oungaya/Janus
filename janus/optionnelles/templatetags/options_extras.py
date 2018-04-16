@@ -23,3 +23,9 @@ def has_group(UE, args):
 def is_group(user, group_name):
     group =  Group.objects.get(name=group_name) 
     return group in user.groups.all() 
+
+@register.filter(name='get_UE_valid')
+def get_UE_valid(e, args):
+    id_ue = int(args)
+    e_par_ue = Etudiant_par_UE.objects.filter(etudiant__id=e.id,ue__id=id_ue)
+    return e_par_ue.first().valide
