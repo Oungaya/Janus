@@ -171,11 +171,22 @@ def valide_ue(request):
     ue_id = request.GET.get('ue', None)
     etudiant = request.GET.get('etudiant', None)
     ue = UE.objects.get(pk=ue_id)
+    #Récup l'étudiant pour vérifier s'il est redoublant
+    '''e = Etudiant.objects.get(pk=etudiant)
+    print(e)
+    if(e.redoublant == False):
+        e.redoublant = not e.redoublant
+    else:
+        e.redoublant = not e.redoublant
+    e.save()'''
     EtudiantParUE = Etudiant_par_UE.objects.get(etudiant__id=etudiant,ue__id=ue.id)
     EtudiantParUE.valide = not EtudiantParUE.valide
     EtudiantParUE.save()
+    
+    print(e.redoublant)
     data = {
-        'is_valid': 1
+        'is_valid': 1,
+        #'is_redoublant': e.redoublant
     }
     return JsonResponse(data)
 

@@ -58,10 +58,10 @@
                                         {{ form.ajac }}
                                     </label>
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="id_redoublant">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect redoublant" for="id_redoublant" data-id-etudiant="{{etudiant.id}}" data-is-redoublant="{{etudiant.redoublant}}">
                                             <span class="mdl-switch__label">Redoublant</span>
-                                            <!--<input type="checkbox" id="switch-redoublant" class="mdl-switch__input">-->
+                                        <!-- <input type="checkbox" id="switch-redoublant" class="mdl-switch__input">-->
                                             {{ form.redoublant }}
                                     </label>
                             </div>
@@ -72,7 +72,7 @@
                         </form>
                     </div>
             </div>
-            <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-cell mdl-cell--6-col validation-ue-redoublant">
                 <table class="js-dynamitable mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                     <thead>
                         <tr>
@@ -127,7 +127,7 @@
 
 {% block script %}
 <script>
-    $(function(){
+    $(document).ready(function(){
         $(".control-show-nom_ue").on('change keyup paste', function () {
             $(".control-hide-nom_ue").val($(".control-show-nom_ue").val());
             $(".control-hide-nom_ue").change();
@@ -136,22 +136,57 @@
         $(".validation-ue-input").change(function(){
             id_etudiant = $(this).parents('label').attr("data-id-etudiant");
             id_ue = $(this).parents('label').attr("data-id-ue");
+            redouble = $(this).parents('label').attr("data-is-redoublant");
 
             $.ajax({
                 url: '/options/ajax/valide_ue/',
                 data: {
                 'ue': id_ue,  
-                'etudiant': id_etudiant
+                'etudiant': id_etudiant,
+                'e':redouble,
                 },
                 dataType: 'json',
                 success: function (data) {
-                    
                 },
                 error: function(jqXHR, exception){
                     
                 }
             });
         });
+        $(".redoublant").change(function(){
+            id_etudiant = $(this).parents('label').attr("data-id-etudiant");
+            id_ue = $(this).parents('label').attr("data-id-ue");
+            redouble = $(this).parents('label').attr("data-is-redoublant");
+
+            $.ajax({
+                url: '/options/ajax/valide_ue/',
+                data: {
+                'etudiant': id_etudiant,
+                'e':redouble,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var etudiant_redoublant = data.is_redoublant;
+                    if(etudiant_redoublant){
+                        $(".validation-ue-redoublant").show();
+                    }
+                    else{
+                        $(".validation-ue-redoublant").hide();
+                    }
+                },
+                error: function(jqXHR, exception){
+                    
+                }
+            });
+        });
+        
+/*         $(".redoublant").change(function(){
+        if($(this).attr("etudiant.redoublant"))
+            $(".validation-ue-redoublant").show();
+        else
+            $(".validation-ue-redoublant").hide();
+        }); */
     });
+
 </script>
 {% endblock %}
