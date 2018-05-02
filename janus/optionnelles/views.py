@@ -15,10 +15,6 @@ from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
-#from reportlab.pdfgen import canvas
-#from reportlab.platypus import SimpleDocTemplate
-#from reportlab.platypus.tables import Table
-import random, string, csv, json, codecs
 from .generateur import generate_etudiant, bulk_generate_etudiant
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate
