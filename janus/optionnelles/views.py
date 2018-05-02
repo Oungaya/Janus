@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE
+from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Semestre
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -262,6 +262,20 @@ def etudiant_choixOptions(request):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/etudiant_choix_options.html', context)
+
+@login_required
+def etudiant_mesCours(request):
+    liste_ues_valide_s1_poleid12 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=1, poles=12)
+    liste_ues_valide_s2_poleid12 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=2, poles=12)
+    liste_ues_valide_s3= Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=3)
+    print(liste_ues_valide_s1_poleid12) 
+    print(liste_ues_valide_s2_poleid12)
+    context = {
+        'liste_ues_valide_s1_poleid12': liste_ues_valide_s1_poleid12,
+        'liste_ues_valide_s2_poleid12': liste_ues_valide_s2_poleid12,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/etudiant_mes_cours.html', context)
 
 @login_required
 def admin_ValidationInscriptionDetails(request, num_etu):
