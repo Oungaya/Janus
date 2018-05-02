@@ -53,4 +53,7 @@ urlpatterns = [
                                                     name='password_reset_confirm'),
 
     url(r'^reset/done/$', auth_views.password_reset_complete, {'template_name': 'optionnelles/registration/password_reset_complete.html'},name='password_reset_complete'),
+    
+    ### URL temporaires
+    path('generateur_temp/', views.generateur_temp, name='generateur_temp'),
 ]
