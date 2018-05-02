@@ -34,6 +34,7 @@ class Semestre(models.Model):
 
 class Pole(models.Model):
     nom = models.CharField(max_length=200)
+    a_choisir_dans_pole = models.IntegerField(default=2)
     parcours = models.ForeignKey(Parcours, on_delete=models.CASCADE)
     typePole = models.ForeignKey(TypePole, on_delete=models.CASCADE)
     semestres = models.ManyToManyField("Semestre", through="Pole_par_Semestre")
@@ -56,6 +57,7 @@ class UE(models.Model):
     nombre_groupes = models.IntegerField(default=0)
     nombre_heures_TD = models.IntegerField(default=0)
     nombre_heures_CM = models.IntegerField(default=0)
+    capacite = models.IntegerField(default=20)
     semestre = models.ForeignKey(Semestre, on_delete=models.CASCADE)
     poles = models.ManyToManyField("Pole", through="UE_par_Pole")
 
