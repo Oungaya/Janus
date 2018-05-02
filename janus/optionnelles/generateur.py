@@ -33,13 +33,12 @@ def generate_etudiant(_username,_email,_password,_prenom,_nom,_numetu,_ajac,_red
                 list_ue_etu[i].save()
     etu.save()
 
-def bulk_generate_etudiant(number,starting_num_etu):
-    num_etu = starting_num_etu
+def bulk_generate_etudiant(number):
+    num_etu = 10000000
     nb_parcours = Parcours.objects.all().count()
     for _ in range(number):
         num_etu += 1
         str_num_etu = str(num_etu)
-        str_num_etu = str_num_etu.zfill(8-len(str_num_etu))
         intial = ''.join(random.choices(string.ascii_lowercase))
         generate_etudiant(
             intial+str_num_etu,
