@@ -15,20 +15,17 @@ from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
-<<<<<<< HEAD
 #from reportlab.pdfgen import canvas
 #from reportlab.platypus import SimpleDocTemplate
 #from reportlab.platypus.tables import Table
 import random, string, csv, json, codecs
 from .generateur import generate_etudiant, bulk_generate_etudiant
-=======
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus.tables import Table, TableStyle
 import random, string, csv, json, codecs, io, tempfile
 from weasyprint import HTML
 from django.template.loader import render_to_string
->>>>>>> 2cc55a9dbdae93b8c828a9c59f88ee79377d450a
 
 
 def generer_mdp():
