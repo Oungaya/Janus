@@ -20,7 +20,7 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus.tables import Table, TableStyle
 import random, string, csv, json, codecs, io, tempfile
-#from weasyprint import HTML
+from weasyprint import HTML
 from django.template.loader import render_to_string
 
 
@@ -272,7 +272,13 @@ def etudiant_mesCours(request):
     #print(poles_parcours)
     for pole in poles_parcours:
         semestres_par_pole = Pole_par_Semestre.objects.filter(pole=pole.id).all()
-        print(semestres_par_pole)
+        for semestre in semestres_par_pole:
+            #print(semestre.semestre_id)
+            liste_ues_valide = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=semestre.semestre_id, poles=pole.id)
+            print("ID du semestre : ", semestre.semestre_id)
+            print("ID du pole : ", pole.id)
+            print("UE par semestre par pole : ", liste_ues_valide)
+        #print(semestres_par_pole)
         #print(pole.id, "-", pole.nom)
         liste_ues_valide_s1 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=1, poles=pole.id)
         #print(liste_ues_valide_s1)
@@ -648,19 +654,10 @@ def user_validationReinitialisation(request):
 def generateur_temp(request):
     user_list = User.objects.all()
     #generate_etudiant("d21109442","kappa123@gmail.com","kappa123","Jean","Dupont","21109442","False","False","0689547939",Parcours.objects.all()[0])
-    bulk_generate_etudiant(100)
+    bulk_generate_etudiant(10,500)
     context = {
         'user_list': user_list,
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/generateur_temp.html', context)
-
-def attribution_ues(request):
-    user_list = User.objects.all()
-    Etudiant.objects.all().delete
-    context = {
-        'user_list': user_list,
-        'template_group': getGroupTemplate(request.user)
-    }
-    return render(request, 'optionnelles/generateur_temp.html', context)   
 # Create your views here.
