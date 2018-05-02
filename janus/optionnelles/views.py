@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Semestre
+from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Pole, Semestre
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -266,11 +266,25 @@ def etudiant_choixOptions(request):
 
 @login_required
 def etudiant_mesCours(request):
+    parcours_id_etudiant = Etudiant.objects.get(utilisateur=request.user.id).parcours.first().id
+    parcours_etudiant = Etudiant.objects.get(utilisateur=request.user.id).parcours.first()
+    poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
+    #print(poles_parcours)
+    for pole in poles_parcours:
+        semestres_par_pole = Pole_par_Semestre.objects.filter(pole=pole.id).all()
+        print(semestres_par_pole)
+        #print(pole.id, "-", pole.nom)
+        liste_ues_valide_s1 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=1, poles=pole.id)
+        #print(liste_ues_valide_s1)
+        liste_ues_valide_s2 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=2, poles=pole.id)
+        #print(liste_ues_valide_s2)        
     liste_ues_valide_s1_poleid12 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=1, poles=12)
     liste_ues_valide_s2_poleid12 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=2, poles=12)
     liste_ues_valide_s3= Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=3)
-    print(liste_ues_valide_s1_poleid12) 
-    print(liste_ues_valide_s2_poleid12)
+    #print(poles_parcours)
+    #print(parcours_etudiant)
+    #print(liste_ues_valide_s1_poleid12) 
+    #print(liste_ues_valide_s2_poleid12)
     context = {
         'liste_ues_valide_s1_poleid12': liste_ues_valide_s1_poleid12,
         'liste_ues_valide_s2_poleid12': liste_ues_valide_s2_poleid12,

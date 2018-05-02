@@ -255,25 +255,64 @@ def main():
     INSERT INTO optionnelles_ue_par_pole VALUES (125, 1, 27, 54);\
     INSERT INTO optionnelles_ue_par_pole VALUES (126, 1, 27, 44);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 1, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 1, 3);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 2, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (4, 2, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 3, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 3, 2);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 4, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 4, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 5, 3);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 6, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 6, 3);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 7, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (4, 7, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 8, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 8, 2);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 9, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 9, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 10, 3);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 11, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 11, 2);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 12, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 12, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 13, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 13, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 14, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 14, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 15, 3);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 16, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 16, 2);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 17, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 17, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 18, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 18, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 19, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 19, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 20, 3);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 21, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 21, 2);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (3, 22, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 22, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 23, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 23, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 24, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 24, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 25, 3);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 26, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 26, 2);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (2, 27, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 27, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 28, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 28, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 29, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 29, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 30, 3);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 31, 1);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 31, 2);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (14, 32, 1);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (13, 32, 2);\
+    INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 32, 3);\
     "', shell=True)
     subprocess.call('python3 manage.py createsuperuser', shell=True)
 
