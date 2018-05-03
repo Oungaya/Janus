@@ -1,19 +1,16 @@
 {% extends template_group %}
 
 {% block content %}
-{% if poles_etudiant %} 
-<div class='mdl-cell mdl-cell--12-col card-ue'><h5>Bloc</h5>
-    <div class="mdl-cell mdl-cell--6-col card-chip">
-        <h5>Premier semestre</h5>
-        {% for pole in poles_etudiant %}
-        {{ pole.nom }}
-        {% endfor %}
-    </div>
+{% for p in poles_parcours %}
+    <div class='mdl-cell mdl-cell--12-col card-ue'><h5>{{ p }}</h5></div>
     <div class="mdl-cell mdl-cell--6-col card-chip-etudiant">
-        <h5>Deuxième semestre</h5>
-    </div>
-
-</div>
-{% endif %}
+    {% for s in semestres_par_pole %}
+    <h6>{{ s.semestre }}</h6>
+    {% for ue in liste_ues_valide %}
+    <div class="mdl-cell mdl-cell--12-col ">{{ ue.nom }}</div>
+    {% endfor %}
+    </div>   
+    {% endfor %}
+{% endfor %}
 
 {% endblock %}

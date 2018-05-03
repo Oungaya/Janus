@@ -273,11 +273,13 @@ def etudiant_mesCours(request):
     for pole in poles_parcours:
         semestres_par_pole = Pole_par_Semestre.objects.filter(pole=pole.id).all()
         for semestre in semestres_par_pole:
-            #print(semestre.semestre_id)
-            liste_ues_valide = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=semestre.semestre_id, poles=pole.id)
-            print("ID du semestre : ", semestre.semestre_id)
-            print("ID du pole : ", pole.id)
-            print("UE par semestre par pole : ", liste_ues_valide)
+            print(semestre)
+            liste_ues_valide = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=semestre.semestre_id, poles=pole.id) 
+            #print("ID du semestre : ", semestre.semestre_id)
+            #print("ID du pole : ", pole.id)
+            for ue in liste_ues_valide:
+                print(ue.nom)
+            #print("UE par semestre par pole : ", liste_ues_valide.values('nom'))
         #print(semestres_par_pole)
         #print(pole.id, "-", pole.nom)
         liste_ues_valide_s1 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=1, poles=pole.id)
@@ -292,8 +294,9 @@ def etudiant_mesCours(request):
     #print(liste_ues_valide_s1_poleid12) 
     #print(liste_ues_valide_s2_poleid12)
     context = {
-        'liste_ues_valide_s1_poleid12': liste_ues_valide_s1_poleid12,
-        'liste_ues_valide_s2_poleid12': liste_ues_valide_s2_poleid12,
+        'liste_ues_valide': liste_ues_valide,
+        'poles_parcours':poles_parcours,
+        'semestres_par_pole':semestres_par_pole,
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/etudiant_mes_cours.html', context)
