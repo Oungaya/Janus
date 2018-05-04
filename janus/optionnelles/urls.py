@@ -57,5 +57,5 @@ urlpatterns = [
     
     ### URL temporaires
     path('generateur_temp/', views.generateur_temp, name='generateur_temp'),
-    path('attribution_ues/', views.attribution_ues, name='attribution_ues'),
+  
 ]
