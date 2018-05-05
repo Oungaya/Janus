@@ -1,0 +1,146 @@
+
+{% extends template_group %}
+{% load options_extras %}
+{% block content %}
+<div class="mdl-cell mdl-cell--12-col">
+    <a href="/options/ajout_periode/"> 
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored add-button">
+                <i class="material-icons">add</i>
+        </button>
+    </a>
+{% if liste_periodes %}
+    <table class="js-dynamitable mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+            <tr>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-parcours" type="text" id="parcours">
+                                <label class="mdl-textfield__label" for="parcours">Parcours</label>
+                        </div>
+                    </th>
+                    <th class="mdl-data-table__cell--non-numeric">
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="form-control mdl-textfield__input control-show-nom" type="text" id="nom">
+                            <label class="mdl-textfield__label" for="nom">Nom</label>
+                          </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-dateDebutFinS1" type="text" id="dateDebutFinS1">
+                                <label class="mdl-textfield__label" for="dateDebutFinS1">Semestre 1</label>
+                        </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-dateDebutFinS2" type="text" id="dateDebutFinS2">
+                                <label class="mdl-textfield__label" for="dateDebutFinS2">Semestre 2</label>
+                        </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-dateDebutFinOptionsS1" type="text" id="dateDebutFinOptionsS1">
+                                <label class="mdl-textfield__label" for="dateDebutFinOptionsS1">Options Semestre 1</label>
+                        </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-dateDebutFinOptionsS2" type="text" id="dateDebutFinOptionsS2">
+                                <label class="mdl-textfield__label" for="dateDebutFinOptionsS2">Options Semestre 2</label>
+                        </div>
+                    </th>
+                    <th>
+                        <i class="js-sorter-desc material-icons">sort</i>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class=" form-control mdl-textfield__input control-show-dateDebutFinAnnee" type="text" id="dateDebutFinAnnee">
+                                <label class="mdl-textfield__label" for="dateDebutFinAnnee">Année</label>
+                        </div>
+                    </th>
+                </tr>
+                <tr class="hide-control">
+                        <th>
+                                <input class="js-filter  form-control hide-control control-hide-parcours" type="text" value="">
+                        </th>
+                        <th>
+                            <input class="js-filter  form-control hide-control control-hide-nom" type="text" value="">
+                        </th>
+                        <th>
+                                <input class="js-filter  form-control hide-control control-hide-dateDebutFinS1" type="text" value="">
+                        </th>
+                        <th>
+                            <input class="js-filter  form-control hide-control control-hide-dateDebutFinS2" type="text" value="">
+                        </th>
+                        <th>
+                            <input class="js-filter  form-control hide-control control-hide-dateDebutFinOptionsS1" type="text" value="">
+                        </th>
+                        <th>
+                            <input class="js-filter  form-control hide-control control-hide-dateDebutFinOptionsS2" type="text" value="">
+                        </th>
+                        <th>
+                            <input class="js-filter  form-control hide-control control-hide-dateDebutFinAnnee" type="text" value="">
+                        </th>
+                    </tr>
+        </thead>
+        <tbody>
+            {% for p in liste_periodes %}
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">{{ p.parcours }}</td>
+                    <td><a href="/options/modification_periode/{{ p.id }}/user/">{{ p.nom }}</a></td>
+                    <td> {{ p.dateDebutSemestre1|date:'d-m-Y' }} / {{ p.dateFinSemestre1|date:'d-m-Y'  }}</td>
+                    <td> {{ p.dateDebutSemestre2|date:'d-m-Y'  }} / {{ p.dateFinSemestre2|date:'d-m-Y' }}</td>
+                    <td> {{ p.dateDebutOptions1|date:'d-m-Y'  }} / {{ p.dateFinOptions1|date:'d-m-Y'  }}</td>
+                    <td> {{ p.dateDebutOptions2|date:'d-m-Y'  }} / {{ p.dateFinOptions2|date:'d-m-Y'  }}</td>
+                    <td> {{ p.dateDebutAnnee|date:'d-m-Y'  }} / {{ p.dateFinAnnee|date:'d-m-Y'  }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+{% else %}
+    <div class="mdl-cell mdl-cell--12-col  card-ue">
+        <h5>Aucune période n'est renseignée pour le moment.</h5>
+    </div>>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function(){
+
+            $(".control-show-parcours").on('change keyup paste', function () {
+                $(".control-hide-parcours").val($(".control-show-parcours").val());
+                $(".control-hide-parcours").change();
+            });
+            $(".control-show-nom").on('change keyup paste', function () {
+                $(".control-hide-nom").val($(".control-show-nom").val());
+                $(".control-hide-nom").change();
+            });
+            $(".control-show-dateDebutFinS1").on('change keyup paste', function () {
+                $(".control-hide-dateDebutFinS1").val($(".control-show-dateDebutFinS1").val());
+                $(".control-hide-dateDebutFinS1").change();
+            });
+            $(".control-show-dateDebutFinS2").on('change keyup paste', function () {
+                $(".control-hide-dateDebutFinS2").val($(".control-show-dateDebutFinS2").val());
+                $(".control-hide-dateDebutFinS2").change();
+            });
+            $(".control-show-dateDebutFinOptionsS1").on('change keyup paste', function () {
+                $(".control-hide-dateDebutFinOptionsS1").val($(".control-show-dateDebutFinOptionsS1").val());
+                $(".control-hide-dateDebutFinOptionsS1").change();
+            });
+            $(".control-show-dateDebutFinOptionsS2").on('change keyup paste', function () {
+                $(".control-hide-dateDebutFinOptionsS2").val($(".control-show-dateDebutFinOptionsS2").val());
+                $(".control-hide-dateDebutFinOptionsS2").change();
+            });
+            $(".control-show-dateDebutFinAnnee").on('change keyup paste', function () {
+                $(".control-hide-dateDebutFinAnnee").val($(".control-show-dateDebutFinAnnee").val());
+                $(".control-hide-dateDebutFinAnnee").change();
+            });
+        });
+    </script>
+{% endblock %}

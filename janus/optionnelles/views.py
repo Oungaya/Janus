@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Pole, Semestre
+from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Pole, Semestre, AnneeCourante
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
 from django.template import loader, Context
-from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm, InscriptionAdminForm, ModificationAdminForm
+from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm, InscriptionAdminForm, ModificationAdminForm, AjoutPeriodeForm, ModificationPeriodeForm
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .optionnellesHelpers import getGroupTemplate
@@ -22,7 +22,7 @@ from reportlab.platypus.tables import Table, TableStyle
 import random, string, csv, json, codecs, io, tempfile
 from weasyprint import HTML
 from django.template.loader import render_to_string
-
+from datetime import datetime
 
 def generer_mdp():
     length = 8
@@ -418,9 +418,6 @@ def admin_InscriptionAdmin(request):
         if form.is_valid():
             data = form.cleaned_data
             djangoUser = User.objects.create_user(username=data['prenom'][0].lower()+data['nom'].lower(), email=data['email'], password=generer_mdp())
-            #my_group = Group.objects.get(name='Professeur') 
-            #if data['isProf'] == "True":
-            #    my_group.user_set.add(djangoUser)
             djangoUser.first_name = username=data['prenom']
             djangoUser.last_name = username=data['nom']
             djangoUser.is_staff = "True"
@@ -433,7 +430,7 @@ def admin_InscriptionAdmin(request):
                 "L'inscription a échoué"
                 )
     else:
-        form = InscriptionProfesseurForm()
+        form = InscriptionAdminForm()
 
     return render(request, 'optionnelles/inscription_admin.html', {'form': form,'liste_admin': liste_admin,'template_group': getGroupTemplate(request.user)})
 
@@ -454,6 +451,83 @@ def admin_ListeAdmin(request):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/liste_admin.html', context)
+
+@login_required
+def admin_ListePeriodes(request):
+    liste_periodes = AnneeCourante.objects.all
+    context = {
+        'liste_periodes': liste_periodes,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/liste_periodes.html', context)
+
+@login_required
+def admin_PeriodeDetails(request, id_periode):
+    periode = AnneeCourante.objects.get(pk=id_periode)
+    form = ModificationPeriodeForm(initial={
+        'nom': periode.nom,
+        'parcours': periode.parcours,
+        'dateDebutS1': periode.dateDebutSemestre1,
+        'dateDebutS2': periode.dateDebutSemestre2,
+        'dateFinS1': periode.dateFinSemestre1,
+        'dateFinS2': periode.dateFinSemestre2,
+        'dateDebutOptionsS1': periode.dateDebutOptions1,
+        'dateDebutOptionsS2': periode.dateDebutOptions2,
+        'dateFinOptionsS1': periode.dateFinOptions1,
+        'dateFinOptionsS2': periode.dateFinOptions2,
+        'dateDebutAnnee': periode.dateDebutAnnee,
+        'dateFinAnnee': periode.dateFinAnnee
+    })
+    context = {
+        'periode': periode,
+        'template_group': getGroupTemplate(request.user),
+        'form' : form
+    }
+    return render(request, 'optionnelles/periode_details.html', context)
+
+@login_required
+def admin_PeriodeEnd(request, id_periode):
+    periode = AnneeCourante.objects.get(pk=id_periode)
+    if request.method == 'POST':
+        form = ModificationPeriodeForm(request.POST)
+        if request.POST.get("modif"):
+            if form.is_valid():
+                data = form.cleaned_data
+                periode.nom = data['nom']
+                periode.parcours = data['parcours']
+                periode.dateDebutSemestre1 = data['dateDebutS1']
+                periode.dateDebutSemestre2 = data['dateDebutS2']
+                periode.dateFinSemestre1 = data['dateFinS1']
+                periode.dateFinSemestre2 = data['dateFinS2']
+                periode.dateDebutOptions1 = data['dateDebutOptionsS1']
+                periode.dateDebutOptions2 = data['dateDebutOptionsS2']
+                periode.dateFinOptions1 = data['dateFinOptionsS1']
+                periode.dateFinOptions2 = data['dateFinOptionsS2']
+                periode.dateDebutAnnee = data['dateDebutAnnee']
+                periode.dateFinAnnee = data['dateFinAnnee']
+                periode.save()
+                messages.success(request, 'Periode modifiée')
+                return HttpResponseRedirect('/options/liste_periodes/')
+            else:
+                form.add_error(None, "La modification a échoué")
+        else:
+            return HttpResponseRedirect('/options/liste_periodes/')
+
+@login_required
+def admin_AjoutPeriode(request):
+    if request.method == 'POST':
+        form = AjoutPeriodeForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            periode = AnneeCourante(nom=data['nom'], parcours=data['parcours'], dateDebutSemestre1=data['dateDebutS1'], dateDebutSemestre2=data['dateDebutS2'], dateFinSemestre1=data['dateFinS1'], dateFinSemestre2=data['dateFinS2'], dateDebutOptions1=data['dateDebutOptionsS1'], dateDebutOptions2=data['dateDebutOptionsS2'], dateFinOptions1=data['dateFinOptionsS1'], dateFinOptions2=data['dateFinOptionsS2'], dateDebutAnnee=['dateDebutAnnee'], dateFinAnnee=['dateFinAnnee'])
+            periode.save()
+            messages.success(request, 'La période a été crée')
+            return HttpResponseRedirect('/options/liste_periodes')
+        else:
+            form.add_error(None, "La création a échoué")
+    else:
+        form = AjoutPeriodeForm()
+    return render(request, 'optionnelles/ajout_periode.html', {'form': form, 'template_group': getGroupTemplate(request.user)})
 
 @login_required
 def admin_AdminDetails(request, id_admin):
