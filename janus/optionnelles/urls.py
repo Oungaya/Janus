@@ -61,9 +61,5 @@ urlpatterns = [
     
     ### URL temporaires 
     path('generateur_temp/', views.generateur_temp, name='generateur_temp'),
-<<<<<<< HEAD
     path('aggreg_pref/', views.aggreg_pref, name='aggreg_pref'),
-=======
-  
->>>>>>> e24f9f693ec7f490852441a69e7faf57d86c59ab
 ]
