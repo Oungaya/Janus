@@ -15,7 +15,7 @@ from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
-from .generateur import generate_etudiant, bulk_generate_etudiant
+from .generateur import generate_etudiant, bulk_generate_etudiant, attribution_ue
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus.tables import Table, TableStyle
@@ -656,11 +656,19 @@ def user_validationReinitialisation(request):
 
 def generateur_temp(request):
     user_list = User.objects.all()
-    #generate_etudiant("d21109442","kappa123@gmail.com","kappa123","Jean","Dupont","21109442","False","False","0689547939",Parcours.objects.all()[0])
-    bulk_generate_etudiant(10,500)
+    bulk_generate_etudiant(10)
     context = {
         'user_list': user_list,
         'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/generateur_temp.html', context)
+
+def aggreg_pref(request):
+    user_list = User.objects.all()
+    context = {
+        'user_list': user_list,
+        'template_group': getGroupTemplate(request.user),
+        'res' : attribution_ue()
     }
     return render(request, 'optionnelles/generateur_temp.html', context)
 # Create your views here.
