@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['janusoptions.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
-    #'optionnelles',
+    'optionnelles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'janus',
         'HOST': '127.0.0.1',
         'PORT': '3306',
