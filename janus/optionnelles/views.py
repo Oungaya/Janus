@@ -276,12 +276,9 @@ def etudiant_mesCours(request):
         res[pole] = {}
         semestres_par_pole = Pole_par_Semestre.objects.filter(pole=pole.id).all()
         for semestre in semestres_par_pole:
-            '''liste_ues_valide = etudiant.ues.filter(etudiant_par_ue__choisie=True, semestre_id=semestre.semestre_id, poles=pole.id)#.filter()
-            print(liste_ues_valide)            
-            res[pole][semestre] = {'ue_obligatoire': liste_ues_valide, 'ue_optionnelles': []}'''
             liste_ues_valide_option = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, etudiant_par_ue__choisie=True, semestre_id=semestre.semestre_id, poles=pole.id)
             liste_ues_valide_oblig = etudiant.ues.filter(etudiant_par_ue__optionnelle=False, etudiant_par_ue__choisie=True, semestre_id=semestre.semestre_id, poles=pole.id)
-            res[pole][semestre] = {'ue_obligatoire': liste_ues_valide_oblig, 'ue_optionnelles': liste_ues_valide_option}
+            res[pole][semestre] = {'UE obligatoire(s)': liste_ues_valide_oblig, 'UE optionnelle(s)': liste_ues_valide_option}
     context = {
         'res':res,
         'template_group': getGroupTemplate(request.user)

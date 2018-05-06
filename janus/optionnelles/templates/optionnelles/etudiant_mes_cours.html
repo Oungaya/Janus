@@ -3,16 +3,35 @@
 {% block content %}
 {% if res %}
     {% for pole, liste_semestre in res.items %}
-        {{ pole }}
+    <div class="mdl-cell mdl-cell--12-col card-ue"><h4>{{ pole }}</h4></div>
         {% for semestre, type_ues in liste_semestre.items %}
-            {{ semestre }}
-            {% for key, liste_ues in type_ues.items %}
-                {{ key }}
-                {% for ue in liste_ues %}
-                    {{ ue }}
+        <div class="mdl-cell mdl-cell--6-col card-chip-etudiant">
+            <h5>{{ semestre.semestre }}</h5>
+            <div class="mdl-cell mdl-cell--12-col">
+                {% for key, liste_ues in type_ues.items %}
+                <table class="mdl-data-table mdl-shadow--2dp">
+                    <thead>
+                        <h6>{{ key }}</h6> <br>
+                    </thead>
+                    <body>
+                        {% for ue in liste_ues %}
+                        <ul>
+                            <li>
+                                <span>
+                                    {{ ue }} <br>
+                                </span>
+                            </li>
+                        </ul>      
+                        {% endfor %}
+                    </body>
+                </table>
+                    
                 {% endfor %}
-            {% endfor %}
+            </div>  
+        </div>
         {% endfor %}
+            
+            
     {% endfor %}
 {% endif %}
 {% endblock %}
