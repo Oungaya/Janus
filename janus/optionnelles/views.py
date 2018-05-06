@@ -412,7 +412,7 @@ def admin_AdminDetails(request, id_admin):
     }
     return render(request, 'optionnelles/admin_details.html', context)
 
-@login_required
+@login_required  
 def admin_AdminEnd(request, id_admin):
     admin = User.objects.filter(is_staff=True).get(pk=id_admin)
     if request.method == 'POST':
