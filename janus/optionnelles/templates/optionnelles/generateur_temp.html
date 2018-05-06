@@ -4,5 +4,21 @@
 
 {% block content %}
 
+{% if res %}
+    {% for key, value_list  in res.items %}
+        <ul>
+            <li>{{ key }}
+                <ul>
+                    {% for value in value_list %}
+                        <li>{{ value }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+{% else %}
+    <p>No res</p>
+{% endif %}
+
 
 {% endblock %}
