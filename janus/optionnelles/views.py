@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Pole, Semestre, AnneeCourante
+from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Pole, Semestre, AnneeCourante, UE_par_Pole
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -266,37 +266,21 @@ def etudiant_choixOptions(request):
 
 @login_required
 def etudiant_mesCours(request):
-    parcours_id_etudiant = Etudiant.objects.get(utilisateur=request.user.id).parcours.first().id
-    parcours_etudiant = Etudiant.objects.get(utilisateur=request.user.id).parcours.first()
+    etudiant = Etudiant.objects.get(utilisateur=request.user.id)
+    parcours_id_etudiant = etudiant.parcours.first().id
+    parcours_etudiant = etudiant.parcours.first()
     poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
     #print(poles_parcours)
+    res = {}
     for pole in poles_parcours:
+        res[pole] = {}
         semestres_par_pole = Pole_par_Semestre.objects.filter(pole=pole.id).all()
         for semestre in semestres_par_pole:
-            print(semestre)
-            liste_ues_valide = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=semestre.semestre_id, poles=pole.id) 
-            #print("ID du semestre : ", semestre.semestre_id)
-            #print("ID du pole : ", pole.id)
-            for ue in liste_ues_valide:
-                print(ue.nom)
-            #print("UE par semestre par pole : ", liste_ues_valide.values('nom'))
-        #print(semestres_par_pole)
-        #print(pole.id, "-", pole.nom)
-        liste_ues_valide_s1 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=1, poles=pole.id)
-        #print(liste_ues_valide_s1)
-        liste_ues_valide_s2 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=2, poles=pole.id)
-        #print(liste_ues_valide_s2)        
-    liste_ues_valide_s1_poleid12 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=1, poles=12)
-    liste_ues_valide_s2_poleid12 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=2, poles=12)
-    liste_ues_valide_s3= Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=3)
-    #print(poles_parcours)
-    #print(parcours_etudiant)
-    #print(liste_ues_valide_s1_poleid12) 
-    #print(liste_ues_valide_s2_poleid12)
+            liste_ues_valide_option = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, etudiant_par_ue__choisie=True, semestre_id=semestre.semestre_id, poles=pole.id)
+            liste_ues_valide_oblig = etudiant.ues.filter(etudiant_par_ue__optionnelle=False, etudiant_par_ue__choisie=True, semestre_id=semestre.semestre_id, poles=pole.id)
+            res[pole][semestre] = {'UE obligatoire(s)': liste_ues_valide_oblig, 'UE optionnelle(s)': liste_ues_valide_option}
     context = {
-        'liste_ues_valide': liste_ues_valide,
-        'poles_parcours':poles_parcours,
-        'semestres_par_pole':semestres_par_pole,
+        'res':res,
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/etudiant_mes_cours.html', context)
@@ -681,6 +665,8 @@ def user_inscription(request):
                 for i in k.pole_set.all():
                     for y in i.ue_par_pole_set.all():
                         ueEtudiant = Etudiant_par_UE(etudiant = etudiantUser, ue = y.ue, optionnelle = y.option)
+                        if y.option==False:
+                            ueEtudiant.choisie = True
                         ueEtudiant.save()
             etudiantUser.save()
 

@@ -1,16 +1,37 @@
 {% extends template_group %}
 
 {% block content %}
-{% for p in poles_parcours %}
-    <div class='mdl-cell mdl-cell--12-col card-ue'><h5>{{ p }}</h5></div>
-    <div class="mdl-cell mdl-cell--6-col card-chip-etudiant">
-    {% for s in semestres_par_pole %}
-    <h6>{{ s.semestre }}</h6>
-    {% for ue in liste_ues_valide %}
-    <div class="mdl-cell mdl-cell--12-col ">{{ ue.nom }}</div>
+{% if res %}
+    {% for pole, liste_semestre in res.items %}
+    <div class="mdl-cell mdl-cell--12-col card-ue"><h4>{{ pole }}</h4></div>
+        {% for semestre, type_ues in liste_semestre.items %}
+        <div class="mdl-cell mdl-cell--6-col card-chip-etudiant">
+            <h5>{{ semestre.semestre }}</h5>
+            <div class="mdl-cell mdl-cell--12-col">
+                {% for key, liste_ues in type_ues.items %}
+                <table class="mdl-data-table mdl-shadow--2dp">
+                    <thead>
+                        <h6>{{ key }}</h6> <br>
+                    </thead>
+                    <body>
+                        {% for ue in liste_ues %}
+                        <ul>
+                            <li>
+                                <span>
+                                    {{ ue }} <br>
+                                </span>
+                            </li>
+                        </ul>      
+                        {% endfor %}
+                    </body>
+                </table>
+                    
+                {% endfor %}
+            </div>  
+        </div>
+        {% endfor %}
+            
+            
     {% endfor %}
-    </div>   
-    {% endfor %}
-{% endfor %}
-
+{% endif %}
 {% endblock %}
