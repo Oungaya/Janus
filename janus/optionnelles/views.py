@@ -268,11 +268,14 @@ def etudiant_choixOptions(request):
 def etudiant_choixOptions_temp(request):
     etudiant = Etudiant.objects.get(utilisateur=request.user.id)
     parcours_etudiant = etudiant.parcours.first()
+    #date_debut_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
+    #date_fin_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
     res = {}
     for pole in poles_parcours:
         liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id).order_by('etudiant_par_ue__order')
         res[pole] = {liste_ues}
+        #print(liste_ues)
     context = {
         'res': res,
         'template_group': getGroupTemplate(request.user)

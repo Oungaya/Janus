@@ -6,13 +6,13 @@
     {% if res %} 
     <h5>Vos options :</h5>
     <p>Sélectionner vos options par ordre de préférence. Vous pouvez modifier à tous moment vos choix jusqu'à la date --DATE--. Vos options seront ensuite réparties de manière équitable à l'aide d'un algorithme.</p>
-    {% for pole, liste_ue in res.items %}
+    {% for pole, liste_ues in res.items %}
     <h6>{{ pole }}</h6>
-    <ol id="choix-option">
-        {% for ue in liste_ue.res.items %}
-            <li class="li-ue-order" data-ordre="" data-ue="{{ e.id }}"><div class="card-ue" ></div>{{ ue }}</div></li>
+        <ol id="choix-option">
+        {% for ue in liste_ues %}
+            <li class="li-ue-order" data-ordre="" data-ue="{{ ue }}"><div class="card-ue" >{{ ue }}</div></li>
         {% endfor %}
-    </ol>
+        </ol>
     {% endfor %}
     <input type="submit" id="btn-valider-ordre" name="accept" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--colored right-btn" value="Valider mes choix" />
     {% else %}
