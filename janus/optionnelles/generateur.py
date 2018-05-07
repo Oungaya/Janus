@@ -75,6 +75,8 @@ def attribution_ue():
                 #print(str(pole.id))
                 choix_restant[etu.id][pole.id] = pole.a_choisir_dans_pole
     
+    # première phase de la répartition : met les étudiants dans des ues autant que possible
+    # des étudiants peuvent ne pas avoir assez d'ues dans certains poles à l'issue de cette étape
     for pref_ind in range(5):
         list_ue_etu = Etudiant_par_UE.objects.filter(order=pref_ind,choisie=False)
         for ue_etu in list_ue_etu:
@@ -92,5 +94,15 @@ def attribution_ue():
                         debug_ue[ue_etu.ue.nom] = []
                     debug_ue[ue_etu.ue.nom].append(str(ue_etu.etudiant.utilisateur))
                     print(ue_etu.ue.nom + "  " + str(ue_etu.etudiant.utilisateur))
+    
+    # seconde phase de la répartition : crée des place dans des poles pour les étudiants au nombre
+    # d'ues par pole pas suffisant (plus de place dans les ues lors de la première phase)
+    """
+    for etu_id, liste_pole in choix_restant.items():
+        for pole_id, reste in liste_pole.items():
+            while reste > 0:
+                #prend la place d'un autre étudiant dans une ue de ce pole
+    """
+
     return debug_ue
     
