@@ -274,7 +274,7 @@ def etudiant_choixOptions_temp(request):
     res = {}
     for pole in poles_parcours:
         liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id).order_by('etudiant_par_ue__order')
-        res[pole] = {liste_ues}
+        res[pole] = liste_ues
         #print(liste_ues)
     context = {
         'res': res,
