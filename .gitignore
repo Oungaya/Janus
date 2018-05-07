@@ -9,3 +9,4 @@ janus/optionnelles/__init__.py
 janus/.vscode/settings.json
 janus/janus/__init__.py
 janus/optionnelles/__init__.py
+*.pyc
