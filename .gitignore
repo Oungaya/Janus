@@ -4,3 +4,6 @@ janus/optionnelles/migrations
 janus/optionnelles/__pycache__
 .DS_Store
 janus/script_reset_db.py
+janus/janus/__init__.py
+janus/optionnelles/__init__.py
+janus/.vscode/settings.json
