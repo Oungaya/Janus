@@ -27,7 +27,6 @@ SECRET_KEY = '7a@a#v_ovx370se@f=7rody@-l4hfc+md!4aef+)@s5=-nlz!7'
 if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
 else:
-
     DEBUG = True
 
 ALLOWED_HOSTS = ['janusoptions.herokuapp.com']

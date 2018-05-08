@@ -8,9 +8,14 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 """
 
 import os
+import sys
 
-from django.core.wsgi import get_wsgi_application
-
+path = '/app/janus'
+if path not in sys.path:
+    sys.path.append(path)
+    
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "janus.settings")
 
-application = get_wsgi_application()
+from django.core.wsgi import get_wsgi_application
+from django.contrib.staticfiles.handlers import StaticFilesHandler
+application = StaticFilesHandler(get_wsgi_application())
