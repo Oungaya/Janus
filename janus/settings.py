@@ -26,7 +26,7 @@ SECRET_KEY = '7a@a#v_ovx370se@f=7rody@-l4hfc+md!4aef+)@s5=-nlz!7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["localhost", "janusoption.herokuapp.com"]
 
 
 # Application definition
