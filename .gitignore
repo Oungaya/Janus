@@ -10,3 +10,5 @@ janus/.vscode/settings.json
 janus/janus/__init__.py
 janus/optionnelles/__init__.py
 *.pyc
+janus/janus/.DS_Store
+janus/.DS_Store

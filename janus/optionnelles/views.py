@@ -22,7 +22,11 @@ from reportlab.platypus.tables import Table, TableStyle
 import random, string, csv, json, codecs, io, tempfile
 from weasyprint import HTML
 from django.template.loader import render_to_string
-from datetime import datetime
+#si USE_TZ = True
+from django.utils import timezone
+#si USE_TZ = False
+import datetime
+
 
 def generer_mdp():
     length = 8
@@ -271,6 +275,25 @@ def etudiant_choixOptions_temp(request):
     #date_debut_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     #date_fin_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
+    utc=pytz.UTC
+    dateDebutOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions1
+    dateFinOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions1
+    dateDebutOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions2
+    dateFinOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions2
+    dateDebutOptions1 = utc.localize(dateDebutOptions1)
+    dateFinOptions1 = utc.localize(dateFinOptions1)
+    dateDebutOptions2 = utc.localize(dateDebutOptions2)
+    dateFinOptions2 = utc.localize(dateFinOptions2)
+
+    now = timezone.now()
+
+    print(now)
+
+    '''if(datetime.now() >= dateDebutOptions1 and datetime.now() <= dateFinOptions1):
+        print("on est en S1")
+    elif(datetime.now() >= dateDebutOptions2 and datetime.now() <= dateFinOptions2):
+        print("on est en S2")'''
+
     res = {}
     for pole in poles_parcours:
         liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id).order_by('etudiant_par_ue__order')
