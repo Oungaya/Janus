@@ -80,16 +80,15 @@ WSGI_APPLICATION = 'janus.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'janus',
-#        'HOST': '127.0.0.1',
-#        'PORT': '3306',
-#        'USER': 'root',
-#        'PASSWORD': 'root'
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
-#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
