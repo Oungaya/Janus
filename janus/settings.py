@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -79,10 +80,10 @@ WSGI_APPLICATION = 'janus.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.posgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'janus',
         'HOST': '127.0.0.1',
-        'PORT': '5534',
+        'PORT': '3306',
         'USER': 'root',
         'PASSWORD': 'root'
     }
@@ -126,3 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/optionnelles/static/'
+
+if os.environ.get('ENV') == 'PRODUCTION':
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
