@@ -1,7 +1,7 @@
 {% extends template_group %}
 
 {% block content %}
-<div class="mdl-cell mdl-cell--12-col filter-panel">
+<div class="mdl-cell mdl-cell--12-col filter-panel card-chip-etudiant">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-promotion">
                 <select name="promotion" class="mdl-textfield__input" required="" id="id_promotion">
                 <option value="" selected=""></option>
@@ -94,15 +94,15 @@
                 <th class="mdl-data-table__cell--non-numeric">
                     <i class="js-sorter-desc material-icons">sort</i>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="form-control mdl-textfield__input control-show-nom" type="text" id="nom">
-                        <label class="mdl-textfield__label" for="nom">Nom</label>
+                        <input class="form-control mdl-textfield__input control-show-numUE" type="text" id="numUE">
+                        <label class="mdl-textfield__label" for="numUE">Numéro UE</label>
                       </div>
                 </th>
                 <th class="mdl-data-table__cell--non-numeric">
                     <i class="js-sorter-desc material-icons">sort</i>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="form-control mdl-textfield__input control-show-numUE" type="text" id="numUE">
-                        <label class="mdl-textfield__label" for="numUE">Numéro UE</label>
+                        <input class="form-control mdl-textfield__input control-show-nom" type="text" id="nom">
+                        <label class="mdl-textfield__label" for="nom">Nom</label>
                       </div>
                 </th>
                 <th>
@@ -123,10 +123,10 @@
             </tr>
             <tr class="hide-control">
                     <th>
-                            <input class="js-filter  form-control control-hide-nom" type="text" value="">
+                            <input class="js-filter  form-control control-hide-numUE" type="text" value="">
                     </th>
                     <th>
-                            <input class="js-filter  form-control control-hide-numUE" type="text" value="">
+                            <input class="js-filter  form-control control-hide-nom" type="text" value="">
                     </th>
                     <th>
                             <input class="js-filter  form-control control-hide-groupe" type="text" value="">
@@ -142,10 +142,10 @@
             {% for e in liste_ue %}
             
                 <tr>
+                    <td><a href="/options/emargement/{{ e.id }}/">{{ e.num_UE }}</a></td>
                     <td class="mdl-data-table__cell--non-numeric">
                             <a href="/options/emargement/{{ e.id }}/">  {{ e.nom }} </a>
                     </td>
-                    <td> {{ e.num_UE }} </td>
                     <td> {{ e.nombre_groupes }} </td>
                     <td> 
                         {% for p in e.poles.all %}

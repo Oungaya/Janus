@@ -17,7 +17,7 @@ class InscriptionForm(forms.Form):
     confirmPassword = forms.CharField(max_length=100,widget=forms.PasswordInput(attrs={'class' : 'mdl-textfield__input'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class' : 'mdl-textfield__input'}))
     telephone = forms.CharField(widget=forms.TextInput(attrs={'class' : 'mdl-textfield__input'}))
-    #AJAC plus pris en compte dans l'inscription mais dans la validation admin de l'étudiant (MAJ du 13/03/2018)
+    #AJAC plus pris en compte dans l'inscription mais dans la validation admin de l'étudiant (MAJ du 13-03-2018)
     #ajac = forms.BooleanField(required=False,widget=forms.CheckboxInput(attrs={'class' : 'mdl-switch__input'}))
     redoublant = forms.BooleanField(required=False,widget=forms.CheckboxInput(attrs={'class' : 'mdl-switch__input'}))
 
@@ -36,6 +36,36 @@ class InscriptionAdminForm(forms.Form):
     nom = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class' : 'mdl-textfield__input'}))
     prenom = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class' : 'mdl-textfield__input'}))
     #isProf = forms.BooleanField(required=False,widget=forms.CheckboxInput(attrs={'class' : 'mdl-switch__input'}))
+
+class AjoutPeriodeForm(forms.Form):
+    queryParcours = Parcours.objects.all()
+    nom = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class' : 'mdl-textfield__input'}))
+    parcours = forms.ModelChoiceField(queryset=queryParcours,widget=forms.Select(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutS1 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinS1 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutOptionsS1 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutOptionsS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinOptionsS1 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinOptionsS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutAnnee = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinAnnee = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+
+class ModificationPeriodeForm(forms.Form):
+    queryParcours = Parcours.objects.all()
+    nom = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class' : 'mdl-textfield__input'}))
+    parcours = forms.ModelChoiceField(queryset=queryParcours,widget=forms.Select(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutS1 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinS1 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutOptionsS1 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutOptionsS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinOptionsS1 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinOptionsS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateDebutAnnee = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
+    dateFinAnnee = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input'}))
 
 class ModificationAdminForm(forms.Form):
     queryGroupe = Group.objects.all()

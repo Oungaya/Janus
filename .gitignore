@@ -5,3 +5,11 @@ janus/optionnelles/__pycache__
 .DS_Store
 janus/script_reset_db.py
 janus/optionnelles/templatetags/__pycache__/
+janus/janus/__init__.py
+janus/optionnelles/__init__.py
+janus/.vscode/settings.json
+janus/janus/__init__.py
+janus/optionnelles/__init__.py
+*.pyc
+janus/janus/.DS_Store
+janus/.DS_Store

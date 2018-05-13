@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Pole, Semestre
+from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Pole, Semestre, AnneeCourante, UE_par_Pole
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,20 +8,24 @@ from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.template.context_processors import csrf
 from django.template import loader, Context
-from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm, InscriptionAdminForm, ModificationAdminForm
+from .forms import ConnexionForm, InscriptionForm, InscriptionProfesseurForm, MpoublieForm, ReinitialisationForm, ValidationUserByAdminForm, ModificationProfByAdminForm, InscriptionAdminForm, ModificationAdminForm, AjoutPeriodeForm, ModificationPeriodeForm
 from django.contrib.auth.decorators import login_required
 from django import forms
 from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
-from .generateur import generate_etudiant, bulk_generate_etudiant
+from .generateur import generate_etudiant, bulk_generate_etudiant, attribution_ue
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus.tables import Table, TableStyle
 import random, string, csv, json, codecs, io, tempfile
 from weasyprint import HTML
 from django.template.loader import render_to_string
+#si USE_TZ = True
+from django.utils import timezone
+#si USE_TZ = False
+import datetime
 
 
 def generer_mdp():
@@ -265,38 +269,58 @@ def etudiant_choixOptions(request):
     return render(request, 'optionnelles/etudiant_choix_options.html', context)
 
 @login_required
-def etudiant_mesCours(request):
-    parcours_id_etudiant = Etudiant.objects.get(utilisateur=request.user.id).parcours.first().id
-    parcours_etudiant = Etudiant.objects.get(utilisateur=request.user.id).parcours.first()
+def etudiant_choixOptions_temp(request):
+    etudiant = Etudiant.objects.get(utilisateur=request.user.id)
+    parcours_etudiant = etudiant.parcours.first()
+    #date_debut_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
+    #date_fin_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
-    #print(poles_parcours)
+    utc=pytz.UTC
+    dateDebutOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions1
+    dateFinOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions1
+    dateDebutOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions2
+    dateFinOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions2
+    dateDebutOptions1 = utc.localize(dateDebutOptions1)
+    dateFinOptions1 = utc.localize(dateFinOptions1)
+    dateDebutOptions2 = utc.localize(dateDebutOptions2)
+    dateFinOptions2 = utc.localize(dateFinOptions2)
+
+    now = timezone.now()
+
+    print(now)
+
+    '''if(datetime.now() >= dateDebutOptions1 and datetime.now() <= dateFinOptions1):
+        print("on est en S1")
+    elif(datetime.now() >= dateDebutOptions2 and datetime.now() <= dateFinOptions2):
+        print("on est en S2")'''
+
+    res = {}
     for pole in poles_parcours:
+        liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id).order_by('etudiant_par_ue__order')
+        res[pole] = liste_ues
+        #print(liste_ues)
+    context = {
+        'res': res,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/etudiant_choix_options_temp.html', context)
+
+@login_required
+def etudiant_mesCours(request):
+    etudiant = Etudiant.objects.get(utilisateur=request.user.id)
+    parcours_id_etudiant = etudiant.parcours.first().id
+    parcours_etudiant = etudiant.parcours.first()
+    poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
+    res = {}
+    for pole in poles_parcours:
+        res[pole] = {}
         semestres_par_pole = Pole_par_Semestre.objects.filter(pole=pole.id).all()
         for semestre in semestres_par_pole:
-            print(semestre)
-            liste_ues_valide = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=semestre.semestre_id, poles=pole.id) 
-            #print("ID du semestre : ", semestre.semestre_id)
-            #print("ID du pole : ", pole.id)
-            for ue in liste_ues_valide:
-                print(ue.nom)
-            #print("UE par semestre par pole : ", liste_ues_valide.values('nom'))
-        #print(semestres_par_pole)
-        #print(pole.id, "-", pole.nom)
-        liste_ues_valide_s1 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=1, poles=pole.id)
-        #print(liste_ues_valide_s1)
-        liste_ues_valide_s2 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=2, poles=pole.id)
-        #print(liste_ues_valide_s2)        
-    liste_ues_valide_s1_poleid12 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=1, poles=12)
-    liste_ues_valide_s2_poleid12 = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=2, poles=12)
-    liste_ues_valide_s3= Etudiant.objects.get(utilisateur=request.user.id).ues.filter(semestre_id=3)
-    #print(poles_parcours)
-    #print(parcours_etudiant)
-    #print(liste_ues_valide_s1_poleid12) 
-    #print(liste_ues_valide_s2_poleid12)
+            liste_ues_valide_option = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, etudiant_par_ue__choisie=True, semestre_id=semestre.semestre_id, poles=pole.id)
+            liste_ues_valide_oblig = etudiant.ues.filter(etudiant_par_ue__optionnelle=False, etudiant_par_ue__choisie=True, semestre_id=semestre.semestre_id, poles=pole.id)
+            res[pole][semestre] = {'UE obligatoire(s)': liste_ues_valide_oblig, 'UE optionnelle(s)': liste_ues_valide_option}
     context = {
-        'liste_ues_valide': liste_ues_valide,
-        'poles_parcours':poles_parcours,
-        'semestres_par_pole':semestres_par_pole,
+        'res':res,
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/etudiant_mes_cours.html', context)
@@ -418,9 +442,6 @@ def admin_InscriptionAdmin(request):
         if form.is_valid():
             data = form.cleaned_data
             djangoUser = User.objects.create_user(username=data['prenom'][0].lower()+data['nom'].lower(), email=data['email'], password=generer_mdp())
-            #my_group = Group.objects.get(name='Professeur') 
-            #if data['isProf'] == "True":
-            #    my_group.user_set.add(djangoUser)
             djangoUser.first_name = username=data['prenom']
             djangoUser.last_name = username=data['nom']
             djangoUser.is_staff = "True"
@@ -433,7 +454,7 @@ def admin_InscriptionAdmin(request):
                 "L'inscription a échoué"
                 )
     else:
-        form = InscriptionProfesseurForm()
+        form = InscriptionAdminForm()
 
     return render(request, 'optionnelles/inscription_admin.html', {'form': form,'liste_admin': liste_admin,'template_group': getGroupTemplate(request.user)})
 
@@ -454,6 +475,83 @@ def admin_ListeAdmin(request):
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/liste_admin.html', context)
+
+@login_required
+def admin_ListePeriodes(request):
+    liste_periodes = AnneeCourante.objects.all
+    context = {
+        'liste_periodes': liste_periodes,
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/liste_periodes.html', context)
+
+@login_required
+def admin_PeriodeDetails(request, id_periode):
+    periode = AnneeCourante.objects.get(pk=id_periode)
+    form = ModificationPeriodeForm(initial={
+        'nom': periode.nom,
+        'parcours': periode.parcours,
+        'dateDebutS1': periode.dateDebutSemestre1,
+        'dateDebutS2': periode.dateDebutSemestre2,
+        'dateFinS1': periode.dateFinSemestre1,
+        'dateFinS2': periode.dateFinSemestre2,
+        'dateDebutOptionsS1': periode.dateDebutOptions1,
+        'dateDebutOptionsS2': periode.dateDebutOptions2,
+        'dateFinOptionsS1': periode.dateFinOptions1,
+        'dateFinOptionsS2': periode.dateFinOptions2,
+        'dateDebutAnnee': periode.dateDebutAnnee,
+        'dateFinAnnee': periode.dateFinAnnee
+    })
+    context = {
+        'periode': periode,
+        'template_group': getGroupTemplate(request.user),
+        'form' : form
+    }
+    return render(request, 'optionnelles/periode_details.html', context)
+
+@login_required
+def admin_PeriodeEnd(request, id_periode):
+    periode = AnneeCourante.objects.get(pk=id_periode)
+    if request.method == 'POST':
+        form = ModificationPeriodeForm(request.POST)
+        if request.POST.get("modif"):
+            if form.is_valid():
+                data = form.cleaned_data
+                periode.nom = data['nom']
+                periode.parcours = data['parcours']
+                periode.dateDebutSemestre1 = data['dateDebutS1']
+                periode.dateDebutSemestre2 = data['dateDebutS2']
+                periode.dateFinSemestre1 = data['dateFinS1']
+                periode.dateFinSemestre2 = data['dateFinS2']
+                periode.dateDebutOptions1 = data['dateDebutOptionsS1']
+                periode.dateDebutOptions2 = data['dateDebutOptionsS2']
+                periode.dateFinOptions1 = data['dateFinOptionsS1']
+                periode.dateFinOptions2 = data['dateFinOptionsS2']
+                periode.dateDebutAnnee = data['dateDebutAnnee']
+                periode.dateFinAnnee = data['dateFinAnnee']
+                periode.save()
+                messages.success(request, 'Periode modifiée')
+                return HttpResponseRedirect('/options/liste_periodes/')
+            else:
+                form.add_error(None, "La modification a échoué")
+        else:
+            return HttpResponseRedirect('/options/liste_periodes/')
+
+@login_required
+def admin_AjoutPeriode(request):
+    if request.method == 'POST':
+        form = AjoutPeriodeForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            periode = AnneeCourante(nom=data['nom'], parcours=data['parcours'], dateDebutSemestre1=data['dateDebutS1'], dateDebutSemestre2=data['dateDebutS2'], dateFinSemestre1=data['dateFinS1'], dateFinSemestre2=data['dateFinS2'], dateDebutOptions1=data['dateDebutOptionsS1'], dateDebutOptions2=data['dateDebutOptionsS2'], dateFinOptions1=data['dateFinOptionsS1'], dateFinOptions2=data['dateFinOptionsS2'], dateDebutAnnee=['dateDebutAnnee'], dateFinAnnee=['dateFinAnnee'])
+            periode.save()
+            messages.success(request, 'La période a été crée')
+            return HttpResponseRedirect('/options/liste_periodes')
+        else:
+            form.add_error(None, "La création a échoué")
+    else:
+        form = AjoutPeriodeForm()
+    return render(request, 'optionnelles/ajout_periode.html', {'form': form, 'template_group': getGroupTemplate(request.user)})
 
 @login_required
 def admin_AdminDetails(request, id_admin):
@@ -607,6 +705,8 @@ def user_inscription(request):
                 for i in k.pole_set.all():
                     for y in i.ue_par_pole_set.all():
                         ueEtudiant = Etudiant_par_UE(etudiant = etudiantUser, ue = y.ue, optionnelle = y.option)
+                        if y.option==False:
+                            ueEtudiant.choisie = True
                         ueEtudiant.save()
             etudiantUser.save()
 
@@ -656,11 +756,19 @@ def user_validationReinitialisation(request):
 
 def generateur_temp(request):
     user_list = User.objects.all()
-    #generate_etudiant("d21109442","kappa123@gmail.com","kappa123","Jean","Dupont","21109442","False","False","0689547939",Parcours.objects.all()[0])
-    bulk_generate_etudiant(10,500)
+    bulk_generate_etudiant(10)
     context = {
         'user_list': user_list,
         'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/generateur_temp.html', context)
+
+def aggreg_pref(request):
+    user_list = User.objects.all()
+    context = {
+        'user_list': user_list,
+        'template_group': getGroupTemplate(request.user),
+        'res' : attribution_ue()
     }
     return render(request, 'optionnelles/generateur_temp.html', context)
 # Create your views here.

@@ -1,0 +1,86 @@
+{% extends template_group %}
+
+{% block content %}
+<div class='mdl-cell mdl-cell--12-col card-ue'><h5>Choix des options</h5></div>
+<div class="mdl-cell mdl-cell--12-col card-chip-etudiant">
+    {% if res %} 
+    <h5>Vos options :</h5>
+    <p>Sélectionner vos options par ordre de préférence. Vous pouvez modifier à tous moment vos choix jusqu'à la date --DATE--. Vos options seront ensuite réparties de manière équitable à l'aide d'un algorithme.</p>
+    {% for pole, liste_ues in res.items %}
+    <h6>{{ pole }}</h6>
+        <ol id="choix-option">
+        {% for ue in liste_ues %}
+            <li class="li-ue-order" data-ordre="" data-ue="{{ ue }}"><div class="card-ue" >{{ ue }}</div></li>
+        {% endfor %}
+        </ol>
+    {% endfor %}
+    <input type="submit" id="btn-valider-ordre" name="accept" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--colored right-btn" value="Valider mes choix" />
+    {% else %}
+        <div class="mdl-cell mdl-cell--12-col card-ue-order">
+            <h5>Aucune UE n'est disponible.</h5>
+        </div>
+    {% endif %}
+</div>
+<div id="toast" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text">
+                
+        </div>
+        <div class="mdl-snackbar__icon">
+                <i class="material-icons" style="color:rgb(34, 209, 34);">done</i>
+              </div>
+        <button class="mdl-snackbar__action" type="button"></button>
+      </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+
+    function reloadOrder(){
+        var counter = 1;
+            $(".li-ue-order").each(function(){
+                $(this).attr("data-ordre",counter);
+                counter++;
+            });
+    }
+        $( function() {
+         reloadOrder();
+        $( "#choix-option" ).sortable({
+            update: function(event, ui) {
+                reloadOrder()
+        }
+        });
+        $( "#choix-option" ).disableSelection();
+        
+        $("#btn-valider-ordre").click(function(){
+            var dict = [];
+
+            $(".li-ue-order").each(function(){
+                var ordre = $(this).attr("data-ordre");
+                var ue = $(this).attr("data-ue");
+                dict.push({
+                    ue: ue,
+                    ordre: ordre
+                });
+            });
+
+            $.ajax({
+                url: '/options/ajax/choix_options/',
+                data: {
+                'dict': JSON.stringify(dict),
+                },
+                dataType: 'json',
+            success: function (data) {
+                var msg = 'Vos choix ont bien été pris en comptes';
+                var snackbarContainer = document.querySelector('#toast');
+                var data = {message: msg};
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            },
+            error: function(jqXHR, exception){
+                
+            }
+        });
+        });
+
+        } );
+    </script>
+{% endblock %}

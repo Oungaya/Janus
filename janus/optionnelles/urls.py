@@ -26,6 +26,10 @@ urlpatterns = [
     url(r'^ajax/valide_ue/$', views.valide_ue, name='valide_ue'),
     path('inscription_admin/', views.admin_InscriptionAdmin, name='admin_InscriptionAdmin'),
     path('liste_admin/', views.admin_ListeAdmin, name='admin_ListeAdmin'),
+    path('liste_periodes/', views.admin_ListePeriodes, name='admin_ListePeriodes'),
+    path('ajout_periode/', views.admin_AjoutPeriode, name='admin_AjoutPeriode'),
+    path('modification_periode/<int:id_periode>/user/', views.admin_PeriodeDetails, name='admin_PeriodeDetails'),
+    path('modification_periode/<int:id_periode>/end/', views.admin_PeriodeEnd, name='admin_PeriodeEnd'),
     path('modification_admin/<int:id_admin>/user/', views.admin_AdminDetails, name='admin_AdminDetails'),
     path('modification_admin/<int:id_admin>/end/', views.admin_AdminEnd, name='admin_AdminEnd'),
     path('selection_groupe/<int:id_ue>/', views.admin_selectionGroupe, name='admin_selectionGroupe'),
@@ -36,6 +40,7 @@ urlpatterns = [
     path('liste_emargement/', views.liste_emargement, name='liste_emargement'),
     path('emargement/<int:id_ue>/', views.emargement, name='emargement'),
     path('choix_options/', views.etudiant_choixOptions, name='choix_options'),
+    path('choix_options_temp/', views.etudiant_choixOptions_temp, name='choix_options_temp'),
     path('export_csv/<int:id_ue>/<int:id_groupe>', views.exportCSV, name='export_csv'),
     path('export_pdf/<int:id_ue>/<int:id_groupe>', views.exportPDF, name='export_pdf'),
     path('mes_cours/', views.etudiant_mesCours, name='mes_cours'),
@@ -55,7 +60,7 @@ urlpatterns = [
 
     url(r'^reset/done/$', auth_views.password_reset_complete, {'template_name': 'optionnelles/registration/password_reset_complete.html'},name='password_reset_complete'),
     
-    ### URL temporaires
+    ### URL temporaires 
     path('generateur_temp/', views.generateur_temp, name='generateur_temp'),
-  
+    path('aggreg_pref/', views.aggreg_pref, name='aggreg_pref'),
 ]
