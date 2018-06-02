@@ -25,8 +25,3 @@ urlpatterns = [
     url(r'^options/', include('optionnelles.urls'), name='optionnelles'),
 ]
 
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
