@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = '7a@a#v_ovx370se@f=7rody@-l4hfc+md!4aef+)@s5=-nlz!7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "janusoption.herokuapp.com"]
 
 
 # Application definition
@@ -79,16 +80,15 @@ WSGI_APPLICATION = 'janus.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'janus',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'USER': 'root',
-        'PASSWORD': 'root'
+        'PORT': '5432',
     }
 }
 
-#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -126,3 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/optionnelles/static/'
+
+if os.environ.get('ENV') == 'PRODUCTION':
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
