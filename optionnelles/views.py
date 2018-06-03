@@ -260,7 +260,7 @@ def admin_listeProfesseurs(request):
     return render(request, 'optionnelles/admin_liste_professeur.html', context)
 
 @login_required
-def etudiant_choixOptions(request):
+def etudiant_choixOptions_temp(request):
     liste_ues = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(etudiant_par_ue__optionnelle=True).order_by('etudiant_par_ue__order')
     context = {
         'liste_ues': liste_ues,
@@ -269,7 +269,7 @@ def etudiant_choixOptions(request):
     return render(request, 'optionnelles/etudiant_choix_options.html', context)
 
 @login_required
-def etudiant_choixOptions_temp(request):
+def etudiant_choixOptions(request):
     etudiant = Etudiant.objects.get(utilisateur=request.user.id)
     parcours_etudiant = etudiant.parcours.first()
     #date_debut_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
@@ -283,20 +283,24 @@ def etudiant_choixOptions_temp(request):
     now = datetime.datetime.now()
 
     print(now)
-
-    if(now >= dateDebutOptions1 and now <= dateFinOptions1):
-        print("on est en S1")
-    elif(now >= dateDebutOptions2 and now <= dateFinOptions2):
-        print("on est en S2")
-
     res = {}
-    for pole in poles_parcours:
-        liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id).order_by('etudiant_par_ue__order')
-        res[pole] = liste_ues
-        #print(liste_ues)
+    dateFinOptions = ""
+    if(now >= dateDebutOptions1 and now <= dateFinOptions1):    
+        for pole in poles_parcours:
+            liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id, semestre_id=1).order_by('etudiant_par_ue__order')
+            res[pole] = liste_ues
+            dateFinOptions = dateFinOptions1
+            #print(liste_ues)
+    elif(now >= dateDebutOptions2 and now <= dateFinOptions2):
+        for pole in poles_parcours:
+            liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id, semestre_id=2).order_by('etudiant_par_ue__order')
+            res[pole] = liste_ues
+            dateFinOptions = dateFinOptions2
+            #print(liste_ues)
     context = {
         'res': res,
-        'template_group': getGroupTemplate(request.user)
+        'template_group': getGroupTemplate(request.user),
+        'dateFinOptions': dateFinOptions
     }
     return render(request, 'optionnelles/etudiant_choix_options_temp.html', context)
 
