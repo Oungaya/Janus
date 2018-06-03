@@ -127,10 +127,11 @@ def admin_choixUeGroupe(request):
 @login_required
 def emargement(request, id_ue):
     liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue__id=id_ue)
-
+    nom_ue = UE.objects.get(pk=id_ue)
     context = {
         'liste_etudiant': liste_etudiant,
         'ue': id_ue,
+        'nom_ue': nom_ue,
         'template_group': getGroupTemplate(request.user)
     }
     return render(request, 'optionnelles/emargement.html', context)
@@ -281,8 +282,6 @@ def etudiant_choixOptions(request):
     dateDebutOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions2
     dateFinOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions2
     now = datetime.datetime.now()
-
-    print(now)
     res = {}
     dateFinOptions = ""
     if(now >= dateDebutOptions1 and now <= dateFinOptions1):    
