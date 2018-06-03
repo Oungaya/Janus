@@ -72,8 +72,21 @@
         </div>
         <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--0-col-phone"></div>
     </div>
-{% else %}
-    <p>Mes couilles.</p>
 {% endif %}
 
+{% endblock %}
+
+{% block script %}
+    <script>/*
+        $("input.datetime-field-custom").each(function(){
+            var val = new Date($(this).val());
+            $(this).attr("type","datetime-local");
+            $(this).val(val);
+        });
+        $("input.date-field-custom").each(function(){
+            var val = $(this).val();
+            $(this).attr("type","date");
+            $(this).val(val);
+        });*/
+    </script>
 {% endblock %}

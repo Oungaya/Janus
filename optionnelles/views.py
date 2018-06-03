@@ -275,24 +275,19 @@ def etudiant_choixOptions_temp(request):
     #date_debut_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     #date_fin_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
-    utc=pytz.UTC
+    #utc=pytz.UTC
     dateDebutOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions1
     dateFinOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions1
     dateDebutOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions2
     dateFinOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions2
-    dateDebutOptions1 = utc.localize(dateDebutOptions1)
-    dateFinOptions1 = utc.localize(dateFinOptions1)
-    dateDebutOptions2 = utc.localize(dateDebutOptions2)
-    dateFinOptions2 = utc.localize(dateFinOptions2)
-
-    now = timezone.now()
+    now = datetime.datetime.now()
 
     print(now)
 
-    '''if(datetime.now() >= dateDebutOptions1 and datetime.now() <= dateFinOptions1):
+    if(now >= dateDebutOptions1 and now <= dateFinOptions1):
         print("on est en S1")
-    elif(datetime.now() >= dateDebutOptions2 and datetime.now() <= dateFinOptions2):
-        print("on est en S2")'''
+    elif(now >= dateDebutOptions2 and now <= dateFinOptions2):
+        print("on est en S2")
 
     res = {}
     for pole in poles_parcours:
