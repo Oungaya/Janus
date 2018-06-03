@@ -29,6 +29,7 @@ def generate_etudiant(_username,_email,_password,_prenom,_nom,_numetu,_ajac,_red
                     list_ue_etu.append(ue_etu)
                 else:
                     ue_etu.choisie = True
+                    if ue_etu.ue.id == 35:
                     y.ue.capacite -= 1
                     y.ue.save()
                 ue_etu.save()
@@ -41,7 +42,7 @@ def generate_etudiant(_username,_email,_password,_prenom,_nom,_numetu,_ajac,_red
     etu.save()
 
 def bulk_generate_etudiant(number):
-    num_etu = 10000500
+    num_etu = 10000010
     nb_parcours = Parcours.objects.all().count()
     res = []
     for _ in range(number):
@@ -61,6 +62,8 @@ def bulk_generate_etudiant(number):
             Parcours.objects.all()[random.randint(0,nb_parcours-1)])
         res.append(intial+str_num_etu)
     return res
+
+
 
 
 def attribution_ue():

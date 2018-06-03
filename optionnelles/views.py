@@ -126,7 +126,7 @@ def admin_choixUeGroupe(request):
 
 @login_required
 def emargement(request, id_ue):
-    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue__id=id_ue)
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue__id=id_ue, etudiant_par_ue__choisie=True)
 
     context = {
         'liste_etudiant': liste_etudiant,
