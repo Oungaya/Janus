@@ -44,17 +44,25 @@ def exportCSV(request, id_ue, id_groupe):
     
     #if id_groupe == 0:
     
-    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id)
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id).order_by("utilisateur__last_name")
     
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="emargement.csv"'
+    response['Content-Disposition'] = 'attachment; filename="export.csv"'
 
     csv.register_dialect('unixpwd', delimiter=';', quoting=csv.QUOTE_NONE)
     response.write(codecs.BOM_UTF8)
     writer = csv.writer(response)
 
+    writer.writerow(["Numéro étudiant; Nom; Prénom; Options;"])
+
     for e in liste_etudiant:
-        writer.writerow([e.utilisateur.last_name + ";" + e.utilisateur.first_name])
+        string_ue = ""
+        EtudiantParUE = Etudiant_par_UE.objects.filter(etudiant__id=e.id)
+        for o in EtudiantParUE:
+            if o.optionnelle == True and o.choisie == True:
+                string_ue +=o.ue.nom + " : " + o.ue.code_apoge
+
+        writer.writerow([e.numero_etudiant + ";" + e.utilisateur.last_name + ";" + e.utilisateur.first_name + ";" + string_ue + ";"])
         
     return response
 
@@ -87,10 +95,14 @@ def exportPDF(request, id_ue, id_groupe):
     buff.close()
     """
     ue = UE.objects.get(pk=id_ue)
-    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id)
-    
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id).order_by("utilisateur__last_name")
+    groupe = id_groupe
+    if id_groupe == 0:
+        groupe = "Promotion complète"
+
+
     # Rendered
-    html_string = render_to_string('export/export_pdf.html', {'liste_etudiant': liste_etudiant})
+    html_string = render_to_string('export/export_pdf.html', {'liste_etudiant': liste_etudiant, 'ue': ue, 'groupe' : groupe})
     html = HTML(string=html_string)
     result = html.write_pdf()
 
@@ -126,7 +138,7 @@ def admin_choixUeGroupe(request):
 
 @login_required
 def emargement(request, id_ue):
-    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue__id=id_ue)
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue__id=id_ue).order_by("utilisateur__last_name")
 
     context = {
         'liste_etudiant': liste_etudiant,
@@ -151,7 +163,7 @@ def liste_emargement(request):
 @login_required
 def admin_selectionGroupe(request, id_ue):
     ue = UE.objects.get(pk=id_ue)
-    user_list = Etudiant.objects.filter(utilisateur__is_active=True, ues__id=id_ue)
+    user_list = Etudiant.objects.filter(utilisateur__is_active=True, ues__id=id_ue).order_by("utilisateur__last_name")
     if ue.nombre_groupes != 0:
         col = int(12/ue.nombre_groupes)
     else:
@@ -243,7 +255,7 @@ def valider_choix_options(request):
 
 @login_required
 def admin_ValidationInscription(request):
-    liste_etudiant = Etudiant.objects.filter(utilisateur__is_active=False)
+    liste_etudiant = Etudiant.objects.filter(utilisateur__is_active=False).order_by("utilisateur__last_name")
     context = {
         'liste_etudiant': liste_etudiant,
         'template_group': getGroupTemplate(request.user)
@@ -252,7 +264,7 @@ def admin_ValidationInscription(request):
 
 @login_required
 def admin_listeProfesseurs(request):
-    liste_professeur = Professeur.objects.filter(utilisateur__is_active=True)
+    liste_professeur = Professeur.objects.filter(utilisateur__is_active=True).order_by("utilisateur__last_name")
     context = {
         'liste_professeur': liste_professeur,
         'template_group': getGroupTemplate(request.user)
@@ -275,7 +287,7 @@ def etudiant_choixOptions_temp(request):
     #date_debut_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     #date_fin_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
-    utc=pytz.UTC
+    '''utc=pytz.UTC
     dateDebutOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions1
     dateFinOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions1
     dateDebutOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions2
@@ -283,11 +295,11 @@ def etudiant_choixOptions_temp(request):
     dateDebutOptions1 = utc.localize(dateDebutOptions1)
     dateFinOptions1 = utc.localize(dateFinOptions1)
     dateDebutOptions2 = utc.localize(dateDebutOptions2)
-    dateFinOptions2 = utc.localize(dateFinOptions2)
+    dateFinOptions2 = utc.localize(dateFinOptions2)'''
 
-    now = timezone.now()
+    #now = timezone.now()
 
-    print(now)
+    #print(now)
 
     '''if(datetime.now() >= dateDebutOptions1 and datetime.now() <= dateFinOptions1):
         print("on est en S1")
