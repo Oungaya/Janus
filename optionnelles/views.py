@@ -287,20 +287,16 @@ def etudiant_choixOptions(request):
     #date_debut_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     #date_fin_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
-<<<<<<< HEAD
-    '''utc=pytz.UTC
-=======
+
     #utc=pytz.UTC
->>>>>>> 8a9ba8e5358c71c2a093cb635a20a8ac1f2a055f
     dateDebutOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions1
     dateFinOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions1
     dateDebutOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions2
     dateFinOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions2
-<<<<<<< HEAD
     dateDebutOptions1 = utc.localize(dateDebutOptions1)
     dateFinOptions1 = utc.localize(dateFinOptions1)
     dateDebutOptions2 = utc.localize(dateDebutOptions2)
-    dateFinOptions2 = utc.localize(dateFinOptions2)'''
+    dateFinOptions2 = utc.localize(dateFinOptions2)
 
     #now = timezone.now()
 
@@ -311,11 +307,9 @@ def etudiant_choixOptions(request):
     elif(datetime.now() >= dateDebutOptions2 and datetime.now() <= dateFinOptions2):
         print("on est en S2")'''
 
-=======
     now = datetime.datetime.now()
 
     print(now)
->>>>>>> 8a9ba8e5358c71c2a093cb635a20a8ac1f2a055f
     res = {}
     dateFinOptions = ""
     if(now >= dateDebutOptions1 and now <= dateFinOptions1):    
