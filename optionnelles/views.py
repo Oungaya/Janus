@@ -233,7 +233,7 @@ def valider_choix_options(request):
     etudiant = Etudiant.objects.get(utilisateur=request.user.id)
     liste_choix = json.loads(request.GET.get('dict'))
     flag = True
-
+    #print(liste_choix)
     for ue in liste_choix:
         if Etudiant_par_UE.objects.filter(etudiant__id=etudiant.id, ue__id=ue['ue']).exists():
             print(ue['ue']) 

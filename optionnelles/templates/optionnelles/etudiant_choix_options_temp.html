@@ -10,7 +10,7 @@
     <h6>{{ pole }}</h6>
         <ol class="choix-option">
         {% for ue in liste_ues %}
-            <li class="li-ue-order" data-ordre="" data-ue="{{ ue }}"><div class="card-ue" >{{ ue }}</div></li>
+            <li class="li-ue-order" data-ordre="" data-ue="{{ ue.id }}"><div class="card-ue" >{{ ue }}</div></li>
         {% endfor %}
         </ol>
     {% endfor %}
@@ -61,7 +61,7 @@
                     ordre: ordre
                 });
             });
-
+            //alert(dict);
             $.ajax({
                 url: '/options/ajax/choix_options/',
                 data: {
