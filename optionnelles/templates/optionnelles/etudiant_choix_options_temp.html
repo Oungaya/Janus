@@ -1,6 +1,7 @@
 {% extends template_group %}
 
 {% block content %}
+{% if has_period %}
 <div class='mdl-cell mdl-cell--12-col card-ue'><h5>Choix des options</h5></div>
 <div class="mdl-cell mdl-cell--12-col card-chip-etudiant">
     {% if res %} 
@@ -28,7 +29,9 @@
         </div>
         <button class="mdl-snackbar__action" type="button"></button>
 </div>
-
+{% else %}
+<div class='mdl-cell mdl-cell--12-col card-ue'><h5>Aucun choix d'options n'est configuré pour vous actuellement</h5></div>
+{% endif %}
 {% endblock %}
 
 {% block script %}
