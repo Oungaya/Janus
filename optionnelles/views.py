@@ -95,7 +95,7 @@ def exportPDF(request, id_ue, id_groupe):
     buff.close()
     """
     ue = UE.objects.get(pk=id_ue)
-    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id).order_by("utilisateur__last_name")
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue_id=ue.id, etudiant_par_ue__choisie=True).order_by("utilisateur__last_name")
     groupe = id_groupe
     if id_groupe == 0:
         groupe = "Promotion complète"
@@ -139,7 +139,7 @@ def admin_choixUeGroupe(request):
 @login_required
 def emargement(request, id_ue):
     nom_ue = UE.objects.get(pk=id_ue)
-    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue__id=id_ue).order_by("utilisateur__last_name")
+    liste_etudiant = Etudiant.objects.filter(etudiant_par_ue__ue__id=id_ue,etudiant_par_ue__choisie=True).order_by("utilisateur__last_name")
 
     context = {
         'liste_etudiant': liste_etudiant,
