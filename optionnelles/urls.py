@@ -40,7 +40,6 @@ urlpatterns = [
     path('liste_emargement/', views.liste_emargement, name='liste_emargement'),
     path('emargement/<int:id_ue>/', views.emargement, name='emargement'),
     path('choix_options/', views.etudiant_choixOptions, name='choix_options'),
-    path('choix_options_temp/', views.etudiant_choixOptions_temp, name='choix_options_temp'),
     path('export_csv/<int:id_ue>/<int:id_groupe>', views.exportCSV, name='export_csv'),
     path('export_pdf/<int:id_ue>/<int:id_groupe>', views.exportPDF, name='export_pdf'),
     path('mes_cours/', views.etudiant_mesCours, name='mes_cours'),
