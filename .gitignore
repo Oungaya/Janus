@@ -3,7 +3,6 @@ janus/__pycache__
 optionnelles/migrations
 optionnelles/__pycache__
 .DS_Store
-script_reset_db.py
 optionnelles/templatetags/__pycache__/
 janus/__init__.py
 optionnelles/__init__.py

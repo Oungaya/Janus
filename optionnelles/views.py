@@ -15,7 +15,7 @@ from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
-from .generateur import generate_etudiant, bulk_generate_etudiant, attribution_ue
+from .generateur import generate_etudiant, bulk_generate_etudiant, attribution_ue, testset001
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus.tables import Table, TableStyle
@@ -280,45 +280,51 @@ def etudiant_choixOptions(request):
     #date_debut_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     #date_fin_options = AnneeCourante.objects.get(parcours=parcours_etudiant)
     poles_parcours = Pole.objects.filter(parcours=parcours_etudiant).all()
-
-    #utc=pytz.UTC
-    dateDebutOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions1
-    dateFinOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions1
-    dateDebutOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions2
-    dateFinOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions2
-    '''dateDebutOptions1 = utc.localize(dateDebutOptions1)
-    dateFinOptions1 = utc.localize(dateFinOptions1)
-    dateDebutOptions2 = utc.localize(dateDebutOptions2)
-    dateFinOptions2 = utc.localize(dateFinOptions2)'''
-
-    #now = timezone.now()
-
-    #print(now)
-
-    '''if(datetime.now() >= dateDebutOptions1 and datetime.now() <= dateFinOptions1):
-        print("on est en S1")
-    elif(datetime.now() >= dateDebutOptions2 and datetime.now() <= dateFinOptions2):
-        print("on est en S2")'''
-
-    now = datetime.datetime.now()
     res = {}
-    dateFinOptions = ""
-    if(now >= dateDebutOptions1 and now <= dateFinOptions1):    
-        for pole in poles_parcours:
-            liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id, semestre_id=1).order_by('etudiant_par_ue__order')
-            res[pole] = liste_ues
-            dateFinOptions = dateFinOptions1
-            #print(liste_ues)
-    elif(now >= dateDebutOptions2 and now <= dateFinOptions2):
-        for pole in poles_parcours:
-            liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id, semestre_id=2).order_by('etudiant_par_ue__order')
-            res[pole] = liste_ues
-            dateFinOptions = dateFinOptions2
-            #print(liste_ues)
+    if AnneeCourante.objects.filter(parcours=parcours_etudiant).exists():
+        has_period = True
+        #utc=pytz.UTC
+        dateDebutOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions1
+        dateFinOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions1
+        dateDebutOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions2
+        dateFinOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions2
+        '''dateDebutOptions1 = utc.localize(dateDebutOptions1)
+        dateFinOptions1 = utc.localize(dateFinOptions1)
+        dateDebutOptions2 = utc.localize(dateDebutOptions2)
+        dateFinOptions2 = utc.localize(dateFinOptions2)'''
+
+        #now = timezone.now()
+
+        #print(now)
+
+        '''if(datetime.now() >= dateDebutOptions1 and datetime.now() <= dateFinOptions1):
+            print("on est en S1")
+        elif(datetime.now() >= dateDebutOptions2 and datetime.now() <= dateFinOptions2):
+            print("on est en S2")'''
+
+        now = datetime.datetime.now()
+        
+        dateFinOptions = ""
+        if(now >= dateDebutOptions1 and now <= dateFinOptions1):    
+            for pole in poles_parcours:
+                liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id, semestre_id=1).order_by('etudiant_par_ue__order')
+                res[pole] = liste_ues
+                dateFinOptions = dateFinOptions1
+                #print(liste_ues)
+        elif(now >= dateDebutOptions2 and now <= dateFinOptions2):
+            for pole in poles_parcours:
+                liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id, semestre_id=2).order_by('etudiant_par_ue__order')
+                res[pole] = liste_ues
+                dateFinOptions = dateFinOptions2
+                #print(liste_ues)
+    else:
+        has_period = False
+        dateFinOptions = None
     context = {
         'res': res,
         'template_group': getGroupTemplate(request.user),
-        'dateFinOptions': dateFinOptions
+        'dateFinOptions': dateFinOptions,
+        'has_period' : has_period
     }
     return render(request, 'optionnelles/etudiant_choix_options.html', context)
 
@@ -721,7 +727,7 @@ def user_inscription(request):
             for k in etudiantUser.parcours.all():
                 for i in k.pole_set.all():
                     for y in i.ue_par_pole_set.all():
-                        ueEtudiant = Etudiant_par_UE(etudiant = etudiantUser, ue = y.ue, optionnelle = y.option)
+                        ueEtudiant = Etudiant_par_UE(etudiant = etudiantUser, ue = y.ue, optionnelle = y.option, pole_ref = i.id)
                         if y.option==False:
                             ueEtudiant.choisie = True
                         ueEtudiant.save()
@@ -773,7 +779,7 @@ def user_validationReinitialisation(request):
 
 def generateur_temp(request):
     user_list = User.objects.all()
-    bulk_generate_etudiant(10)
+    bulk_generate_etudiant(100)
     context = {
         'user_list': user_list,
         'template_group': getGroupTemplate(request.user)
