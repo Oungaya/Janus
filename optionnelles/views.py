@@ -15,7 +15,7 @@ from .optionnellesHelpers import getGroupTemplate
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.core.mail import send_mail
-from .generateur import generate_etudiant, bulk_generate_etudiant, attribution_ue
+from .generateur import generate_etudiant, bulk_generate_etudiant, attribution_ue, testset001
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus.tables import Table, TableStyle
@@ -704,7 +704,7 @@ def user_inscription(request):
             for k in etudiantUser.parcours.all():
                 for i in k.pole_set.all():
                     for y in i.ue_par_pole_set.all():
-                        ueEtudiant = Etudiant_par_UE(etudiant = etudiantUser, ue = y.ue, optionnelle = y.option)
+                        ueEtudiant = Etudiant_par_UE(etudiant = etudiantUser, ue = y.ue, optionnelle = y.option, pole_ref = i.id)
                         if y.option==False:
                             ueEtudiant.choisie = True
                         ueEtudiant.save()
@@ -756,7 +756,7 @@ def user_validationReinitialisation(request):
 
 def generateur_temp(request):
     user_list = User.objects.all()
-    bulk_generate_etudiant(10)
+    bulk_generate_etudiant(100)
     context = {
         'user_list': user_list,
         'template_group': getGroupTemplate(request.user)

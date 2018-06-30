@@ -137,6 +137,7 @@ class Etudiant_par_UE(models.Model):
     order = models.IntegerField(default=0)
     choisie = models.BooleanField(default="False")
     valide = models.BooleanField(default="True")
+    pole_ref = models.IntegerField(default=0)#id du pole utilisée dans aggregation (ignorée quand ue obligatoire)
 
     def __str__(self):
         return self.ue.nom + " " + self.etudiant.utilisateur.first_name + " " + self.etudiant.utilisateur.last_name
