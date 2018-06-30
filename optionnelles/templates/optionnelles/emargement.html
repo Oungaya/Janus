@@ -2,7 +2,7 @@
 {% extends template_group %}
 
 {% block content %}
-<div class='mdl-cell mdl-cell--12-col card-ue'><h5>Choix des options</h5></div>
+<div class='mdl-cell mdl-cell--12-col card-ue'><h5>{{ nom_ue.nom }} - Liste d'émargement</h5></div>
 <div class="mdl-cell mdl-cell--12-col card-chip-etudiant">
 {% if liste_etudiant %}
 <a href="/options/export_csv/{{ue}}/0" id="btn-valider-ordre" name="accept" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--colored right-btn" >Export CSV</a>

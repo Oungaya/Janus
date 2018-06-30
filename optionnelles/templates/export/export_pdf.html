@@ -2,38 +2,56 @@
  <head>
    <title>Test</title>
    <style>
-     h1 {
+     h3 {
        text-align: center;
      }
 
      table {
        border: 1px solid;
        margin: 0 auto;
-       width: 70%;
+       width: 100%;
+       background: black;
      }
 
      td, th {
        text-align: center;
-       border: 1px solid;
+       border: 1px solid black;
+       width:33%;
+       background: white;
      }
+
+     td.etudiant{
+       text-align: left;
+       font-weight: bold;
+     }
+
+     .num_etudiant{
+       font-style:italic;
+       font-weight: normal;
+     }
+
    </style>
  </head>
  <body>
-   <h1>List of people</h1>
+   <h2>Feuille d'émargement</h2>
+   <h4>Unité d'enseignement : {{ ue.nom }} </h4>
+   <h5>Groupe : {{groupe}}</h5>
+   <h5>Enseignant : </h5>
+   <h5>Date : </h5>
    <table>
      <thead>
        <tr>
-         <th>Last Name</th>
-         <th>First Name</th>
-         <th>Email</th>
+         <th>Etudiant</th>
+         <th>Parcours</th>
+         <th>Signature</th>
        </tr>
      </thead>
      <tbody>
        {% for etudiant in liste_etudiant %}
          <tr>
-           <td>{{ etudiant.utilisateur.last_name }}</td>
-           <td>{{ etudiant.utilisateur.first_name }}</td>
-           <td>{{ etudiant.utilisateur.email }}</td>
+           <td class="etudiant">{{ etudiant.utilisateur.last_name }} {{ etudiant.utilisateur.first_name }} <br/> <span class="num_etudiant">{{ etudiant.numero_etudiant }}</span></td>
+           <td>{{ etudiant.parcours.first }}</td>
+           <td></td>
          </tr>
        {% endfor %}    
      </tbody>
