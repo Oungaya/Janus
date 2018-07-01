@@ -271,16 +271,28 @@ def population_liste(request):
     ue_id = request.GET.get('id_ue', None)
     first_launch = request.GET.get('first_launch', None)
     modified_list = request.GET.get('modified_list', None)
+    data_promotion = list(Promotion.objects.all().values())
+    data_semestre = list(Semestre.objects.all().values())
+    data_pole = list(Pole.objects.all().values())
+    data_parcours = list(Parcours.objects.all().values())
+    data_ue = list(UE.objects.all().values())
+    data_groupe = []
 
     if(first_launch):
-        data_promotion = list(Promotion.objects.all().values())
-        data_semestre = list(Semestre.objects.all().values())
-        data_pole = list(Pole.objects.all().values())
-        data_parcours = list(Parcours.objects.all().values())
-        data_ue = list(UE.objects.all().values())
-        data_groupe = []
+        print("test")
     else:
+         if(modified_list == "UE"):
+            data_groupe = []
+            nb_group = Ues.object.get(id=ue_id).nombre_groupes
+            for i in range(nb_group):
+                data_groupe[i] = i 
+            data_groupe = list(data_groupe)
+    """
         #traiter chaque cas particulier 
+        if(parcours_id != -1):
+            data_pole = list(Pole.objects.all().values())
+        else:
+            data_pole = list(Pole.objects.all().values())
 
         if(modified_list == "PROMOTION"):
             data_promotion = ""
@@ -313,20 +325,15 @@ def population_liste(request):
             data_parcours = Parcours.objects.all().values()
             data_ue = UE.objects.all().values()
             data_groupe = []
-
-        if(modified_list == "UE"):
-            data_groupe = []
-            nb_group = Ues.object.get(id=ue_id).nombre_groupes
-            for i in range(nb_group):
-                data_groupe[i] = i 
-            data_groupe = list(data_groupe)
+"""
+       
 
     data = {
         'liste_promotion': data_promotion,
-        'liste_semestre': list(data_semestre),
-        'liste_pole': list(data_pole),
-        'liste_parcours': list(data_parcours),
-        'liste_ue': list(data_ue),
+        'liste_semestre': data_semestre,
+        'liste_pole': data_pole,
+        'liste_parcours': data_parcours,
+        'liste_ue': data_ue,
         'liste_groupe': data_groupe
     }
 
