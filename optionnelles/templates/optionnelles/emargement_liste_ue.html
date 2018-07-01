@@ -146,6 +146,7 @@
                     for (var i=0; i < tab_url.length; i++){
                         if(i == other_position){
                             new_url+=value+"/";
+                            
                         }
                         else{
                             new_url+=tab_url[i]+"/";
@@ -168,9 +169,9 @@
                 }
             }
             new_url = new_url.replace("//","/");
-            
-            $("#btn-valider-ordre-csv").attr("href",new_url);
-            $("#btn-valider-ordre-pdf").attr("href",new_url);
+            $("#btn-valider-ordre-pdf").attr("href",new_url);            
+            new_url_csv = new_url.replace("export_csv", "export_pdf");
+            $("#btn-valider-ordre-csv").attr("href",new_url_csv);
         }  
 
         function populate_liste(first_launch, modified_list){
