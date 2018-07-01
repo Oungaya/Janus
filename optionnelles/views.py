@@ -123,31 +123,31 @@ def exportPDF_emmargement(request, id_ue, id_groupe, id_pole, id_parcours, id_se
 
     liste_etudiant = Etudiant.objects.all()
     if id_promotion != -1:
-        liste_etudiant.prefetch_related('parcours_set').filter(promotion__id = id_promotion)
+        liste_etudiant = liste_etudiant.filter(parcours__promotion__id =id_promotion).distinct()
     if id_pole != -1:
-        liste_etudiant.prefetch_related('parcours_set').select_related('id_parcours').get(id_pole)
+        liste_etudiant = liste_etudiant.filter(etudiant_par_ue__pole_ref = id_pole).distinct()
     if id_parcours != -1:
-        liste_etudiant.filter(parcours_etudiant__parcours_id = id_parcours)
+        liste_etudiant = liste_etudiant.filter(parcours__id = id_parcours).distinct()
     if id_ue != -1:
-        liste_etudiant.filter(etudiant_par_ue__ue__id = id_ue, etudiant_par_ue__choisie = True)
+        liste_etudiant = liste_etudiant.filter(utilisateur__is_active=True, ues__id=id_ue, etudiant_par_ue__choisie = True).order_by("utilisateur__last_name").distinct()
     if id_groupe > 0:
-        liste_etudiant.filter(etudiant_par_ue__groupe = id_groupe)
+        liste_etudiant = liste_etudiant.filter(etudiant_par_ue__groupe = id_groupe)
     if id_semestre != -1:
-        pass
-        ## manque semestre #############################################################
+        liste_etudiant = liste_etudiant.filter(etudiant_par_ue__ue__semestre__id = id_semestre).distinct()
+
     
     groupe = id_groupe
     if id_groupe == 0:
         groupe = "Promotion complète"
 
     # Rendered
-    html_string = render_to_string('export/export_pdf.html', {'liste_etudiant': liste_etudiant, 'ue': ue, 'groupe' : groupe})
+    html_string = render_to_string('export/export_pdf.html', {'liste_etudiant': liste_etudiant})
     html = HTML(string=html_string)
     result = html.write_pdf()
 
     # Creating http response
     response = HttpResponse(content_type='application/pdf;')
-    response['Content-Disposition'] = 'attachment; filename="'+ ue.nom +' export.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="export.pdf"'
     response['Content-Transfer-Encoding'] = 'binary'
     with tempfile.NamedTemporaryFile(delete=True) as output:
         output.write(result)
@@ -204,7 +204,7 @@ def liste_emargement(request):
 @login_required
 def admin_selectionGroupe(request, id_ue):
     ue = UE.objects.get(pk=id_ue)
-    user_list = Etudiant.objects.filter(utilisateur__is_active=True, ues__id=id_ue).order_by("utilisateur__last_name")
+    user_list = Etudiant.objects.filter(utilisateur__is_active=True, ues__id=id_ue, etudiant_par_ue__choisie = True).order_by("utilisateur__last_name")
     if ue.nombre_groupes != 0:
         col = int(12/ue.nombre_groupes)
     else:
