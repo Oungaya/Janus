@@ -1,38 +1,34 @@
-{% extends "optionnelles/base.html" %}
+{% extends "optionnelles/base.html" %} 
 {% block sidebar %}
-<a class="mdl-navigation__link" href="/options/"><i class="material-icons" role="presentation">home</i>Accueil</a>
-<a class="mdl-navigation__link " href="/options/validation_inscription/" id="link-inscription"><i class="material-icons" role="presentation" >account_box</i><span class=" " data-badge="0">Inscriptions</span></a>
-<a class="mdl-navigation__link" href="/options/choix_ue_groupe/"><i class="material-icons" role="presentation">group</i>Groupes</a>
-<a class="mdl-navigation__link" href="/options/liste_admin/"><i class="material-icons" role="presentation">person</i>Administrateurs</a>
-<a class="mdl-navigation__link" href="/options/liste_professeur/"><i class="material-icons" role="presentation">school</i>Enseignant</a>
-<a class="mdl-navigation__link" href="/options/liste_periodes/"><i class="material-icons" role="presentation">date_range</i>Périodes</a>
-<a class="mdl-navigation__link" href="/admin/" target="_blank"><i class="material-icons" role="presentation">build</i>Administration</a>
-<a class="mdl-navigation__link" href="/options/liste_emargement/"><i class="material-icons" role="presentation">list</i>Emargement</a>
+    <a class="mdl-navigation__link" href="/options/"><i class="material-icons" role="presentation">home</i>Accueil</a>
+    <a class="mdl-navigation__link " href="/options/validation_inscription/" id="link-inscription"><i class="material-icons" role="presentation" >account_box</i><span class=" " data-badge="0">Inscriptions</span></a>
+    <a class="mdl-navigation__link" href="/options/choix_ue_groupe/"><i class="material-icons" role="presentation">group</i>Groupes</a>
+    <a class="mdl-navigation__link" href="/options/liste_admin/"><i class="material-icons" role="presentation">person</i>Administrateurs</a>
+    <a class="mdl-navigation__link" href="/options/liste_professeur/"><i class="material-icons" role="presentation">school</i>Enseignant</a>
+    <a class="mdl-navigation__link" href="/options/liste_periodes/"><i class="material-icons" role="presentation">date_range</i>Périodes</a>
+    <a class="mdl-navigation__link" href="/admin/" target="_blank"><i class="material-icons" role="presentation">build</i>Administration</a>
+    <a class="mdl-navigation__link" href="/options/liste_emargement/"><i class="material-icons" role="presentation">list</i>Emargement</a>
+    <a class="mdl-navigation__link" href="/options/attribution_ue_index/"><i class="material-icons" role="presentation">list</i>Attribution UEs</a> {% endblock %} {% block scriptTemplate %}
 
-{% endblock %}
+    <script>
+        $(function() {
+            $.ajax({
+                url: '/options/ajax/notification_inscription/',
+                dataType: 'json',
+                success: function(data) {
+                    var notifications = data.nombre_notification;
+                    $("#link-inscription span").attr("data-badge", notifications);
+                    if (notifications != 0) {
+                        $("#link-inscription span").addClass("mdl-badge");
+                    }
 
-{% block scriptTemplate %}
 
-<script>
-    $(function(){
-        $.ajax({
-            url: '/options/ajax/notification_inscription/',
-            dataType: 'json',
-            success: function (data) {
-                var notifications = data.nombre_notification;
-                $("#link-inscription span").attr("data-badge",notifications);
-                if(notifications != 0){                    
-                    $("#link-inscription span").addClass("mdl-badge");
+                },
+                error: function(jqXHR, exception) {
+
                 }
-                
-                
-            },
-            error: function(jqXHR, exception){
-                
-            }
+            });
         });
-    });
-    
-</script>
+    </script>
 
 {% endblock %}
