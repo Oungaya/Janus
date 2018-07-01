@@ -223,36 +223,69 @@ def valide_ue(request):
 def population_liste(request):
     
     semestre_id = request.GET.get('id_semestre', None)
-    promotion_id = request.GET.get('id_promotion' None)
-    parcours_id = request.GET.get('id_parcours' None)
-    pole_id = request.GET.get('id_pole' None)
-    ue_id = request.GET.get('id_ue' None)
-    first_launch = request.GET.get('first_launch' None)
-    modified_list = request.GET.get('modified_list' None)
+    promotion_id = request.GET.get('id_promotion', None)
+    parcours_id = request.GET.get('id_parcours', None)
+    pole_id = request.GET.get('id_pole', None)
+    ue_id = request.GET.get('id_ue', None)
+    first_launch = request.GET.get('first_launch', None)
+    modified_list = request.GET.get('modified_list', None)
 
     if(first_launch):
-        data_promotion = Promotion.objects.all().values()
-        data_semestre = Semestre.objects.all().values()
-        data_pole = Pole.objects.all().values()
-        data_parcours = Parcours.objects.all().values()
-        data_ue = UE.objects.all().values()
+        data_promotion = list(Promotion.objects.all().values())
+        data_semestre = list(Semestre.objects.all().values())
+        data_pole = list(Pole.objects.all().values())
+        data_parcours = list(Parcours.objects.all().values())
+        data_ue = list(UE.objects.all().values())
         data_groupe = []
     else:
         #traiter chaque cas particulier 
-        data_promotion = Promotion.objects.all().values()
-        data_semestre = Semestre.objects.all().values()
-        data_pole = Pole.objects.all().values()
-        data_parcours = Parcours.objects.all().values()
-        data_ue = UE.objects.all().values()
-        data_groupe = []
+
+        if(modified_list == "PROMOTION"):
+            data_promotion = ""
+            data_semestre = ""
+            data_pole = list(Pole.objects.filter("parcours__promotion__id" == promotion_id))
+            data_parcours = list(Parcours.objects.filter("promotion__id" == promotion_id))
+            data_ue = list(UE.objects.filter("poles__parcours__promotion__id" == promotion_id))
+            data_groupe = []
+        
+        if(modified_list == "SEMESTRE"):
+            data_promotion = ""
+            data_semestre = ""
+            data_pole = Pole.objects.all().values()
+            data_parcours = Parcours.objects.all().values()
+            data_ue = UE.objects.all().values()
+            data_groupe = []
+
+        if(modified_list == "POLE"):
+            data_promotion = ""
+            data_semestre = ""
+            data_pole = Pole.objects.all().values()
+            data_parcours = Parcours.objects.all().values()
+            data_ue = UE.objects.all().values()
+            data_groupe = []
+
+        if(modified_list == "PARCOURS"):
+            data_promotion = ""
+            data_semestre = ""
+            data_pole = Pole.objects.all().values()
+            data_parcours = Parcours.objects.all().values()
+            data_ue = UE.objects.all().values()
+            data_groupe = []
+
+        if(modified_list == "UE"):
+            data_groupe = []
+            nb_group = Ues.object.get(id=ue_id).nombre_groupes
+            for i in range(nb_group):
+                data_groupe[i] = i 
+            data_groupe = list(data_groupe)
 
     data = {
-        'liste_promotion': list(data_promotion),
+        'liste_promotion': data_promotion,
         'liste_semestre': list(data_semestre),
         'liste_pole': list(data_pole),
         'liste_parcours': list(data_parcours),
         'liste_ue': list(data_ue),
-        'liste_groupe': list(data_groupe)
+        'liste_groupe': data_groupe
     }
 
     return JsonResponse(data)

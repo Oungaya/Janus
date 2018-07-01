@@ -212,39 +212,47 @@
                     }
                     
                     if(modified_list != "PARCOURS"){
-                        $("#id_parcours").html("");
-                        $("#id_parcours").append("<option value='-1'></option>");
-                        for (i in data.liste_parcours) {                        
-                            $("#id_parcours").append("<option value='"+data.liste_parcours[i].id+"'>"+data.liste_parcours[i].nom+"</option>");
-                        }
-                        $("#id_parcours option[value='"+ id_parcours_ajax +"']").prop("selected", true);
+                        if(data.liste_parcours != ""){
+                            $("#id_parcours").html("");
+                            $("#id_parcours").append("<option value='-1'></option>");
+                            for (i in data.liste_parcours) {                        
+                                $("#id_parcours").append("<option value='"+data.liste_parcours[i].id+"'>"+data.liste_parcours[i].nom+"</option>");
+                            }
+                            $("#id_parcours option[value='"+ id_parcours_ajax +"']").prop("selected", true);
+                        }                      
                     }
 
                     if(modified_list != "POLE"){
-                        $("#id_pole").html("");
-                        $("#id_pole").append("<option value='-1'></option>");
-                        for (i in data.liste_pole) {                        
-                            $("#id_pole").append("<option value='"+data.liste_pole[i].id+"'>"+data.liste_pole[i].nom+"</option>");
+                        if(data.liste_pole != ""){
+                            $("#id_pole").html("");
+                            $("#id_pole").append("<option value='-1'></option>");
+                            for (i in data.liste_pole) {                        
+                                $("#id_pole").append("<option value='"+data.liste_pole[i].id+"'>"+data.liste_pole[i].nom+"</option>");
+                            }
+                            $("#id_pole option[value='"+ id_pole_ajax +"']").prop("selected", true);
                         }
-                        $("#id_pole option[value='"+ id_pole_ajax +"']").prop("selected", true);
                     }
                     
                     if(modified_list != "UE"){
-                        $("#id_ue_filter").html("");
-                        $("#id_ue_filter").append("<option value='-1'></option>");
-                        for (i in data.liste_ue) {                        
-                            $("#id_ue_filter").append("<option value='"+data.liste_ue[i].id+"'>"+data.liste_ue[i].nom+"</option>");
+                        if(data.liste_ue != ""){
+                            $("#id_ue_filter").html("");
+                            $("#id_ue_filter").append("<option value='-1'></option>");
+                            for (i in data.liste_ue) {                        
+                                $("#id_ue_filter").append("<option value='"+data.liste_ue[i].id+"'>"+data.liste_ue[i].nom+"</option>");
+                            }
+                            $("#id_ue_filter option[value='"+ id_ue_ajax +"']").prop("selected", true);
                         }
-                        $("#id_ue_filter option[value='"+ id_ue_ajax +"']").prop("selected", true);
                     }
 
                     if(modified_list != "GROUPE"){
-                        $("#id_groupe_filter").html("");
-                        $("#id_groupe_filter").append("<option value='-1'></option>");
-                        for (i in data.liste_groupe) {                        
-                            $("#id_groupe_filter").append("<option value='"+data.liste_groupe[i]+"'>Groupe "+data.liste_groupe[i]+"</option>");
+                        if(data.liste_groupe != ""){
+                            $("#id_groupe_filter").html("");
+                            $("#id_groupe_filter").append("<option value='-1'></option>");
+                            for (i in data.liste_groupe) {                        
+                                $("#id_groupe_filter").append("<option value='"+data.liste_groupe[i]+"'>Groupe "+data.liste_groupe[i]+"</option>");
+                            }
+                            $("#id_groupe_filter option[value='"+ id_groupe_ajax +"']").prop("selected", true);
                         }
-                        $("#id_groupe_filter option[value='"+ id_groupe_ajax +"']").prop("selected", true);
                     }
                 },
                 error: function(jqXHR, exception){
