@@ -3,11 +3,11 @@
 {% load options_extras %}
 {% block content %}
 <div class="mdl-cell mdl-cell--12-col">
-    <a href="/options/ajout_periode/"> 
+    <!--<a href="/options/ajout_periode/"> 
         <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored add-button">
                 <i class="material-icons">add</i>
         </button>
-    </a>
+    </a>-->
 {% if liste_periodes %}
     <table class="js-dynamitable mdl-data-table mdl-js-data-table mdl-shadow--2dp">
     <thead>
@@ -90,7 +90,7 @@
             {% for p in liste_periodes %}
                 <tr>
                     <td class="mdl-data-table__cell--non-numeric">{{ p.parcours }}</td>
-                    <td><a href="/options/modification_periode/{{ p.id }}/user/">{{ p.nom }}</a></td>
+                    <td><!--<a href="/options/modification_periode/{{ p.id }}/user/">-->{{ p.nom }}<!--</a>--></td>
                     <td> {{ p.dateDebutSemestre1 }} <br> {{ p.dateFinSemestre1  }}</td>
                     <td> {{ p.dateDebutSemestre2  }} <br> {{ p.dateFinSemestre2 }}</td>
                     <td> {{ p.dateDebutOptions1  }} <br> {{ p.dateFinOptions1  }}</td>
@@ -104,7 +104,7 @@
 {% else %}
     <div class="mdl-cell mdl-cell--12-col  card-ue">
         <h5>Aucune période n'est renseignée pour le moment.</h5>
-    </div>>
+    </div>
 {% endif %}
 </div>
 {% endblock %}
