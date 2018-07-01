@@ -123,18 +123,19 @@ def exportPDF_emmargement(request, id_ue, id_groupe, id_pole, id_parcours, id_se
 
     liste_etudiant = Etudiant.objects.all()
     if id_promotion != -1:
-        liste_etudiant = liste_etudiant.filter(parcours__promotion__id =id_promotion).distinct()
+        liste_etudiant = liste_etudiant.filter(parcours__promotion__id =id_promotion)
     if id_pole != -1:
-        liste_etudiant = liste_etudiant.filter(etudiant_par_ue__pole_ref = id_pole).distinct()
+        liste_etudiant = liste_etudiant.filter(etudiant_par_ue__pole_ref = id_pole)
     if id_parcours != -1:
-        liste_etudiant = liste_etudiant.filter(parcours__id = id_parcours).distinct()
+        liste_etudiant = liste_etudiant.filter(parcours__id = id_parcours)
     if id_ue != -1:
-        liste_etudiant = liste_etudiant.filter(utilisateur__is_active=True, ues__id=id_ue, etudiant_par_ue__choisie = True).order_by("utilisateur__last_name").distinct()
+        liste_etudiant = liste_etudiant.filter(utilisateur__is_active=True, ues__id=id_ue, etudiant_par_ue__choisie = True)
     if id_groupe > 0:
         liste_etudiant = liste_etudiant.filter(etudiant_par_ue__groupe = id_groupe)
     if id_semestre != -1:
-        liste_etudiant = liste_etudiant.filter(etudiant_par_ue__ue__semestre__id = id_semestre).distinct()
-
+        liste_etudiant = liste_etudiant.filter(etudiant_par_ue__ue__semestre__id = id_semestre)
+    
+    liste_etudiant = liste_etudiant.distinct().order_by("utilisateur__last_name")
     
     groupe = id_groupe
     if id_groupe == 0:
