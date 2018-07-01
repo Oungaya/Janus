@@ -291,6 +291,7 @@
         $(".liste").change(function(){
             parse_url($(this).attr("data-url-position"),$(this).val());
             populate_liste(false,$(this).attr("data-id-list"));  
+            alert($(this).attr("data-id-list"));
         });
             
         });

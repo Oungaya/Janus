@@ -271,6 +271,7 @@ def population_liste(request):
     ue_id = request.GET.get('id_ue', None)
     first_launch = request.GET.get('first_launch', None)
     modified_list = request.GET.get('modified_list', None)
+    
     data_promotion = list(Promotion.objects.all().values())
     data_semestre = list(Semestre.objects.all().values())
     data_pole = list(Pole.objects.all().values())
