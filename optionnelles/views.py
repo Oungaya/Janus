@@ -274,15 +274,6 @@ def admin_listeProfesseurs(request):
     return render(request, 'optionnelles/admin_liste_professeur.html', context)
 
 @login_required
-def etudiant_choixOptions_temp(request):
-    liste_ues = Etudiant.objects.get(utilisateur=request.user.id).ues.filter(etudiant_par_ue__optionnelle=True).order_by('etudiant_par_ue__order')
-    context = {
-        'liste_ues': liste_ues,
-        'template_group': getGroupTemplate(request.user)
-    }
-    return render(request, 'optionnelles/etudiant_choix_options.html', context)
-
-@login_required
 def etudiant_choixOptions(request):
     etudiant = Etudiant.objects.get(utilisateur=request.user.id)
     parcours_etudiant = etudiant.parcours.first()
@@ -335,7 +326,7 @@ def etudiant_choixOptions(request):
         'dateFinOptions': dateFinOptions,
         'has_period' : has_period
     }
-    return render(request, 'optionnelles/etudiant_choix_options_temp.html', context)
+    return render(request, 'optionnelles/etudiant_choix_options.html', context)
 
 @login_required
 def etudiant_mesCours(request):
