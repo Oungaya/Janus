@@ -119,28 +119,25 @@ def exportPDF(request, id_ue, id_groupe):
     return response
 
 @login_required
-def exportPDF_emmargement(request):
-    semestre_id = request.GET.get('id_semestre', None)
-    promotion_id = request.GET.get('id_promotion', None)
-    parcours_id = request.GET.get('id_parcours', None)
-    pole_id = request.GET.get('id_pole', None)
-    ue_id = request.GET.get('id_ue', None)
-    group_id = request.GET.get('id_group', None)
+def exportPDF_emmargement(request, id_ue, id_groupe, id_pole, id_parcours, id_semestre ,id_promotion):
 
     liste_etudiant = Etudiant.objects.all()
-    if promotion_id != -1:
-        liste_etudiant.prefetch_related('parcours_set').filter(promotion__id = promotion_id)
-    if pole_id != -1:
-        liste_etudiant.prefetch_related('parcours_set').select_related('id_parcours').get(pole_id)
-    if parcours_id != -1:
-        liste_etudiant.filter(parcours_etudiant__parcours_id = parcours_id)
-    if ue_id != -1:
-        liste_etudiant.filter(etudiant_par_ue__ue__id = ue_id, etudiant_par_ue__choisie = True)
-    if group_id != -1:
-        liste_etudiant.filter(etudiant_par_ue__groupe = group_id)
+    if id_promotion != -1:
+        liste_etudiant.prefetch_related('parcours_set').filter(promotion__id = id_promotion)
+    if id_pole != -1:
+        liste_etudiant.prefetch_related('parcours_set').select_related('id_parcours').get(id_pole)
+    if id_parcours != -1:
+        liste_etudiant.filter(parcours_etudiant__parcours_id = id_parcours)
+    if id_ue != -1:
+        liste_etudiant.filter(etudiant_par_ue__ue__id = id_ue, etudiant_par_ue__choisie = True)
+    if id_groupe > 0:
+        liste_etudiant.filter(etudiant_par_ue__groupe = id_groupe)
+    if id_semestre != -1:
+        pass
+        ## manque semestre #############################################################
     
-    groupe = group_id
-    if group_id == 0:
+    groupe = id_groupe
+    if id_groupe == 0:
         groupe = "Promotion complète"
 
     # Rendered
