@@ -119,6 +119,48 @@ def exportPDF(request, id_ue, id_groupe):
     return response
 
 @login_required
+def exportPDF_emmargement(request):
+    semestre_id = request.GET.get('id_semestre', None)
+    promotion_id = request.GET.get('id_promotion', None)
+    parcours_id = request.GET.get('id_parcours', None)
+    pole_id = request.GET.get('id_pole', None)
+    ue_id = request.GET.get('id_ue', None)
+    group_id = request.GET.get('id_group', None)
+
+    liste_etudiant = Etudiant.objects.all()
+    if promotion_id != -1:
+        liste_etudiant.prefetch_related('parcours_set').filter(promotion__id = promotion_id)
+    if pole_id != -1:
+        liste_etudiant.prefetch_related('parcours_set').select_related('id_parcours').get(pole_id)
+    if parcours_id != -1:
+        liste_etudiant.filter(parcours_etudiant__parcours_id = parcours_id)
+    if ue_id != -1:
+        liste_etudiant.filter(etudiant_par_ue__ue__id = ue_id, etudiant_par_ue__choisie = True)
+    if group_id != -1:
+        liste_etudiant.filter(etudiant_par_ue__groupe = group_id)
+    
+    groupe = group_id
+    if group_id == 0:
+        groupe = "Promotion complète"
+
+    # Rendered
+    html_string = render_to_string('export/export_pdf.html', {'liste_etudiant': liste_etudiant, 'ue': ue, 'groupe' : groupe})
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+
+    # Creating http response
+    response = HttpResponse(content_type='application/pdf;')
+    response['Content-Disposition'] = 'attachment; filename="'+ ue.nom +' export.pdf"'
+    response['Content-Transfer-Encoding'] = 'binary'
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+        output = open(output.name, 'rb')
+        response.write(output.read())
+
+    return response
+
+@login_required
 def index(request):
     user_list = User.objects.all()
     context = {
