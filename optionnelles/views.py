@@ -268,7 +268,8 @@ def population_liste(request):
     ue_id = request.GET.get('id_ue', None)
     first_launch = request.GET.get('first_launch', None)
     modified_list = request.GET.get('modified_list', None)
-    
+    print("nb groupe : " + ue_id) 
+
     data_promotion = list(Promotion.objects.all().values())
     data_semestre = list(Semestre.objects.all().values())
     data_pole = list(Pole.objects.all().values())
@@ -276,15 +277,13 @@ def population_liste(request):
     data_ue = list(UE.objects.all().values())
     data_groupe = []
 
-    if(first_launch):
-        print("test")
-    else:
-         if(modified_list == "UE"):
-            data_groupe = []
-            nb_group = Ues.object.get(id=ue_id).nombre_groupes
+    if(first_launch == 'false'):
+         if(modified_list == "UE"):       
+            nb_group = UE.objects.get(id=ue_id).nombre_groupes
+
             for i in range(nb_group):
-                data_groupe[i] = i 
-            data_groupe = list(data_groupe)
+                data_groupe.append(i+1)
+            
     """
         #traiter chaque cas particulier 
         if(parcours_id != -1):
