@@ -3,77 +3,41 @@
 {% block content %}
 <div class="mdl-cell mdl-cell--12-col filter-panel card-chip-etudiant">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-promotion">
-                <select name="promotion" class="mdl-textfield__input liste" data-id-list="PROMOTION" required="" id="id_promotion">
-                <option value="" selected=""></option>
-
-                <option value="1">M1</option>
-
-                <option value="2">M2</option>
+                <select name="promotion" class="mdl-textfield__input liste" data-id-list="PROMOTION" data-url-position="6" required="" id="id_promotion">
 
                 </select>
                 <label class="mdl-textfield__label" for="id_promotion">Promotion</label>
         </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-parcours">
-            <select name="parcours" class="mdl-textfield__input liste" data-id-list="PARCOURS" required="" id="id_parcours">
-            <option value="" selected=""></option>
+            <select name="parcours" class="mdl-textfield__input liste" data-id-list="PARCOURS" data-url-position="4" required="" id="id_parcours">
 
-            <option value="1">M1 MIAGE Stage</option>
-
-            <option value="2">M1 MIAGE Alternance</option>
-
-            <option value="3">M2 OSIE</option>
-
-            <option value="4">M2 SID</option>
-
-            <option value="5">M2 SIO</option>
-
-            <option value="6">M2 SIS</option>
-
-            <option value="7">M2 INE</option>
 
             </select>
             <label class="mdl-textfield__label" for="id_parcours">Parcours</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-pole" >
-            <select name="pole" class="mdl-textfield__input liste" data-id-list="POLE" required="" id="id_pole">
-            <option value="" selected=""></option>
+            <select name="pole" class="mdl-textfield__input liste" data-id-list="POLE" data-url-position="3" required="" id="id_pole">
 
-            <option value="1">Général</option>
-
-            <option value="2">Informatique</option>
 
             </select>
             <label class="mdl-textfield__label" for="id_pole">Pole</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-semestre" >
-            <select name="semestre" class="mdl-textfield__input liste" data-id-list="SEMESTRE" required="" id="id_semestre">
-            <option value="" selected=""></option>
+            <select name="semestre" class="mdl-textfield__input liste" data-id-list="SEMESTRE" data-url-position="5" required="" id="id_semestre">
 
-            <option value="1">S1</option>
-
-            <option value="2">S2</option>
 
             </select>
             <label class="mdl-textfield__label" for="id_semestre">Semestre</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-ue">
-            <select name="ue_filter" class="mdl-textfield__input liste" data-id-list="UE" required="" id="id_ue_filter">
-            <option value="" selected=""></option>
+            <select name="ue_filter" class="mdl-textfield__input liste" data-id-list="UE" data-url-position="1" required="" id="id_ue_filter">
 
-            <option value="1">Workflow</option>
-
-            <option value="2">Anglais</option>
 
             </select>
             <label class="mdl-textfield__label" for="id_ue_filter">UE</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="div-groupe">
-            <select name="groupe" class="mdl-textfield__input liste" data-id-list="GROUPE" required="" id="id_groupe_filter">
-            <option value="" selected=""></option>
-
-            <option value="1">Groupe 1</option>
-
-            <option value="2">Groupe 2</option>
+            <select name="groupe" class="mdl-textfield__input liste" data-id-list="GROUPE" data-url-position="2" required="" id="id_groupe_filter">
 
             </select>
             <label class="mdl-textfield__label" for="id_groupe_filter">Groupe</label>
@@ -81,8 +45,8 @@
     <br />
     <br />
     <!-- button export -->
-    <a href="/options/export_csv/{{ue}}/0" id="btn-valider-ordre" name="accept" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--colored right-btn btn-export" >Export CSV</a>
-    <a href="/options/export_pdf/{{ue}}/0" id="btn-valider-ordre" name="accept" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--colored right-btn btn-export" >Export PDF</a>
+    <a href="/options/export_csv/-1/0/-1/-1/-1/-1" id="btn-valider-ordre-csv" name="accept" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--colored right-btn btn-export" >Export CSV</a>
+    <a href="/options/export_pdf/-1/0/-1/-1/-1/-1" id="btn-valider-ordre-pdf" name="accept" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-button--colored right-btn btn-export" >Export PDF</a>
 
 </div>
 <div class="mdl-cell mdl-cell--12-col">
@@ -170,6 +134,44 @@
 
 {% block script %}
     <script>
+        function parse_url(position, value){
+            var url = $("#btn-valider-ordre-csv").attr("href");
+            var tab_url = url.split('/');
+            var other_position = parseInt(position) + 2;
+            var new_url="";
+
+            if(position == 2){
+                if(value != 0){
+                    var new_url="";
+                    for (var i=0; i < tab_url.length; i++){
+                        if(i == other_position){
+                            new_url+=value+"/";
+                        }
+                        else{
+                            new_url+=tab_url[i]+"/";
+                        }                       
+                    }
+                } 
+            }
+            else{
+                if(value != -1){
+                    
+                    
+                    for (var i=0; i < tab_url.length; i++){
+                        if(i == other_position){
+                            new_url+=value+"/";
+                        }
+                        else{
+                            new_url+=tab_url[i]+"/";
+                        }                       
+                    }
+                }
+            }
+            new_url = new_url.replace("//","/");
+            
+            $("#btn-valider-ordre-csv").attr("href",new_url);
+            $("#btn-valider-ordre-pdf").attr("href",new_url);
+        }  
 
         function populate_liste(first_launch, modified_list){
             id_promotion_ajax = $("#id_promotion").val();
@@ -286,6 +288,7 @@
         
 
         $(".liste").change(function(){
+            parse_url($(this).attr("data-url-position"),$(this).val());
             populate_liste(true,$(this).attr("data-id-list"));  
         });
             

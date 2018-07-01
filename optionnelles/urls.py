@@ -42,6 +42,8 @@ urlpatterns = [
     path('choix_options/', views.etudiant_choixOptions, name='choix_options'),
     path('export_csv/<int:id_ue>/<int:id_groupe>', views.exportCSV, name='export_csv'),
     path('export_pdf/<int:id_ue>/<int:id_groupe>', views.exportPDF, name='export_pdf'),
+    #path('export_csv_custom/<int:id_ue>/<int:id_groupe>/<int:id_pole>/<int:id_parcours>/<int:id_semestre>/<int:id_promotion>', views.exportCSVcustom, name='export_csv_custom'),
+    path('export_pdf_custom/<int:id_ue>/<int:id_groupe>/<int:id_pole>/<int:id_parcours>/<int:id_semestre>/<int:id_promotion>', views.exportPDF_emmargement, name='export_pdf_custom'),
     path('mes_cours/', views.etudiant_mesCours, name='mes_cours'),
     url(r'^ajax/population_liste/$', views.population_liste, name='population_liste'),
     #gestion du mot de passe oublié
