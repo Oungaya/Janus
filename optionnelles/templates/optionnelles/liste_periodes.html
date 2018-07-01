@@ -91,11 +91,11 @@
                 <tr>
                     <td class="mdl-data-table__cell--non-numeric">{{ p.parcours }}</td>
                     <td><a href="/options/modification_periode/{{ p.id }}/user/">{{ p.nom }}</a></td>
-                    <td> {{ p.dateDebutSemestre1 }} <br> {{ p.dateFinSemestre1  }}</td>
-                    <td> {{ p.dateDebutSemestre2  }} <br> {{ p.dateFinSemestre2 }}</td>
-                    <td> {{ p.dateDebutOptions1  }} <br> {{ p.dateFinOptions1  }}</td>
-                    <td> {{ p.dateDebutOptions2  }} <br> {{ p.dateFinOptions2  }}</td>
-                    <td> {{ p.dateDebutAnnee  }} <br> {{ p.dateFinAnnee  }}</td>
+                    <td> {{ p.date_debut_semestre1 }} <br> {{ p.date_fin_semestre1  }}</td>
+                    <td> {{ p.date_debut_semestre2  }} <br> {{ p.date_fin_semestre2 }}</td>
+                    <td> {{ p.date_debut_options1  }} <br> {{ p.date_fin_options1  }}</td>
+                    <td> {{ p.date_debut_options2  }} <br> {{ p.date_fin_options2  }}</td>
+                    <td> {{ p.date_debut_annee  }} <br> {{ p.date_fin_annee  }}</td>
                 </tr>
             {% endfor %}
         </tbody>

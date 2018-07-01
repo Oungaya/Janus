@@ -50,8 +50,8 @@ class AjoutPeriodeForm(forms.Form):
     dateDebutOptionsS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom'}))
     dateFinOptionsS1 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom'}))
     dateFinOptionsS2 = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom'}))
-    dateDebutAnnee = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom'}))
-    dateFinAnnee = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom'}))
+    date_debut_annee = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom'}))
+    date_fin_annee = forms.DateTimeField(widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom'}))
 
 class ModificationPeriodeForm(forms.Form):
     queryParcours = Parcours.objects.all()
@@ -65,8 +65,8 @@ class ModificationPeriodeForm(forms.Form):
     dateDebutOptionsS2 = forms.DateTimeField(input_formats='%d/%m/%Y', widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom', 'type' : 'date-local'}))
     dateFinOptionsS1 = forms.DateTimeField(input_formats='%d/%m/%Y', widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom', 'type' : 'date-local'}))
     dateFinOptionsS2 = forms.DateTimeField(input_formats='%d/%m/%Y', widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input date-field-custom', 'type' : 'date-local'}))
-    dateDebutAnnee = forms.DateTimeField(input_formats='%d/%m/%Y', widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input datetime-field-custom', 'type' : 'datetime-local'}))
-    dateFinAnnee = forms.DateTimeField(input_formats='%d/%m/%Y', widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input datetime-field-custom', 'type' : 'datetime-local'}))
+    date_debut_annee = forms.DateTimeField(input_formats='%d/%m/%Y', widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input datetime-field-custom', 'type' : 'datetime-local'}))
+    date_fin_annee = forms.DateTimeField(input_formats='%d/%m/%Y', widget=forms.DateInput(attrs={'class' : 'mdl-textfield__input datetime-field-custom', 'type' : 'datetime-local'}))
 
 class ModificationAdminForm(forms.Form):
     queryGroupe = Group.objects.all()

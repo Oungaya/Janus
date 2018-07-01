@@ -293,38 +293,38 @@ def etudiant_choixOptions(request):
     if AnneeCourante.objects.filter(parcours=parcours_etudiant).exists():
         has_period = True
         #utc=pytz.UTC
-        dateDebutOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions1
-        dateFinOptions1 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions1
-        dateDebutOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateDebutOptions2
-        dateFinOptions2 = AnneeCourante.objects.get(parcours=parcours_etudiant).dateFinOptions2
-        '''dateDebutOptions1 = utc.localize(dateDebutOptions1)
-        dateFinOptions1 = utc.localize(dateFinOptions1)
-        dateDebutOptions2 = utc.localize(dateDebutOptions2)
-        dateFinOptions2 = utc.localize(dateFinOptions2)'''
+        date_debut_options1 = AnneeCourante.objects.get(parcours=parcours_etudiant).date_debut_options1
+        date_fin_options1 = AnneeCourante.objects.get(parcours=parcours_etudiant).date_fin_options1
+        date_debut_options2 = AnneeCourante.objects.get(parcours=parcours_etudiant).date_debut_options2
+        date_fin_options2 = AnneeCourante.objects.get(parcours=parcours_etudiant).date_fin_options2
+        '''date_debut_options1 = utc.localize(date_debut_options1)
+        date_fin_options1 = utc.localize(date_fin_options1)
+        date_debut_options2 = utc.localize(date_debut_options2)
+        date_fin_options2 = utc.localize(date_fin_options2)'''
 
         #now = timezone.now()
 
         #print(now)
 
-        '''if(datetime.now() >= dateDebutOptions1 and datetime.now() <= dateFinOptions1):
+        '''if(datetime.now() >= date_debut_options1 and datetime.now() <= date_fin_options1):
             print("on est en S1")
-        elif(datetime.now() >= dateDebutOptions2 and datetime.now() <= dateFinOptions2):
+        elif(datetime.now() >= date_debut_options2 and datetime.now() <= date_fin_options2):
             print("on est en S2")'''
 
         now = datetime.datetime.now()
         
         dateFinOptions = ""
-        if(now >= dateDebutOptions1 and now <= dateFinOptions1):    
+        if(now >= date_debut_options1 and now <= date_fin_options1):    
             for pole in poles_parcours:
                 liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id, semestre_id=1).order_by('etudiant_par_ue__order')
                 res[pole] = liste_ues
-                dateFinOptions = dateFinOptions1
+                dateFinOptions = date_fin_options1
                 #print(liste_ues)
-        elif(now >= dateDebutOptions2 and now <= dateFinOptions2):
+        elif(now >= date_debut_options2 and now <= date_fin_options2):
             for pole in poles_parcours:
                 liste_ues = etudiant.ues.filter(etudiant_par_ue__optionnelle=True, poles=pole.id, semestre_id=2).order_by('etudiant_par_ue__order')
                 res[pole] = liste_ues
-                dateFinOptions = dateFinOptions2
+                dateFinOptions = date_fin_options2
                 #print(liste_ues)
     else:
         has_period = False
@@ -523,16 +523,16 @@ def admin_PeriodeDetails(request, id_periode):
     form = ModificationPeriodeForm(initial={
         'nom': periode.nom,
         'parcours': periode.parcours,
-        'dateDebutS1': periode.dateDebutSemestre1,
-        'dateDebutS2': periode.dateDebutSemestre2,
-        'dateFinS1': periode.dateFinSemestre1,
-        'dateFinS2': periode.dateFinSemestre2,
-        'dateDebutOptionsS1': periode.dateDebutOptions1,
-        'dateDebutOptionsS2': periode.dateDebutOptions2,
-        'dateFinOptionsS1': periode.dateFinOptions1,
-        'dateFinOptionsS2': periode.dateFinOptions2,
-        'dateDebutAnnee': periode.dateDebutAnnee,
-        'dateFinAnnee': periode.dateFinAnnee
+        'dateDebutS1': periode.date_debut_semestre1,
+        'dateDebutS2': periode.date_debut_semestre2,
+        'dateFinS1': periode.date_fin_semestre1,
+        'dateFinS2': periode.date_fin_semestre2,
+        'dateDebutOptionsS1': periode.date_debut_options1,
+        'dateDebutOptionsS2': periode.date_debut_options2,
+        'dateFinOptionsS1': periode.date_fin_options1,
+        'dateFinOptionsS2': periode.date_fin_options2,
+        'date_debut_annee': periode.date_debut_annee,
+        'date_fin_annee': periode.date_fin_annee
     })
     context = {
         'periode': periode,
@@ -551,16 +551,16 @@ def admin_PeriodeEnd(request, id_periode):
                 data = form.cleaned_data
                 periode.nom = data['nom']
                 periode.parcours = data['parcours']
-                periode.dateDebutSemestre1 = data['dateDebutS1']
-                periode.dateDebutSemestre2 = data['dateDebutS2']
-                periode.dateFinSemestre1 = data['dateFinS1']
-                periode.dateFinSemestre2 = data['dateFinS2']
-                periode.dateDebutOptions1 = data['dateDebutOptionsS1']
-                periode.dateDebutOptions2 = data['dateDebutOptionsS2']
-                periode.dateFinOptions1 = data['dateFinOptionsS1']
-                periode.dateFinOptions2 = data['dateFinOptionsS2']
-                periode.dateDebutAnnee = data['dateDebutAnnee']
-                periode.dateFinAnnee = data['dateFinAnnee']
+                periode.date_debut_semestre1 = data['dateDebutS1']
+                periode.date_debut_semestre2 = data['dateDebutS2']
+                periode.date_fin_semestre1 = data['dateFinS1']
+                periode.date_fin_semestre2 = data['dateFinS2']
+                periode.date_debut_options1 = data['dateDebutOptionsS1']
+                periode.date_debut_options2 = data['dateDebutOptionsS2']
+                periode.date_fin_options1 = data['dateFinOptionsS1']
+                periode.date_fin_options2 = data['dateFinOptionsS2']
+                periode.date_debut_annee = data['date_debut_annee']
+                periode.date_fin_annee = data['date_fin_annee']
                 periode.save()
                 messages.success(request, 'Periode modifiée')
                 return HttpResponseRedirect('/options/liste_periodes/')
@@ -575,7 +575,7 @@ def admin_AjoutPeriode(request):
         form = AjoutPeriodeForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            periode = AnneeCourante(nom=data['nom'], parcours=data['parcours'], dateDebutSemestre1=data['dateDebutS1'], dateDebutSemestre2=data['dateDebutS2'], dateFinSemestre1=data['dateFinS1'], dateFinSemestre2=data['dateFinS2'], dateDebutOptions1=data['dateDebutOptionsS1'], dateDebutOptions2=data['dateDebutOptionsS2'], dateFinOptions1=data['dateFinOptionsS1'], dateFinOptions2=data['dateFinOptionsS2'], dateDebutAnnee=['dateDebutAnnee'], dateFinAnnee=['dateFinAnnee'])
+            periode = AnneeCourante(nom=data['nom'], parcours=data['parcours'], date_debut_semestre1=data['dateDebutS1'], date_debut_semestre2=data['dateDebutS2'], date_fin_semestre1=data['dateFinS1'], date_fin_semestre2=data['dateFinS2'], date_debut_options1=data['dateDebutOptionsS1'], date_debut_options2=data['dateDebutOptionsS2'], date_fin_options1=data['dateFinOptionsS1'], date_fin_options2=data['dateFinOptionsS2'], date_debut_annee=['date_debut_annee'], date_fin_annee=['date_fin_annee'])
             periode.save()
             messages.success(request, 'La période a été crée')
             return HttpResponseRedirect('/options/liste_periodes')
