@@ -1,7 +1,19 @@
 from django.conf.urls import url, include
-from django.urls import path
+from django.urls import path, register_converter
 from . import views
 from django.contrib.auth import views as auth_views
+#from optionnellesHelpers import NegativeIntConverter
+class NegativeIntConverter:
+    regex = '-?\d+'
+
+    def to_python(self, value):
+        return int(value)
+
+    def to_url(self, value):
+        return '%d' % value
+
+
+register_converter(NegativeIntConverter, 'negint')
 
 app_name='optionnelles'
 
@@ -43,7 +55,7 @@ urlpatterns = [
     path('export_csv/<int:id_ue>/<int:id_groupe>', views.exportCSV, name='export_csv'),
     path('export_pdf/<int:id_ue>/<int:id_groupe>', views.exportPDF, name='export_pdf'),
     #path('export_csv_custom/<int:id_ue>/<int:id_groupe>/<int:id_pole>/<int:id_parcours>/<int:id_semestre>/<int:id_promotion>', views.exportCSVcustom, name='export_csv_custom'),
-    path('export_pdf_custom/<int:id_ue>/<int:id_groupe>/<int:id_pole>/<int:id_parcours>/<int:id_semestre>/<int:id_promotion>', views.exportPDF_emmargement, name='export_pdf_custom'),
+    path('export_pdf_custom/<negint:id_ue>/<int:id_groupe>/<negint:id_pole>/<negint:id_parcours>/<negint:id_semestre>/<negint:id_promotion>', views.exportPDF_emmargement, name='export_pdf_custom'),
     path('mes_cours/', views.etudiant_mesCours, name='mes_cours'),
     url(r'^ajax/population_liste/$', views.population_liste, name='population_liste'),
     #gestion du mot de passe oublié

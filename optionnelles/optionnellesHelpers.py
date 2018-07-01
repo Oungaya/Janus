@@ -17,3 +17,4 @@ def getGroupTemplate(user):
 def isInGroup(groupe, user):
     res = User.objects.filter(pk=user.id, groups__name=groupe).exists()
     return res
+
