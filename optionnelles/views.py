@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
-from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Pole, Semestre, AnneeCourante, UE_par_Pole
+from .models import Etudiant, Professeur, Parcours, Statut, UE, Etudiant_par_UE, Pole_par_Semestre, Pole, Semestre, AnneeCourante, UE_par_Pole, Promotion
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -219,6 +219,45 @@ def valide_ue(request):
         #'is_redoublant': e.redoublant
     }
     return JsonResponse(data)
+
+def population_liste(request):
+    
+    semestre_id = request.GET.get('id_semestre', None)
+    promotion_id = request.GET.get('id_promotion' None)
+    parcours_id = request.GET.get('id_parcours' None)
+    pole_id = request.GET.get('id_pole' None)
+    ue_id = request.GET.get('id_ue' None)
+    first_launch = request.GET.get('first_launch' None)
+    modified_list = request.GET.get('modified_list' None)
+
+    if(first_launch):
+        data_promotion = Promotion.objects.all().values()
+        data_semestre = Semestre.objects.all().values()
+        data_pole = Pole.objects.all().values()
+        data_parcours = Parcours.objects.all().values()
+        data_ue = UE.objects.all().values()
+        data_groupe = []
+    else:
+        #traiter chaque cas particulier 
+        data_promotion = Promotion.objects.all().values()
+        data_semestre = Semestre.objects.all().values()
+        data_pole = Pole.objects.all().values()
+        data_parcours = Parcours.objects.all().values()
+        data_ue = UE.objects.all().values()
+        data_groupe = []
+
+    data = {
+        'liste_promotion': list(data_promotion),
+        'liste_semestre': list(data_semestre),
+        'liste_pole': list(data_pole),
+        'liste_parcours': list(data_parcours),
+        'liste_ue': list(data_ue),
+        'liste_groupe': list(data_groupe)
+    }
+
+    return JsonResponse(data)
+
+
 
 def notification_inscription(request):
 
