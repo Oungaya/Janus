@@ -4,12 +4,12 @@
 import subprocess
 
 def main():  
-    subprocess.call('mysql -h 127.0.0.1 -P 8889 -u root -proot -e "DROP DATABASE janus; CREATE DATABASE janus;"', shell=True)
+    subprocess.call('mysql -h 127.0.0.1 -P 3306 -u root -proot -e "DROP DATABASE janus; CREATE DATABASE janus;"', shell=True)
     subprocess.call('rm -r optionnelles/migrations/', shell=True)
-    subprocess.call('python3.7 manage.py migrate', shell=True)
-    subprocess.call('python3.7 manage.py makemigrations optionnelles', shell=True)
-    subprocess.call('python3.7 manage.py migrate', shell=True)
-    subprocess.call('mysql -h 127.0.0.1 -P 8889 -u root -proot -e "\
+    subprocess.call('python3.6 manage.py migrate', shell=True)
+    subprocess.call('python3.6 manage.py makemigrations optionnelles', shell=True)
+    subprocess.call('python3.6 manage.py migrate', shell=True)
+    subprocess.call('mysql -h 127.0.0.1 -P 3306 -u root -proot -e "\
     USE janus;\
     INSERT INTO auth_group(name) VALUES (\'Etudiant\');\
     INSERT INTO auth_group(name) VALUES (\'Professeur\');\
@@ -344,7 +344,7 @@ def main():
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (13, 32, 2);\
     INSERT INTO optionnelles_pole_par_semestre(nombre_options, pole_id, semestre_id) VALUES (0, 32, 3);\
     "', shell=True)
-    subprocess.call('python3.7 manage.py createsuperuser', shell=True)
+    subprocess.call('python3.6 manage.py createsuperuser', shell=True)
 
 if __name__ == "__main__":
    main()

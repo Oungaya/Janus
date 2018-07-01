@@ -163,13 +163,15 @@ def attribution_ue():
 
     potential_ue_etu = Etudiant_par_UE.objects.filter(choisie=False)
     for ue_etu in potential_ue_etu:
-        if ue_etu.ue.capacite > 0:
-            infos[ue_etu.etudiant.id][ue_etu.pole_ref]["ue_dispo"].append(ue_etu.ue.id)
-
+        if ue_etu.valide:
+            if ue_etu.ue.capacite > 0:
+                infos[ue_etu.etudiant.id][ue_etu.pole_ref]["ue_dispo"].append(ue_etu.ue.id)
+        else:
+            infos[ue_etu.etudiant.id][ue_etu.pole_ref]["choix_restant"] -= 1
 
     # première phase de la répartition : met les étudiants dans des ues autant que possible
     for pref_ind in range(30):
-        list_ue_etu = Etudiant_par_UE.objects.filter(order=pref_ind,choisie=False)
+        list_ue_etu = Etudiant_par_UE.objects.filter(order=pref_ind,choisie=False,valide=True)
         for ue_etu in list_ue_etu:
             if infos[ue_etu.etudiant.id][ue_etu.pole_ref]["choix_restant"] > 0:
                 #si l'étudiant a encore des choix à faire
@@ -182,8 +184,9 @@ def attribution_ue():
                     ue_etu.save()
                     ue_etu.ue.save()
                 else:
+                    pass
                     # cette ue est pleine
-                    print("denied [etu]" + str(ue_etu.etudiant.id).zfill(3) + " [ue]" + str(ue_etu.ue.id).zfill(3) + " [pole]" + str(ue_etu.pole_ref).zfill(3))
+                    #print("denied [etu]" + str(ue_etu.etudiant.id).zfill(3) + " [ue]" + str(ue_etu.ue.id).zfill(3) + " [pole]" + str(ue_etu.pole_ref).zfill(3))
             else:
                 pass
                 # pas de pb : l'étudiant n'avait juste plus de choix à faire
@@ -207,7 +210,6 @@ def attribution_ue():
                             for UeId in infos[t.etudiant.id][t.pole_ref]["ue_dispo"]:
                                 # parcours des ues du pole de l'étudiant qui perd sa place
                                 if UE.objects.get(id = UeId).capacite > 0:
-                                    print("SWAP")
                                     # transferts
                                     swapped = True
                                     # l'etudiant perdant sa place récupère l'autre ue (UeId)

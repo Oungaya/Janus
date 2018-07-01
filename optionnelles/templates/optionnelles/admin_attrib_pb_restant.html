@@ -1,0 +1,29 @@
+{% extends template_group %} 
+{% block content %} 
+    {% if info_pb %}
+            <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                    <thead>
+                      <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Prenom</th>
+                        <th>Nom</th>
+                        <th>Pole</th>
+                        <th>Manque</th>
+                        <th>Ue que l'étudiant n'as pas encore dans ce pole</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in info_pb %}
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">{{s.0}}</td>
+                                <td>{{s.1}}</td>
+                                <td>{{s.2}}</td>
+                                <td>{{s.3}}</td>
+                                <td>{{s.4}}</td>
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+            </table>
+    {% else %}
+        <p>No info_pb</p>
+    {% endif %} 
+{% endblock %}

@@ -119,6 +119,48 @@ def exportPDF(request, id_ue, id_groupe):
     return response
 
 @login_required
+def exportPDF_emmargement(request):
+    semestre_id = request.GET.get('id_semestre', None)
+    promotion_id = request.GET.get('id_promotion', None)
+    parcours_id = request.GET.get('id_parcours', None)
+    pole_id = request.GET.get('id_pole', None)
+    ue_id = request.GET.get('id_ue', None)
+    group_id = request.GET.get('id_group', None)
+
+    liste_etudiant = Etudiant.objects.all()
+    if promotion_id != -1:
+        liste_etudiant.prefetch_related('parcours_set').filter(promotion__id = promotion_id)
+    if pole_id != -1:
+        liste_etudiant.prefetch_related('parcours_set').select_related('id_parcours').get(pole_id)
+    if parcours_id != -1:
+        liste_etudiant.filter(parcours_etudiant__parcours_id = parcours_id)
+    if ue_id != -1:
+        liste_etudiant.filter(etudiant_par_ue__ue__id = ue_id, etudiant_par_ue__choisie = True)
+    if group_id != -1:
+        liste_etudiant.filter(etudiant_par_ue__groupe = group_id)
+    
+    groupe = group_id
+    if group_id == 0:
+        groupe = "Promotion complète"
+
+    # Rendered
+    html_string = render_to_string('export/export_pdf.html', {'liste_etudiant': liste_etudiant, 'ue': ue, 'groupe' : groupe})
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+
+    # Creating http response
+    response = HttpResponse(content_type='application/pdf;')
+    response['Content-Disposition'] = 'attachment; filename="'+ ue.nom +' export.pdf"'
+    response['Content-Transfer-Encoding'] = 'binary'
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+        output = open(output.name, 'rb')
+        response.write(output.read())
+
+    return response
+
+@login_required
 def index(request):
     user_list = User.objects.all()
     context = {
@@ -849,6 +891,7 @@ def user_demandeInscription(request):
 def user_validationReinitialisation(request):
     return render(request, 'optionnelles/validation_reinitialisation.html')
 
+@login_required
 def generateur_temp(request):
     user_list = User.objects.all()
     bulk_generate_etudiant(100)
@@ -858,12 +901,76 @@ def generateur_temp(request):
     }
     return render(request, 'optionnelles/generateur_temp.html', context)
 
+@login_required
 def aggreg_pref(request):
-    user_list = User.objects.all()
+    #algorithme d'aggrégation des préférences
+    attribution_ue()
     context = {
-        'user_list': user_list,
-        'template_group': getGroupTemplate(request.user),
-        'res' : attribution_ue()
+        'template_group': getGroupTemplate(request.user)
     }
-    return render(request, 'optionnelles/generateur_temp.html', context)
+    return render(request, 'optionnelles/attribution_ue_index.html', context)
+
+@login_required
+def admin_attributionUe(request):
+    context = {
+        'template_group': getGroupTemplate(request.user)
+    }
+    return render(request, 'optionnelles/attribution_ue_index.html', context)
+
+@login_required
+def admin_uesManquantes(request):
+    infos = {}
+    # génère des dictionnaires d'etudiants, contenant des dictionnaires de poles
+    # nb_ue_manquantes : les ues nécessaires théoriquement dans les poles
+    # ue_restantes : liste pour l'instant vide des ues que l'étudiant n'a pas encore
+    for etu in Etudiant.objects.all():
+        infos[etu.id] = {}
+        for par in etu.parcours.all():
+            for pole in par.pole_set.all():
+                if pole.a_choisir_dans_pole > 0:
+                    infos[etu.id][pole.id] = {}
+                    infos[etu.id][pole.id]["nb_ue_manquant"] = pole.a_choisir_dans_pole
+                    infos[etu.id][pole.id]["ue_restantes"] = []
+    
+    # met à jour les ues manquantes et les ues restantes
+    ue_etu_liste = Etudiant_par_UE.objects.filter(optionnelle=True)
+    for ue_etu in ue_etu_liste:
+        if ue_etu.valide:
+            if ue_etu.choisie:
+                infos[ue_etu.etudiant.id][ue_etu.pole_ref]["nb_ue_manquant"] -= 1
+            else:
+                infos[ue_etu.etudiant.id][ue_etu.pole_ref]["ue_restantes"].append(ue_etu.ue.id)
+        else:
+            infos[ue_etu.etudiant.id][ue_etu.pole_ref]["nb_ue_manquant"] -= 1
+
+    res = []
+    for _etudiant, _poles in infos.items():
+        u = Etudiant.objects.get(id=_etudiant).utilisateur
+        prenom = u.first_name
+        nom = u.last_name
+        for p in _poles:
+            first = True
+            pole_name = Pole.objects.get(id=p).nom
+            if infos[_etudiant][p]["nb_ue_manquant"] > 0:
+                for u in infos[_etudiant][p]["ue_restantes"]:
+                    line = []
+                    if first :
+                        line.append(prenom)
+                        line.append(nom)
+                        line.append(pole_name)
+                        line.append(str(infos[_etudiant][p]["nb_ue_manquant"]))
+                        first = False
+                    else:
+                        line.append("")
+                        line.append("")
+                        line.append("")
+                        line.append("")
+                    line.append(UE.objects.get(id = u).nom)
+                    res.append(line)
+
+    context = {
+        'template_group': getGroupTemplate(request.user),
+        'info_pb': res
+    }
+    return render(request, 'optionnelles/admin_attrib_pb_restant.html', context)
 # Create your views here.
