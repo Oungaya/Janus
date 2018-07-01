@@ -36,7 +36,7 @@ class Pole(models.Model):
     nom = models.CharField(max_length=200)
     a_choisir_dans_pole = models.IntegerField(default=2)
     parcours = models.ForeignKey(Parcours, on_delete=models.CASCADE)
-    typePole = models.ForeignKey(TypePole, on_delete=models.CASCADE)
+    type_pole = models.ForeignKey(TypePole, on_delete=models.CASCADE)
     semestres = models.ManyToManyField("Semestre", through="Pole_par_Semestre")
 
     def __str__(self):
@@ -52,11 +52,11 @@ class Pole_par_Semestre(models.Model):
 
 class UE(models.Model):
     nom = models.CharField(max_length=200)
-    num_UE = models.CharField(max_length=200)
+    num_ue = models.CharField(max_length=200)
     code_apoge = models.CharField(max_length=200)
     nombre_groupes = models.IntegerField(default=0)
-    nombre_heures_TD = models.IntegerField(default=0)
-    nombre_heures_CM = models.IntegerField(default=0)
+    nombre_heures_td = models.IntegerField(default=0)
+    nombre_heures_cm = models.IntegerField(default=0)
     capacite = models.IntegerField(default=20)
     semestre = models.ForeignKey(Semestre, on_delete=models.CASCADE)
     poles = models.ManyToManyField("Pole", through="UE_par_Pole")
@@ -90,9 +90,9 @@ class Professeur(models.Model):
 class Professeur_par_UE(models.Model):
     professeur = models.ForeignKey(Professeur, on_delete=models.CASCADE)
     ue = models.ForeignKey(UE, on_delete=models.CASCADE)
-    heuresCM = models.IntegerField(default=0)
-    heuresTP = models.IntegerField(default=0)
-    heuresTD = models.IntegerField(default=0)
+    heurescm = models.IntegerField(default=0)
+    heurestp = models.IntegerField(default=0)
+    heurestd = models.IntegerField(default=0)
 
     def __str__(self):
         return self.ue.nom + " " + self.professeur.nom + " " + self.professeur.prenom
@@ -100,16 +100,16 @@ class Professeur_par_UE(models.Model):
 class AnneeCourante(models.Model):
     parcours = models.ForeignKey(Parcours, on_delete=models.CASCADE)
     nom = models.CharField(max_length=200)
-    dateDebutSemestre1 = models.DateTimeField('date début semestre 1')
-    dateDebutSemestre2 = models.DateTimeField('date début semestre 2')
-    dateFinSemestre1 = models.DateTimeField('date fin semestre 1')
-    dateFinSemestre2 = models.DateTimeField('date fin semestre 2')
-    dateDebutOptions1 = models.DateTimeField('date début options semestre 1')
-    dateDebutOptions2 = models.DateTimeField('date début options semestre 2')
-    dateFinOptions1 = models.DateTimeField('date fin options semestre 1')
-    dateFinOptions2 = models.DateTimeField('date fin options semestre 2')
-    dateDebutAnnee = models.DateTimeField('date début année')
-    dateFinAnnee = models.DateTimeField('date fin année')
+    date_debut_semestre1 = models.DateTimeField('date début semestre 1')
+    date_debut_semestre2 = models.DateTimeField('date début semestre 2')
+    date_fin_semestre1 = models.DateTimeField('date fin semestre 1')
+    date_fin_semestre2 = models.DateTimeField('date fin semestre 2')
+    date_debut_options1 = models.DateTimeField('date début options semestre 1')
+    date_debut_options2 = models.DateTimeField('date début options semestre 2')
+    date_fin_options1 = models.DateTimeField('date fin options semestre 1')
+    date_fin_options2 = models.DateTimeField('date fin options semestre 2')
+    date_debut_annee = models.DateTimeField('date début année')
+    date_fin_annee = models.DateTimeField('date fin année')
 
     def __str__(self):
         return self.nom

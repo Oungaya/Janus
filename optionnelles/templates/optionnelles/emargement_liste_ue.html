@@ -3,7 +3,7 @@
 {% block content %}
 <div class="mdl-cell mdl-cell--12-col filter-panel card-chip-etudiant">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-promotion">
-                <select name="promotion" class="mdl-textfield__input" required="" id="id_promotion">
+                <select name="promotion" class="mdl-textfield__input liste" data-id-list="PROMOTION" required="" id="id_promotion">
                 <option value="" selected=""></option>
 
                 <option value="1">M1</option>
@@ -14,7 +14,7 @@
                 <label class="mdl-textfield__label" for="id_promotion">Promotion</label>
         </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-parcours">
-            <select name="parcours" class="mdl-textfield__input" required="" id="id_parcours">
+            <select name="parcours" class="mdl-textfield__input liste" data-id-list="PARCOURS" required="" id="id_parcours">
             <option value="" selected=""></option>
 
             <option value="1">M1 MIAGE Stage</option>
@@ -35,7 +35,7 @@
             <label class="mdl-textfield__label" for="id_parcours">Parcours</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-pole" >
-            <select name="pole" class="mdl-textfield__input" required="" id="id_pole">
+            <select name="pole" class="mdl-textfield__input liste" data-id-list="POLE" required="" id="id_pole">
             <option value="" selected=""></option>
 
             <option value="1">Général</option>
@@ -46,7 +46,7 @@
             <label class="mdl-textfield__label" for="id_pole">Pole</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-semestre" >
-            <select name="semestre" class="mdl-textfield__input" required="" id="id_semestre">
+            <select name="semestre" class="mdl-textfield__input liste" data-id-list="SEMESTRE" required="" id="id_semestre">
             <option value="" selected=""></option>
 
             <option value="1">S1</option>
@@ -57,7 +57,7 @@
             <label class="mdl-textfield__label" for="id_semestre">Semestre</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" id="div-ue">
-            <select name="ue_filter" class="mdl-textfield__input" required="" id="id_ue_filter">
+            <select name="ue_filter" class="mdl-textfield__input liste" data-id-list="UE" required="" id="id_ue_filter">
             <option value="" selected=""></option>
 
             <option value="1">Workflow</option>
@@ -68,7 +68,7 @@
             <label class="mdl-textfield__label" for="id_ue_filter">UE</label>
     </div>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="div-groupe">
-            <select name="groupe" class="mdl-textfield__input" required="" id="id_groupe_filter">
+            <select name="groupe" class="mdl-textfield__input liste" data-id-list="GROUPE" required="" id="id_groupe_filter">
             <option value="" selected=""></option>
 
             <option value="1">Groupe 1</option>
@@ -142,7 +142,7 @@
             {% for e in liste_ue %}
             
                 <tr>
-                    <td><a href="/options/emargement/{{ e.id }}/">{{ e.num_UE }}</a></td>
+                    <td><a href="/options/emargement/{{ e.id }}/">{{ e.num_ue }}</a></td>
                     <td class="mdl-data-table__cell--non-numeric">
                             <a href="/options/emargement/{{ e.id }}/">  {{ e.nom }} </a>
                     </td>
@@ -170,8 +170,90 @@
 
 {% block script %}
     <script>
-        $(function(){
 
+        function populate_liste(first_launch, modified_list){
+            id_promotion_ajax = $("#id_promotion").val();
+            id_semestre_ajax = $("#id_semestre").val();
+            id_parcours_ajax = $("#id_parcours").val();
+            id_pole_ajax = $("#id_pole").val();
+            id_ue_ajax = $("#id_ue_filter").val();
+            id_groupe_ajax = $("#id_groupe_filter").val();
+
+            $.ajax({
+                url: '/options/ajax/population_liste/',
+                data: {
+                'id_promotion': id_promotion_ajax,
+                'id_semestre': id_semestre_ajax,
+                'id_parcours': id_parcours_ajax,
+                'id_pole': id_pole_ajax,
+                'id_ue': id_ue_ajax,
+                'first_launch': first_launch,
+                'modified_list' : modified_list
+                },
+                dataType: 'json',
+                success: function (data) {
+
+                    if(modified_list != "PROMOTION"){
+                        $("#id_promotion").html("");
+                        $("#id_promotion").append("<option value='-1'></option>");
+                        for (i in data.liste_promotion) {                        
+                            $("#id_promotion").append("<option value='"+data.liste_promotion[i].id+"'>"+data.liste_promotion[i].nom+"</option>");
+                        }
+                        $("#id_promotion option[value='"+ id_promotion_ajax +"']").prop("selected", true);
+                    }
+                    
+                    if(modified_list != "SEMESTRE"){
+                        $("#id_semestre").html("");
+                        $("#id_semestre").append("<option value='-1'></option>");
+                        for (i in data.liste_semestre) {                        
+                            $("#id_semestre").append("<option value='"+data.liste_semestre[i].id+"'>"+data.liste_semestre[i].nom+"</option>");
+                        }
+                        $("#id_semestre option[value='"+ id_semestre_ajax +"']").prop("selected", true);
+                    }
+                    
+                    if(modified_list != "PARCOURS"){
+                        $("#id_parcours").html("");
+                        $("#id_parcours").append("<option value='-1'></option>");
+                        for (i in data.liste_parcours) {                        
+                            $("#id_parcours").append("<option value='"+data.liste_parcours[i].id+"'>"+data.liste_parcours[i].nom+"</option>");
+                        }
+                        $("#id_parcours option[value='"+ id_parcours_ajax +"']").prop("selected", true);
+                    }
+
+                    if(modified_list != "POLE"){
+                        $("#id_pole").html("");
+                        $("#id_pole").append("<option value='-1'></option>");
+                        for (i in data.liste_pole) {                        
+                            $("#id_pole").append("<option value='"+data.liste_pole[i].id+"'>"+data.liste_pole[i].nom+"</option>");
+                        }
+                        $("#id_pole option[value='"+ id_pole_ajax +"']").prop("selected", true);
+                    }
+                    
+                    if(modified_list != "UE"){
+                        $("#id_ue_filter").html("");
+                        $("#id_ue_filter").append("<option value='-1'></option>");
+                        for (i in data.liste_ue) {                        
+                            $("#id_ue_filter").append("<option value='"+data.liste_ue[i].id+"'>"+data.liste_ue[i].nom+"</option>");
+                        }
+                        $("#id_ue_filter option[value='"+ id_ue_ajax +"']").prop("selected", true);
+                    }
+
+                    if(modified_list != "GROUPE"){
+                        $("#id_groupe_filter").html("");
+                        $("#id_groupe_filter").append("<option value='-1'></option>");
+                        for (i in data.liste_groupe) {                        
+                            $("#id_groupe_filter").append("<option value='"+data.liste_groupe[i]+"'>Groupe "+data.liste_groupe[i]+"</option>");
+                        }
+                        $("#id_groupe_filter option[value='"+ id_groupe_ajax +"']").prop("selected", true);
+                    }
+                },
+                error: function(jqXHR, exception){
+                    alert(jqXHR.responseText + " " + exception);
+                }
+            });
+        }
+        $(function(){
+            populate_liste(true,'LAUNCH');  
             $(".control-show-nom").on('change keyup paste', function () {
                 $(".control-hide-nom").val($(".control-show-nom").val());
                 $(".control-hide-nom").change();
@@ -193,6 +275,12 @@
             $(".mdl-textfield").removeClass("is-invalid");
             $("select option").eq(0).html("");
         }, 10);
+        
+
+        $(".liste").change(function(){
+            populate_liste(true,$(this).attr("data-id-list"));  
+        });
+            
         });
     </script>
 {% endblock %}

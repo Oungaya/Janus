@@ -43,6 +43,7 @@ urlpatterns = [
     path('export_csv/<int:id_ue>/<int:id_groupe>', views.exportCSV, name='export_csv'),
     path('export_pdf/<int:id_ue>/<int:id_groupe>', views.exportPDF, name='export_pdf'),
     path('mes_cours/', views.etudiant_mesCours, name='mes_cours'),
+    url(r'^ajax/population_liste/$', views.population_liste, name='population_liste'),
     #gestion du mot de passe oublié
     url(r'^password_reset/$', auth_views.password_reset,{'email_template_name':'optionnelles/registration/password_reset_email.html',
                                                     'template_name':'optionnelles/registration/password_reset_form.html',
@@ -58,8 +59,9 @@ urlpatterns = [
                                                     name='password_reset_confirm'),
 
     url(r'^reset/done/$', auth_views.password_reset_complete, {'template_name': 'optionnelles/registration/password_reset_complete.html'},name='password_reset_complete'),
-    
+    path('attribution_ue_index/', views.admin_attributionUe, name='attribution_ue_index'),
+    path('ue_manquantes/', views.admin_uesManquantes, name='admin_uesManquantes'),
     ### URL temporaires 
     path('generateur_temp/', views.generateur_temp, name='generateur_temp'),
-    path('aggreg_pref/', views.aggreg_pref, name='aggreg_pref'),
+    path('aggreg_pref/', views.aggreg_pref, name='aggreg_pref')
 ]
